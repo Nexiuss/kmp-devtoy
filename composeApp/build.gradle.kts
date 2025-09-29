@@ -1,12 +1,10 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
-val  carbon_version = "0.6.1"
-val compose_version = "1.9.0"
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    //alias(libs.plugins.sqldelight)
 }
 
 
@@ -23,7 +21,22 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation("io.github.gabrieldrn:carbon:${carbon_version}")
+            implementation(libs.composeIcons.fontAwesome)
+            implementation(libs.composeUI.carbon)
+
+
+            // SQLite JDBC驱动
+            implementation(libs.sqlite.jdbc)
+            // SQLDelight核心库
+            //implementation(sqldelight.runtime)
+            //implementation(sqldelight.sqliteDriver)
+            //implementation(sqldelight.coroutinesExtensions)
+
+            // 协程
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
+            // 数据结构
+            implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
         }
         commonMain{
             resources.srcDirs("src/jvmMain/resources")

@@ -2,16 +2,13 @@ package com.nexius.carbon
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import com.nexius.carbon.components.App
+import com.nexius.carbon.components.FontAwesomeMenuTree
 
 fun main() = application {
-    /*Window(
+    Window(
         onCloseRequest = ::exitApplication,
         title = "kmp-carbon",
     ) {
-        CarbonApp()
-    }*/
-
-    Window(onCloseRequest = ::exitApplication, title = "SQL Editor") { App() }
-
+        App()
+    }
 }

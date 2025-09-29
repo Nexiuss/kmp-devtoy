@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.compose.snippets.components
+package com.nexius.carbon.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,7 +38,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nexius.ui.Icons
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.Bus
+import compose.icons.fontawesomeicons.solid.Directions
+import compose.icons.fontawesomeicons.solid.Walking
 
 @Composable
 fun SegmentedButtonExamples() {
@@ -107,15 +111,15 @@ fun MultiChoiceSegmentedButton(modifier: Modifier = Modifier) {
                 label = {
                     when (label) {
                         "Walk" -> Icon(
-                            Icons.Filled.DirectionsWalk.toVector(),
+                            FontAwesomeIcons.Solid.Walking,
                             contentDescription = "Directions Walk"
                         )
                         "Ride" -> Icon(
-                            Icons.Default.DirectionsBus.toVector(),
+                            FontAwesomeIcons.Solid.Bus,
                             contentDescription = "Directions Bus"
                         )
                         "Drive" -> Icon(
-                            Icons.Default.DirectionsCar.toVector(),
+                            FontAwesomeIcons.Solid.Directions,
                             contentDescription = "Directions Car"
                         )
                     }

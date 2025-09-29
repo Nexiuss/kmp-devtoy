@@ -1,4 +1,4 @@
-rootProject.name = "kmp-carbon"
+rootProject.name = "kmp-devtoy"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -27,13 +27,7 @@ dependencyResolutionManagement {
         maven(uri("https://maven.aliyun.com/repository/gradle-plugin"))
         maven(uri("https://maven.aliyun.com/repository/google"))
         maven(uri("https://jitpack.io"))
-        google {
-            mavenContent {
-                includeGroupAndSubgroups("androidx")
-                includeGroupAndSubgroups("com.android")
-                includeGroupAndSubgroups("com.google")
-            }
-        }
+        google()
         mavenCentral()
         maven(uri("https://jitpack.io"))
     }
