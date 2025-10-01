@@ -56,11 +56,11 @@ fun IconImage(path: String, modifier: Modifier = Modifier) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SidebarLayoutExample() {
-    var home = getById("home")
+    val home = getById("home")
     var menuVisiable by remember { mutableStateOf(true) }
     var selectedItem: MenuItem by remember { mutableStateOf(home) }
 
-    var tabs = remember { mutableListOf(toTab(home)) }
+    val tabs = remember { mutableStateListOf(toTab(home)) }
     var selectedTab by remember { mutableStateOf(toTab(home)) }
     Scaffold(
         topBar = {
@@ -76,11 +76,14 @@ fun SidebarLayoutExample() {
                         Spacer(modifier = Modifier.weight(1f))
                         ContextMenuArea(items = {
                             listOf(
-                                ContextMenuItem("关闭未选中") {
-                                    // Custom action
+                                ContextMenuItem("关闭未选中"){
+                                    tabs.removeIf { it != selectedTab }
                                 },
-                                ContextMenuItem("关闭其他") {
-                                    // Another custom action
+                                ContextMenuItem("关闭选中") {
+                                    tabs.remove(selectedTab)
+                                },
+                                ContextMenuItem("关闭所有") {
+                                    tabs.clear()
                                 }
                             )
                         }) {
