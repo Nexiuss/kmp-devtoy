@@ -22,6 +22,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.composeIcons.fontAwesome)
+            implementation(libs.composeIcons.feather)
             implementation(libs.composeUI.carbon)
 
 
