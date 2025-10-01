@@ -1,4 +1,4 @@
-package com.nexius.carbon
+package com.nexius.devtoy
 
 import androidx.compose.foundation.ContextMenuArea
 import androidx.compose.foundation.ContextMenuItem
@@ -14,19 +14,11 @@ import androidx.compose.ui.res.useResource
 import androidx.compose.ui.unit.dp
 import com.gabrieldrn.carbon.tab.TabItem
 import com.gabrieldrn.carbon.tab.TabList
-import com.nexius.carbon.components.*
-import com.nexius.carbon.components.MenuItem
+import com.nexius.devtoy.components.*
+import com.nexius.devtoy.components.MenuItem
 import compose.icons.FeatherIcons
-import compose.icons.FontAwesomeIcons
 import compose.icons.feathericons.Menu
 import compose.icons.feathericons.Settings
-import compose.icons.fontawesomeicons.Regular
-import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.regular.Grimace
-import compose.icons.fontawesomeicons.solid.Equals
-import compose.icons.fontawesomeicons.solid.GripLines
-import compose.icons.fontawesomeicons.solid.GripVertical
-import compose.icons.fontawesomeicons.solid.Guitar
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -174,15 +166,18 @@ fun toTab(menuItem: MenuItem): TabItem {
 
 @Composable
 fun getContent(menuItem: MenuItem){
-    when(menuItem.name){
-        "HTML" -> {
+    when(menuItem.id){
+        "html" -> {
             HtmlDeEncode()
         }
-        "URL" -> {
+        "url" -> {
             UrlDeEncode()
         }
-        "base64文本" -> {
+        "base64" -> {
             Base64DeEncode()
+        }
+        "qrCode" -> {
+            QrCode()
         }
     }
 }

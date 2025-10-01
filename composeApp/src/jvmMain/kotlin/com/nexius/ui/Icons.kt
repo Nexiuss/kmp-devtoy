@@ -1,7 +1,7 @@
 package com.nexius.ui
 
 import androidx.compose.ui.graphics.ImageBitmap
-import com.nexius.carbon.loadIcon
+import com.nexius.devtoy.loadIcon
 
 interface Icons {
    enum class Filled{

@@ -1,11 +1,13 @@
-package com.nexius.carbon.components
+package com.nexius.devtoy.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.*
 import com.gabrieldrn.carbon.textinput.TextArea
 import compose.icons.FeatherIcons
 import androidx.compose.material3.Icon
+import com.nexius.devtoy.utils.generateQrCode
 import compose.icons.feathericons.ChevronsDown
 import compose.icons.feathericons.ChevronsUp
 import java.net.URLDecoder
@@ -137,4 +139,18 @@ fun encodeHtml(input: String): String {
         sb.append(entities[char] ?: char)
     }
     return sb.toString()
+}
+
+
+@Composable
+fun QrCode() {
+    //左边输入框
+    var url by remember { mutableStateOf("http://www.baidu.com") }
+
+    TextArea(
+        value = url,
+        onValueChange = { url = it },
+        label = "链接"
+    )
+    Image(imageVector = generateQrCode( url), contentDescription = "二维码")
 }

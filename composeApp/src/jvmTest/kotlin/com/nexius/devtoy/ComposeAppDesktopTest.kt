@@ -1,4 +1,4 @@
-package com.nexius.carbon
+package com.nexius.devtoy
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

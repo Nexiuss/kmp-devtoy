@@ -1,4 +1,4 @@
-package com.nexius.carbon.components
+package com.nexius.devtoy.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -24,21 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import compose.icons.FeatherIcons
 import compose.icons.FontAwesomeIcons
+import compose.icons.feathericons.Maximize
 import compose.icons.fontawesomeicons.Brands
-import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.brands.AccessibleIcon
 import compose.icons.fontawesomeicons.brands.Html5
-import compose.icons.fontawesomeicons.regular.FileAlt
-import compose.icons.fontawesomeicons.regular.FileWord
-import compose.icons.fontawesomeicons.regular.Star
-import compose.icons.fontawesomeicons.solid.Bell
 import compose.icons.fontawesomeicons.solid.ChevronDown
 import compose.icons.fontawesomeicons.solid.ChevronRight
-import compose.icons.fontawesomeicons.solid.Clock
 import compose.icons.fontawesomeicons.solid.Cog
-import compose.icons.fontawesomeicons.solid.FileImage
 import compose.icons.fontawesomeicons.solid.FileVideo
 import compose.icons.fontawesomeicons.solid.FileWord
 import compose.icons.fontawesomeicons.solid.FolderOpen
@@ -113,6 +107,13 @@ val menuItems = listOf(
                 name = "URL",
                 icon = FontAwesomeIcons.Solid.FileVideo,
                 expandedIcon = FontAwesomeIcons.Solid.FolderOpen
+            ),
+            MenuItem(
+                id = "qrCode",
+                path =  "root/endecode/qrCode",
+                name = "二维码",
+                icon = FeatherIcons.Maximize,
+                expandedIcon = FontAwesomeIcons.Solid.FolderOpen
             )
         )
     ),
@@ -128,7 +129,7 @@ val menuItems = listOf(
 @Composable
 fun FontAwesomeMenuTree(
     modifier: Modifier = Modifier,
-    menuItems: List<MenuItem> = com.nexius.carbon.components.menuItems,
+    menuItems: List<MenuItem> = com.nexius.devtoy.components.menuItems,
     level: Int = 0,
     onClick: (MenuItem) -> Unit= {}
 ) {

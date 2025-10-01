@@ -24,6 +24,7 @@ kotlin {
             implementation(libs.composeIcons.fontAwesome)
             implementation(libs.composeIcons.feather)
             implementation(libs.composeUI.carbon)
+            implementation("com.google.zxing:core:3.5.2")
 
 
             // SQLite JDBC驱动
