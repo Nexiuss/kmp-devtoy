@@ -12,17 +12,21 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.res.useResource
 import androidx.compose.ui.unit.dp
-import com.gabrieldrn.carbon.CarbonDesignSystem
-import com.gabrieldrn.carbon.breadcrumb.Breadcrumb
 import com.gabrieldrn.carbon.tab.TabItem
 import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.carbon.components.*
 import com.nexius.carbon.components.MenuItem
+import compose.icons.FeatherIcons
 import compose.icons.FontAwesomeIcons
+import compose.icons.feathericons.Menu
+import compose.icons.feathericons.Settings
 import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.regular.Grimace
 import compose.icons.fontawesomeicons.solid.Equals
+import compose.icons.fontawesomeicons.solid.GripLines
+import compose.icons.fontawesomeicons.solid.GripVertical
+import compose.icons.fontawesomeicons.solid.Guitar
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,10 +34,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     // 主布局（垂直排列）
-    CarbonDesignSystem {
-        SidebarLayoutExample()
-
-    }
+    layout()
 }
 
 
@@ -55,7 +56,7 @@ fun IconImage(path: String, modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SidebarLayoutExample() {
+fun layout() {
     val home = getById("home")
     var menuVisiable by remember { mutableStateOf(true) }
     var selectedItem: MenuItem by remember { mutableStateOf(home) }
@@ -70,7 +71,7 @@ fun SidebarLayoutExample() {
                         IconButton(onClick = {
                             menuVisiable = !menuVisiable
                         }) {
-                            Icon(FontAwesomeIcons.Solid.Equals, contentDescription = "图标", modifier = Modifier.size(24.dp))
+                            Icon(FeatherIcons.Menu, contentDescription = "图标", modifier = Modifier.size(24.dp))
                         }
 
                         Spacer(modifier = Modifier.weight(1f))
@@ -100,7 +101,7 @@ fun SidebarLayoutExample() {
                 },
                 actions = {
                     IconButton(onClick = { /* 用户信息 */ }) {
-                        Icon(FontAwesomeIcons.Regular.Grimace, contentDescription = "用户")
+                        Icon(FeatherIcons.Settings, contentDescription = "用户")
                     }
                 }
             )
@@ -151,7 +152,7 @@ fun SidebarLayoutExample() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(
+                   /* Text(
                         text = "$contentText 内容区",
                         style = MaterialTheme.typography.headlineMedium
                     )
@@ -159,7 +160,8 @@ fun SidebarLayoutExample() {
                     Text(
                         text = "当前选中: $contentText",
                         style = MaterialTheme.typography.bodyLarge
-                    )
+                    )*/
+                    getContent(selectedItem)
                 }
             }
         }
@@ -169,5 +171,21 @@ fun SidebarLayoutExample() {
 fun toTab(menuItem: MenuItem): TabItem {
     return TabItem(menuItem.name)
 }
+
+@Composable
+fun getContent(menuItem: MenuItem){
+    when(menuItem.name){
+        "HTML" -> {
+            HtmlDeEncode()
+        }
+        "URL" -> {
+            UrlDeEncode()
+        }
+        "base64文本" -> {
+            Base64DeEncode()
+        }
+    }
+}
+
 
 
