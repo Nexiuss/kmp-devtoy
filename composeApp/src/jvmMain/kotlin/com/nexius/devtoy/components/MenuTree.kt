@@ -38,6 +38,7 @@ import compose.icons.fontawesomeicons.solid.FileWord
 import compose.icons.fontawesomeicons.solid.FolderOpen
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.MoneyBillWaveAlt
+import compose.icons.fontawesomeicons.solid.Qrcode
 
 // 菜单项数据类
 data class MenuItem(
@@ -112,7 +113,7 @@ val menuItems = listOf(
                 id = "qrCode",
                 path =  "root/endecode/qrCode",
                 name = "二维码",
-                icon = FeatherIcons.Maximize,
+                icon = FontAwesomeIcons.Solid.Qrcode,
                 expandedIcon = FontAwesomeIcons.Solid.FolderOpen
             )
         )
