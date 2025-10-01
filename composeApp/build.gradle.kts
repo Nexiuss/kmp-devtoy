@@ -57,11 +57,11 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "com.nexius.carbon.MainKt"
+        mainClass = "com.nexius.devtoy.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.nexius.carbon"
+            packageName = "com.nexius.devtoy"
             packageVersion = "1.0.0"
         }
     }
