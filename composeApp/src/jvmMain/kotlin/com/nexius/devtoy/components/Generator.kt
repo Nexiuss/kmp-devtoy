@@ -14,12 +14,28 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Copy
 import compose.icons.fontawesomeicons.solid.Check
 import kotlinx.coroutines.delay
+import java.util.UUID
 
 @Composable
 fun UuidGenerator() {
+    val selectedOptions = remember {
+        mutableStateListOf(false, false)
+    }
     var uuid by remember { mutableStateOf(java.util.UUID.randomUUID().toString()) }
     var showCopied by remember { mutableStateOf(false) }
     val clipboardManager = LocalClipboardManager.current
+    val options = listOf("连字符", "大写字符")
+    // 处理选项变化
+    LaunchedEffect(selectedOptions[0], selectedOptions[1],uuid) {
+        var text = uuid
+        if (selectedOptions[0]) {
+            text = text.replace("-", "")
+        }
+        if (selectedOptions[1]) {
+            text = text.uppercase()
+        }
+        uuid = text
+    }
 
     Column(
         modifier = Modifier
@@ -27,6 +43,27 @@ fun UuidGenerator() {
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        MultiChoiceSegmentedButtonRow {
+            options.forEachIndexed { index, label ->
+                SegmentedButton(
+                    shape = SegmentedButtonDefaults.itemShape(
+                        index = index,
+                        count = options.size
+                    ),
+                    checked = selectedOptions[index],
+                    onCheckedChange = {
+                        selectedOptions[index] = !selectedOptions[index]
+                    },
+                    icon = { SegmentedButtonDefaults.Icon(selectedOptions[index]) },
+                    label = {
+                        Text(label, modifier = Modifier.widthIn(max = 100.dp))
+                    }
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         // UUID显示区域
         OutlinedTextField(
             value = uuid,
@@ -44,7 +81,7 @@ fun UuidGenerator() {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Button(
-                onClick = { uuid = java.util.UUID.randomUUID().toString() }
+                onClick = { uuid = UUID.randomUUID().toString() }
             ) {
                 Text("生成新UUID")
             }
