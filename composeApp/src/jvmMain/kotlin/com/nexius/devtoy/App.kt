@@ -179,6 +179,9 @@ fun getContent(menuItem: MenuItem){
         "qrCode" -> {
             QrCode()
         }
+        "uuid" -> {
+            UuidGenerator()
+        }
     }
 }
 

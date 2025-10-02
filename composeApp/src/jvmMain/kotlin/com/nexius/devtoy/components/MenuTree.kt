@@ -36,6 +36,8 @@ import compose.icons.fontawesomeicons.solid.Cog
 import compose.icons.fontawesomeicons.solid.FileVideo
 import compose.icons.fontawesomeicons.solid.FileWord
 import compose.icons.fontawesomeicons.solid.FolderOpen
+import compose.icons.fontawesomeicons.solid.Forward
+import compose.icons.fontawesomeicons.solid.Genderless
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.MoneyBillWaveAlt
 import compose.icons.fontawesomeicons.solid.Qrcode
@@ -119,10 +121,46 @@ val menuItems = listOf(
         )
     ),
     MenuItem(
-        id = "setting",
-        name =  "设置",
-        path =  "root/setting",
-        icon = FontAwesomeIcons.Solid.Cog
+        id = "format",
+        name =  "格式化工具",
+        path =  "root/format",
+        icon = FontAwesomeIcons.Solid.Forward,
+        expandedIcon = FontAwesomeIcons.Solid.FolderOpen,
+        children = listOf(
+            MenuItem(
+                id = "json",
+                path = "root/format/json",
+                name = "JSON",
+                icon = FontAwesomeIcons.Solid.FileWord),
+            MenuItem(
+                id = "sql",
+                path = "root/format/sql",
+                name = "SQL",
+                icon = FontAwesomeIcons.Brands.Html5,
+                expandedIcon = FontAwesomeIcons.Solid.FolderOpen
+            ),
+            MenuItem(
+                id = "xml",
+                path =  "root/format/xml",
+                name = "XML",
+                icon = FontAwesomeIcons.Solid.FileVideo,
+                expandedIcon = FontAwesomeIcons.Solid.FolderOpen
+            )
+        )
+    ),
+    MenuItem(
+        id = "generator",
+        name =  "生成器",
+        path =  "root/generator",
+        icon = FontAwesomeIcons.Solid.Genderless,
+        expandedIcon = FontAwesomeIcons.Solid.FolderOpen,
+        children = listOf(
+            MenuItem(
+                id = "uuid",
+                path = "root/generator/uuid",
+                name = "UUID",
+                icon = FontAwesomeIcons.Solid.FileWord)
+        )
     )
 )
 
