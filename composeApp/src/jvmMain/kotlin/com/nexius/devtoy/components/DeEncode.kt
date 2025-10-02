@@ -1,5 +1,7 @@
 package com.nexius.devtoy.components
 
+import androidx.compose.foundation.ContextMenuArea
+import androidx.compose.foundation.ContextMenuItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.IconButton
@@ -7,12 +9,19 @@ import androidx.compose.runtime.*
 import com.gabrieldrn.carbon.textinput.TextArea
 import compose.icons.FeatherIcons
 import androidx.compose.material3.Icon
+import androidx.compose.ui.graphics.vector.ImageVector
+import com.gabrieldrn.carbon.notification.NotificationStatus
+import com.gabrieldrn.carbon.notification.ToastNotification
 import com.nexius.devtoy.utils.generateQrCode
 import compose.icons.feathericons.ChevronsDown
 import compose.icons.feathericons.ChevronsUp
+import org.jetbrains.skia.Bitmap
+import java.awt.image.BufferedImage
+import java.io.File
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.Base64
+import javax.imageio.ImageIO
 
 @Composable
 fun UrlDeEncode() {
@@ -147,10 +156,31 @@ fun QrCode() {
     //左边输入框
     var url by remember { mutableStateOf("http://www.baidu.com") }
 
+    var toastBody by remember { mutableStateOf("暂时不支持保存二维码") }
+    var toastVisibility by remember { mutableStateOf(false) }
+
     TextArea(
         value = url,
         onValueChange = { url = it },
         label = "链接"
     )
-    Image(imageVector = generateQrCode( url), contentDescription = "二维码")
+    ContextMenuArea(items = {
+        listOf(
+            ContextMenuItem("保存"){
+                toastVisibility = true
+            }
+        )
+    }) {
+        Image(imageVector = generateQrCode( url), contentDescription = "二维码")
+    }
+    if(toastVisibility){
+        ToastNotification(
+            title = "提示",
+            body = toastBody,
+            status = NotificationStatus.Informational,
+            onClose = {
+                toastVisibility = false
+            }
+        )
+    }
 }
