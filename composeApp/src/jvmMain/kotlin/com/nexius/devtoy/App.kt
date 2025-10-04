@@ -182,6 +182,12 @@ fun getContent(menuItem: MenuItem){
         "uuid" -> {
             UuidGenerator()
         }
+        "json" -> {
+            JsonFormat()
+        }
+        "xml"-> {
+            XmlFormat()
+        }
     }
 }
 
