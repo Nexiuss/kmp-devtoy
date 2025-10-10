@@ -198,6 +198,9 @@ fun getContent(menuItem: MenuItem){
         "sql" -> {
             SqlFormat()
         }
+        "ccicMD5" -> {
+            ccicPayDecrypt()
+        }
     }
 }
 

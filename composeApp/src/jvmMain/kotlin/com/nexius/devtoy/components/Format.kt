@@ -138,3 +138,9 @@ fun String.formatXml(
     e.printStackTrace()
     this
 }
+
+
+@Composable
+fun SqlFormat(){
+    Text("暂时不支持！！！")
+}

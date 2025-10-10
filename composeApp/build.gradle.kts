@@ -26,6 +26,9 @@ kotlin {
             implementation(libs.composeUI.carbon)
             implementation(libs.zxing.core)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.dom4j)
+            implementation(libs.jackson.module.kotlin)
+            implementation(libs.hutool)
 
 
 

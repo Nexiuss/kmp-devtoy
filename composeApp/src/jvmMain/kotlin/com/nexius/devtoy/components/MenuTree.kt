@@ -161,6 +161,35 @@ val menuItems = listOf(
                 name = "UUID",
                 icon = FontAwesomeIcons.Solid.FileWord)
         )
+    ),
+    MenuItem(
+        id = "s3",
+        name =  "S3工具",
+        path =  "root/s3tool",
+        icon = FontAwesomeIcons.Solid.Genderless,
+        expandedIcon = FontAwesomeIcons.Solid.FolderOpen,
+        children = listOf(
+            MenuItem(
+                id = "s3json",
+                path = "root/s3/s3json",
+                name = "S3Json加签",
+                icon = FontAwesomeIcons.Solid.FileWord),
+            MenuItem(
+                id = "cmbRsa",
+                path = "root/s3/cmbRsa",
+                name = "招商RSA",
+                icon = FontAwesomeIcons.Solid.FileWord),
+            MenuItem(
+                id = "s5Rsa",
+                path = "root/s3/s5Rsa",
+                name = "S5RSA",
+                icon = FontAwesomeIcons.Solid.FileWord),
+            MenuItem(
+                id = "ccicMD5",
+                path = "root/s3/ccicMD5",
+                name = "大地MD5",
+                icon = FontAwesomeIcons.Solid.FileWord)
+        )
     )
 )
 
