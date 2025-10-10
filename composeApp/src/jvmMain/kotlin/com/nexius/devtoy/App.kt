@@ -4,6 +4,8 @@ import androidx.compose.foundation.ContextMenuArea
 import androidx.compose.foundation.ContextMenuItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -100,11 +102,16 @@ fun layout() {
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
+        // 首先定义一个滚动状态
+        val scrollState = rememberScrollState()
+
         // 主布局：左侧菜单 + 右侧内容
         Row(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                // 添加垂直滚动
+                .verticalScroll(scrollState)
         ) {
             if(menuVisiable){
                 // 左侧菜单树
@@ -187,6 +194,9 @@ fun getContent(menuItem: MenuItem){
         }
         "xml"-> {
             XmlFormat()
+        }
+        "sql" -> {
+            SqlFormat()
         }
     }
 }
