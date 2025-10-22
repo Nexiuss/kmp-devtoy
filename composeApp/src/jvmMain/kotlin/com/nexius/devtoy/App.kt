@@ -201,6 +201,9 @@ fun getContent(menuItem: MenuItem){
         "ccicMD5" -> {
             ccicPayDecrypt()
         }
+        "s3json"->{
+            S3JsonSignUnSign()
+        }
     }
 }
 

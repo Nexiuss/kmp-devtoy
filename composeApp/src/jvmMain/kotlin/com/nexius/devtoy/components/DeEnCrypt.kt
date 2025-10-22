@@ -1,12 +1,23 @@
 package com.nexius.devtoy.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,6 +27,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cn.hutool.core.map.MapUtil
+import cn.hutool.core.util.StrUtil
+import cn.hutool.json.JSONArray
+import cn.hutool.json.JSONObject
+import cn.hutool.json.JSONUtil
+import com.nexius.devtoy.utils.Crypto
 import com.nexius.devtoy.utils.PayPackageGenerator
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronsLeft
@@ -24,6 +40,8 @@ import org.dom4j.Document
 import org.dom4j.DocumentHelper
 import org.dom4j.XPath
 import java.math.BigDecimal
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun ccicPayDecrypt() {
@@ -279,4 +297,242 @@ fun String.ccicPayDecrypt(
         recAccountNode.text = PayPackageGenerator.decryptAndBase64Dncode(recAccountStr)
     }
     return PayPackageGenerator.prettyXml(document) ?: ""
+}
+
+@Composable
+fun S3JsonSignUnSign() {
+    // 状态管理
+    var s3JsonL by remember { mutableStateOf("") }
+    var s3JsonR by remember { mutableStateOf("") }
+    var safeCode by remember { mutableStateOf("") }
+    var signStr by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // 主操作区域 - 采用响应式布局，小屏幕自动堆叠
+        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+            if (maxWidth < 600.dp) {
+                // 小屏幕垂直布局
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    InputArea(
+                        value = s3JsonL,
+                        onValueChange = { s3JsonL = it },
+                        label = "S3Json明文"
+                    )
+
+                    OperationArea(
+                        safeCode = safeCode,
+                        onSafeCodeChange = { safeCode = it },
+                        onSignClick = {
+                            var s3JsonSign = s3JsonL.s3JsonSign(safeCode)
+                            s3JsonR = s3JsonSign.first
+                            signStr = s3JsonSign.second
+                        }
+                    )
+
+                    OutputArea(
+                        value = s3JsonR,
+                        onValueChange = { s3JsonR = it },
+                        label = "S3Json签名后"
+                    )
+                }
+            } else {
+                // 大屏幕水平布局
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.Top
+                ) {
+                    InputArea(
+                        value = s3JsonL,
+                        onValueChange = { s3JsonL = it },
+                        label = "S3Json明文",
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    OperationArea(
+                        safeCode = safeCode,
+                        onSafeCodeChange = { safeCode = it },
+                        onSignClick = {
+                            var s3JsonSign = s3JsonL.s3JsonSign(safeCode)
+                            s3JsonR = s3JsonSign.first
+                            signStr = s3JsonSign.second
+                        },
+                        modifier = Modifier.width(120.dp)
+                    )
+
+                    OutputArea(
+                        value = s3JsonR,
+                        onValueChange = { s3JsonR = it },
+                        label = "S3Json签名后",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+        }
+
+        // 签名内容串区域 - 固定在底部，与主区域保持距离
+        OutlinedTextField(
+            value = signStr,
+            onValueChange = { signStr = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp),
+            label = { Text("S3Json加签密文") },
+            singleLine = false,
+            readOnly = true,
+            maxLines = 3,
+            // 增加边框高亮，突出重要结果
+            colors = TextFieldDefaults.colors()
+        )
+    }
+}
+
+// 提取输入区域为独立组件，增强复用性
+@Composable
+private fun InputArea(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(label) },
+            singleLine = false,
+            maxLines = 8,  // 增加可输入行数，提升可用性
+            minLines = 4,
+            placeholder = { Text("请输入$label...") }  // 增加占位提示
+        )
+    }
+}
+
+// 提取输出区域为独立组件
+@Composable
+private fun OutputArea(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(label) },
+            singleLine = false,
+            maxLines = 8,
+            minLines = 4,
+            placeholder = { Text("签名结果将显示在这里...") }
+        )
+    }
+}
+
+// 提取操作区域为独立组件
+@Composable
+private fun OperationArea(
+    safeCode: String,
+    onSafeCodeChange: (String) -> Unit,
+    onSignClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
+        OutlinedTextField(
+            value = safeCode,
+            onValueChange = onSafeCodeChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text("安全码") },
+            singleLine = true,
+            maxLines = 1,
+            placeholder = { Text("请输入安全码") }
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))  // 增加间距，提升点击体验
+
+        Button(
+            onClick = onSignClick,
+            modifier = Modifier.fillMaxWidth(),
+            // 增加按钮高度，提升可点击区域
+            contentPadding = PaddingValues(vertical = 12.dp)
+        ) {
+            Icon(
+                imageVector = FeatherIcons.ChevronsRight,
+                contentDescription = "加签"
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("加签")
+        }
+    }
+}
+fun String.s3JsonSign(safeCode: String): Pair<String, String> {
+    return s3Md5Sign(this,"utf-8","",safeCode)
+}
+
+fun String.s3JsonSignStr(safeCode: String): String {
+    return this
+}
+fun String.s3JsonValid(safeCode:String): String {
+    return this
+}
+
+/**
+ * s5md5签名
+ * @param json json字符串
+ * @param charSet 字符编码
+ * @param SignInfo 签约信息
+ * @param safecodeText 安全码
+ * @return first-签名串 secont-签名后的json字符串
+ */
+fun s3Md5Sign(json: String, charSet: String, SignInfo: String, safecodeText: String): Pair<String, String> {
+    var json = json
+    json = json.replace("&amp;".toRegex(), "&")
+    val jsonObject: JSONObject = JSONUtil.parseObj(json)
+    //jsonObject.set("TransTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("HHmmss")))
+    //jsonObject.set("TransDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+    val transCode = jsonObject.get("TransCode") as String
+    val `in`: JSONArray = jsonObject.getJSONArray("IN")
+    val mapInfo: JSONObject = `in`.getJSONObject(0)
+    val tmpSafeCode = safecodeText
+    val sbVerify = StringBuilder()
+    if (null != mapInfo && mapInfo.containsKey("S3Sign") && null != mapInfo.get("S3Sign") && StrUtil.isNotEmpty(
+            mapInfo.get("S3Sign").toString()
+        )
+    ) {
+        mapInfo.remove("S3Sign")
+    }
+    /*if (mapInfo.containsKey("RdSeq") && "QryRecState" != transCode) {
+        if (Boolean.TRUE.toString() == CfgUtil().readResource().getProperty("sign.md5.auto-rdseq")) {
+            mapInfo.set("RdSeq", "RD" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmss")))
+        }
+    }*/
+    /*if (mapInfo.containsKey("SourceNoteCode")) {
+        mapInfo.set(
+            "SourceNoteCode", "SNC" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmss"))
+        )
+    }*/
+    if (mapInfo.containsKey("PaymentCode")) {
+        mapInfo.set("PaymentCode", "PC" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmss")))
+    }
+    var tmpWaitSign: String = Crypto.buildObjectSortWaitSign(mapInfo, false)
+    tmpWaitSign += "&key=$tmpSafeCode"
+    tmpWaitSign = StrUtil.trimEnd(tmpWaitSign)
+    println("签名串为：【$tmpWaitSign】")
+    val md5ToHexString: String = Crypto.md5ToHexString(tmpWaitSign, charSet, sbVerify)!!
+    mapInfo.set("S3Sign", md5ToHexString)
+    `in`.removeAt(0)
+    `in`.add(mapInfo)
+    System.out.printf("json串为：【%s】\n", jsonObject.toStringPretty())
+    var jsonStr = jsonObject.toStringPretty().replace("&".toRegex(), "&amp;")
+    return Pair(tmpWaitSign, jsonStr)
 }
