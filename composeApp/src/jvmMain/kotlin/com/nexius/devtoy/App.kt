@@ -196,7 +196,7 @@ fun getContent(menuItem: MenuItem){
             XmlFormat()
         }
         "sql" -> {
-            SqlFormat()
+            //SqlFormat()
         }
     }
 }
