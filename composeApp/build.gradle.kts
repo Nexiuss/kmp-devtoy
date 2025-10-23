@@ -15,8 +15,10 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
+            api(compose.ui)
+            api(compose.material)
+            api(compose.material3)
+            api(compose.materialIconsExtended)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
@@ -26,8 +28,20 @@ kotlin {
             implementation(libs.composeUI.carbon)
             implementation(libs.zxing.core)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.jetbrains.markdown)
+            implementation(libs.coil.compose)
+            implementation(libs.richeditor.compose)
 
+            // Coil
+            implementation(libs.coil.compose)
+            implementation(libs.coil.svg)
+            implementation(libs.coil.network.ktor)
 
+            // Ktor
+            implementation(libs.ktor.client.core)
+
+            // Navigation
+            implementation(libs.navigation.compose)
 
 
             // SQLite JDBC驱动

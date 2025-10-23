@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import compose.icons.FeatherIcons
 import compose.icons.FontAwesomeIcons
+import compose.icons.feathericons.FileText
 import compose.icons.feathericons.Maximize
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
@@ -159,6 +160,20 @@ val menuItems = listOf(
                 id = "uuid",
                 path = "root/generator/uuid",
                 name = "UUID",
+                icon = FontAwesomeIcons.Solid.FileWord)
+        )
+    ),
+    MenuItem(
+        id = "text",
+        name =  "文本处理",
+        path =  "root/text",
+        icon = FeatherIcons.FileText,
+        expandedIcon = FontAwesomeIcons.Solid.FolderOpen,
+        children = listOf(
+            MenuItem(
+                id = "markdown",
+                path = "root/text/markdown",
+                name = "Markdown预览",
                 icon = FontAwesomeIcons.Solid.FileWord)
         )
     )

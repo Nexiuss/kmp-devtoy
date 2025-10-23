@@ -9,6 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.loadImageBitmap
@@ -145,21 +146,10 @@ fun layout() {
                     .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
-                val contentText = selectedItem.name
-
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                   /* Text(
-                        text = "$contentText 内容区",
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                    Spacer(modifier = Modifier.height(24.dp))
-                    Text(
-                        text = "当前选中: $contentText",
-                        style = MaterialTheme.typography.bodyLarge
-                    )*/
                     getContent(selectedItem)
                 }
             }
@@ -171,6 +161,7 @@ fun toTab(menuItem: MenuItem): TabItem {
     return TabItem(menuItem.name)
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun getContent(menuItem: MenuItem){
     when(menuItem.id){
@@ -188,6 +179,9 @@ fun getContent(menuItem: MenuItem){
         }
         "uuid" -> {
             UuidGenerator()
+        }
+        "markdown"->{
+            MarkDownPreview()
         }
         "json" -> {
             JsonFormat()
