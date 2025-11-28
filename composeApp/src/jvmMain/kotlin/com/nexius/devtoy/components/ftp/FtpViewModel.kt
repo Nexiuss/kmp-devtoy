@@ -7,10 +7,11 @@ import java.io.File
 enum class ProtocolType { FTP, SFTP }
 
 class FtpViewModel : ViewModel() {
+    var isLoading by mutableStateOf(false)
     var protocolType by mutableStateOf(ProtocolType.FTP)
     var files by mutableStateOf<List<FtpFile>>(emptyList())
     var connected by mutableStateOf(false)
-    var currentPath by mutableStateOf("/")
+    var currentPath by mutableStateOf("")
     var ftp = FtpManager()
     var sft = SftpManager()
     private val fileManager: RemoteFileManager
@@ -49,5 +50,16 @@ class FtpViewModel : ViewModel() {
         connected = false
         files = emptyList()
         currentPath = "/"
+    }
+
+    fun pwd() {
+        currentPath =  fileManager.pwd()?:"";
+    }
+    fun cd(path: String){
+        fileManager.cd( path)
+    }
+
+    fun cdp(){
+        fileManager.cdp()
     }
 }

@@ -34,6 +34,7 @@ import compose.icons.fontawesomeicons.brands.Html5
 import compose.icons.fontawesomeicons.solid.ChevronDown
 import compose.icons.fontawesomeicons.solid.ChevronRight
 import compose.icons.fontawesomeicons.solid.Cog
+import compose.icons.fontawesomeicons.solid.FileUpload
 import compose.icons.fontawesomeicons.solid.FileVideo
 import compose.icons.fontawesomeicons.solid.FileWord
 import compose.icons.fontawesomeicons.solid.FolderOpen
@@ -176,7 +177,13 @@ val menuItems = listOf(
                 name = "Markdown预览",
                 icon = FontAwesomeIcons.Solid.FileWord)
         )
-    )
+    ),
+    MenuItem(
+        id = "ftp",
+        path = "root/ftp",
+        name = "FTP",
+        icon = FontAwesomeIcons.Solid.FileUpload,
+    ),
 )
 
 // 菜单树组件

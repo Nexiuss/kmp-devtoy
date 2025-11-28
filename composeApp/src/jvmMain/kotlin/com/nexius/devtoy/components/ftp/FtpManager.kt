@@ -22,6 +22,18 @@ class FtpManager : RemoteFileManager{
         }
     }
 
+    override fun pwd(): String? {
+        return client.printWorkingDirectory()
+    }
+
+    override fun cd(path: String) {
+        client.changeWorkingDirectory(path)
+    }
+
+    override fun cdp() {
+        client.changeToParentDirectory()
+    }
+
     override fun upload(local: File, remotePath: String): Boolean {
         local.inputStream().use {
             return client.storeFile(remotePath, it)

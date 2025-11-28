@@ -18,6 +18,14 @@ class SftpManager : RemoteFileManager {
         return channel?.isConnected == true
     }
 
+    override fun cdp() {
+        channel?.cd("..")
+    }
+
+    override fun cd(path: String) {
+        channel?.cd(path)
+    }
+
     override fun listFiles(path: String): List<FtpFile> {
         val files = channel?.ls(path) as Vector<ChannelSftp.LsEntry>
         return files.map {
@@ -53,5 +61,9 @@ class SftpManager : RemoteFileManager {
     override fun disconnect() {
         channel?.disconnect()
         session?.disconnect()
+    }
+
+    override fun pwd(): String? {
+        return channel?.pwd()
     }
 }

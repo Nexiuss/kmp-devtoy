@@ -8,4 +8,7 @@ interface RemoteFileManager {
     fun delete(remotePath: String): Boolean
     fun rename(from: String, to: String): Boolean
     fun disconnect()
+    fun pwd(): String?
+    fun cd(path: String)
+    fun cdp()
 }

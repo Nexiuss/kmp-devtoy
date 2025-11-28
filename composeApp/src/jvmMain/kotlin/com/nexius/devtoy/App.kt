@@ -4,6 +4,7 @@ import androidx.compose.foundation.ContextMenuArea
 import androidx.compose.foundation.ContextMenuItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -19,6 +20,7 @@ import com.gabrieldrn.carbon.tab.TabItem
 import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.devtoy.components.*
 import com.nexius.devtoy.components.MenuItem
+import com.nexius.devtoy.components.ftp.ui.FtpScreen
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Menu
 import compose.icons.feathericons.Settings
@@ -111,8 +113,6 @@ fun layout() {
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                // 添加垂直滚动
-                .verticalScroll(scrollState)
         ) {
             if(menuVisiable){
                 // 左侧菜单树
@@ -123,19 +123,21 @@ fun layout() {
                     color = MaterialTheme.colorScheme.surfaceVariant,
                     shadowElevation = 2.dp
                 ) {
-                    Column {
-                        FontAwesomeMenuTree(menuItems = menuItems, onClick = {
-                            println(
-                                "点击了: ${it.name}"
-                            )
-                            selectedItem = it
-                            if(it.children.isEmpty()){
-                                selectedTab = toTab(it)
-                                if(!tabs.contains(toTab(it))){
-                                    tabs.add(toTab(it))
+                    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                        item {
+                            FontAwesomeMenuTree(menuItems = menuItems, onClick = {
+                                println(
+                                    "点击了: ${it.name}"
+                                )
+                                selectedItem = it
+                                if(it.children.isEmpty()){
+                                    selectedTab = toTab(it)
+                                    if(!tabs.contains(toTab(it))){
+                                        tabs.add(toTab(it))
+                                    }
                                 }
-                            }
-                        })
+                            })
+                        }
                     }
                 }
             }
@@ -191,6 +193,9 @@ fun getContent(menuItem: MenuItem){
         }
         "sql" -> {
             //SqlFormat()
+        }
+        "ftp" -> {
+            FtpScreen()
         }
     }
 }
