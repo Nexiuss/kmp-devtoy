@@ -58,6 +58,8 @@ fun FtpScreen(
     var selectedProtocol by remember { mutableStateOf(ProtocolType.FTP) }
     var expandedProtocol by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
+    // 新增：控制配置界面显示/隐藏的状态
+    var isConfigVisible by remember { mutableStateOf(true) }
 
     // 监听连接状态
     LaunchedEffect(viewModel.connected) {
@@ -71,6 +73,7 @@ fun FtpScreen(
     LaunchedEffect(viewModel.isLoading) {
         isLoading = viewModel.isLoading
     }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -78,7 +81,23 @@ fun FtpScreen(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                ),
+                // 新增：在顶部栏添加显示/隐藏配置按钮
+                actions = {
+                    IconButton(
+                        onClick = { isConfigVisible = !isConfigVisible },
+                        modifier = Modifier
+                            .size(36.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f))
+                    ) {
+                        Icon(
+                            imageVector = if (isConfigVisible) FeatherIcons.ChevronUp else FeatherIcons.ChevronDown,
+                            contentDescription = if (isConfigVisible) "隐藏配置" else "显示配置",
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
+                }
             )
         },
         containerColor = MaterialTheme.colorScheme.background
@@ -89,171 +108,225 @@ fun FtpScreen(
                 .padding(innerPadding)
                 .padding(16.dp)
         ) {
-            // 连接配置卡片
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+            // 连接配置卡片 - 新增可见性控制
+            if (isConfigVisible) {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
-                    Text(
-                        text = "连接配置",
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    )
-
-                    // 协议选择
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        Text(text = "协议:", modifier = Modifier.width(60.dp))
-                        Button(
-                            onClick = { expandedProtocol = true },
-                            modifier = Modifier.weight(1f),
-                            shape = RoundedCornerShape(8.dp)
+                        // 新增：配置标题行（包含隐藏按钮）
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(text = selectedProtocol.name)
-                        }
-                        DropdownMenu(
-                            expanded = expandedProtocol,
-                            onDismissRequest = { expandedProtocol = false }
-                        ) {
-                            ProtocolType.values().forEach { protocol ->
-                                DropdownMenuItem(
-                                    text = { Text(protocol.name) },
-                                    onClick = {
-                                        selectedProtocol = protocol
-                                        expandedProtocol = false
-                                    }
+                            Text(
+                                text = "连接配置",
+                                style = MaterialTheme.typography.titleMedium.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            )
+                            IconButton(
+                                onClick = { isConfigVisible = false },
+                                modifier = Modifier.size(28.dp)
+                            ) {
+                                Icon(
+                                    imageVector = FeatherIcons.X,
+                                    contentDescription = "关闭配置",
+                                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                                 )
                             }
                         }
-                    }
 
-                    // 连接参数输入行
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        OutlinedTextField(
-                            value = host,
-                            onValueChange = { host = it },
-                            label = { Text("主机") },
-                            modifier = Modifier.weight(1.5f),
-                            singleLine = true,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                focusedLabelColor = MaterialTheme.colorScheme.primary
-                            ),
-                            shape = RoundedCornerShape(8.dp)
-                        )
-
-                        OutlinedTextField(
-                            value = port,
-                            onValueChange = { port = it },
-                            label = { Text("端口") },
-                            modifier = Modifier.weight(0.8f),
-                            singleLine = true,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                focusedLabelColor = MaterialTheme.colorScheme.primary
-                            ),
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                    }
-
-                    // 认证信息输入行
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        OutlinedTextField(
-                            value = user,
-                            onValueChange = { user = it },
-                            label = { Text("用户名") },
-                            modifier = Modifier.weight(1f),
-                            singleLine = true,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                focusedLabelColor = MaterialTheme.colorScheme.primary
-                            ),
-                            shape = RoundedCornerShape(8.dp)
-                        )
-
-                        OutlinedTextField(
-                            value = pass,
-                            onValueChange = { pass = it },
-                            label = { Text("密码") },
-                            modifier = Modifier.weight(1f),
-                            singleLine = true,
-                            visualTransformation = PasswordVisualTransformation(),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                focusedLabelColor = MaterialTheme.colorScheme.primary
-                            ),
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                    }
-
-                    // 连接控制按钮
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Button(
-                            onClick = {
-                                viewModel.connect(
-                                    host = host,
-                                    port = port.toIntOrNull() ?: 22,
-                                    user = user,
-                                    pass = pass
-                                )
-                            },
-                            modifier = Modifier.weight(1f),
-                            enabled = !viewModel.connected && !isLoading,
-                            shape = RoundedCornerShape(8.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.primary,
-                                contentColor = MaterialTheme.colorScheme.onPrimary
-                            )
+                        // 协议选择
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            if (isLoading) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(20.dp),
-                                    color = MaterialTheme.colorScheme.onPrimary,
-                                    strokeWidth = 2.dp
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
+                            Text(text = "协议:", modifier = Modifier.width(60.dp))
+                            Button(
+                                onClick = { expandedProtocol = true },
+                                modifier = Modifier.weight(1f),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Text(text = selectedProtocol.name)
                             }
-                            Text(text = if (isLoading) "连接中..." else "连接")
+                            DropdownMenu(
+                                expanded = expandedProtocol,
+                                onDismissRequest = { expandedProtocol = false }
+                            ) {
+                                ProtocolType.values().forEach { protocol ->
+                                    DropdownMenuItem(
+                                        text = { Text(protocol.name) },
+                                        onClick = {
+                                            selectedProtocol = protocol
+                                            expandedProtocol = false
+                                        }
+                                    )
+                                }
+                            }
                         }
 
-                        Button(
-                            onClick = { viewModel.disconnect() },
-                            modifier = Modifier.weight(1f),
-                            enabled = viewModel.connected && !isLoading,
-                            shape = RoundedCornerShape(8.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.error,
-                                contentColor = MaterialTheme.colorScheme.onError
-                            )
+                        // 连接参数输入行
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(text = "断开连接")
+                            OutlinedTextField(
+                                value = host,
+                                onValueChange = { host = it },
+                                label = { Text("主机") },
+                                modifier = Modifier.weight(1.5f),
+                                singleLine = true,
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                    focusedLabelColor = MaterialTheme.colorScheme.primary
+                                ),
+                                shape = RoundedCornerShape(8.dp)
+                            )
+
+                            OutlinedTextField(
+                                value = port,
+                                onValueChange = { port = it },
+                                label = { Text("端口") },
+                                modifier = Modifier.weight(0.8f),
+                                singleLine = true,
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                    focusedLabelColor = MaterialTheme.colorScheme.primary
+                                ),
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                        }
+
+                        // 认证信息输入行
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = user,
+                                onValueChange = { user = it },
+                                label = { Text("用户名") },
+                                modifier = Modifier.weight(1f),
+                                singleLine = true,
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                    focusedLabelColor = MaterialTheme.colorScheme.primary
+                                ),
+                                shape = RoundedCornerShape(8.dp)
+                            )
+
+                            OutlinedTextField(
+                                value = pass,
+                                onValueChange = { pass = it },
+                                label = { Text("密码") },
+                                modifier = Modifier.weight(1f),
+                                singleLine = true,
+                                visualTransformation = PasswordVisualTransformation(),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                    focusedLabelColor = MaterialTheme.colorScheme.primary
+                                ),
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                        }
+
+                        // 连接控制按钮
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Button(
+                                onClick = {
+                                    viewModel.connect(
+                                        host = host,
+                                        port = port.toIntOrNull() ?: 22,
+                                        user = user,
+                                        pass = pass
+                                    )
+                                },
+                                modifier = Modifier.weight(1f),
+                                enabled = !viewModel.connected && !isLoading,
+                                shape = RoundedCornerShape(8.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onPrimary
+                                )
+                            ) {
+                                if (isLoading) {
+                                    CircularProgressIndicator(
+                                        modifier = Modifier.size(20.dp),
+                                        color = MaterialTheme.colorScheme.onPrimary,
+                                        strokeWidth = 2.dp
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                }
+                                Text(text = if (isLoading) "连接中..." else "连接")
+                            }
+
+                            Button(
+                                onClick = { viewModel.disconnect() },
+                                modifier = Modifier.weight(1f),
+                                enabled = viewModel.connected && !isLoading,
+                                shape = RoundedCornerShape(8.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.error,
+                                    contentColor = MaterialTheme.colorScheme.onError
+                                )
+                            ) {
+                                Text(text = "断开连接")
+                            }
                         }
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+            } else {
+                // 配置隐藏时显示的折叠提示条
+                if (!viewModel.connected) {
+                    // 未连接时显示提示条，方便用户重新打开配置
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)
+                        ),
+                        onClick = { isConfigVisible = true }
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Icon(
+                                imageVector = FeatherIcons.ChevronUp,
+                                contentDescription = "显示配置",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                            Text(
+                                text = "点击展开连接配置",
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+            }
 
             // 目录导航栏
             if (viewModel.connected) {
@@ -439,7 +512,6 @@ fun FtpScreen(
         }
     }
 }
-
 
 @Composable
 private fun FileItem(
