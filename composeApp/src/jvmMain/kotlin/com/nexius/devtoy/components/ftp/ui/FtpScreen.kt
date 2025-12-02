@@ -8,6 +8,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FolderOpen
@@ -15,20 +17,36 @@ import androidx.compose.material.icons.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.Popup
+import com.mohamedrejeb.richeditor.model.RichTextState
 import com.nexius.devtoy.components.ftp.FtpFile
 import com.nexius.devtoy.components.ftp.FtpViewModel
 import com.nexius.devtoy.components.ftp.ProtocolType
+import com.nexius.devtoy.components.popup.PopupState
+import com.nexius.devtoy.components.popup.rememberPopupState
+import com.nexius.devtoy.components.popup.ui.BasicPopup
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.*
+import kotlinx.coroutines.launch
 import java.io.File
 import java.text.DecimalFormat
 
@@ -60,6 +78,17 @@ fun FtpScreen(
     var isLoading by remember { mutableStateOf(false) }
     // 新增：控制配置界面显示/隐藏的状态
     var isConfigVisible by remember { mutableStateOf(true) }
+
+    // 控制查询对话框显示/隐藏的状态
+    var showSearchDialog by remember { mutableStateOf(false) }
+    var showPopup by remember { mutableStateOf(false) }
+    // 存储查询输入内容
+    var searchText by remember { mutableStateOf("") }
+    // 用于处理输入框焦点
+    val focusRequester = remember { FocusRequester() }
+
+    var rememberPopupState = rememberPopupState()
+
 
     // 监听连接状态
     LaunchedEffect(viewModel.connected) {
@@ -330,6 +359,7 @@ fun FtpScreen(
 
             // 目录导航栏
             if (viewModel.connected) {
+                BasicPopup(rememberPopupState)
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
@@ -407,7 +437,22 @@ fun FtpScreen(
                                 text = viewModel.currentPath,
                                 style = MaterialTheme.typography.bodyMedium,
                                 maxLines = 1,
-                                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                        // 添加的查询按钮（与导航按钮风格一致）
+                        IconButton(
+                            onClick = { showSearchDialog = true},
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
+                        ) {
+                            Icon(
+                                // 使用搜索图标，保持与其他图标风格统一（FeatherIcons 或 Material Icons）
+                                imageVector = FeatherIcons.Search, // 或 Icons.Default.Search
+                                contentDescription = "查询",
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -415,16 +460,106 @@ fun FtpScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
             }
+            // 查询输入对话框
+            if (showSearchDialog) {
+                Dialog(
+                    onDismissRequest = { showSearchDialog = false },
+                    properties = DialogProperties(
+                        // 点击外部不关闭对话框（可选，根据需求调整）
+                        dismissOnClickOutside = false,
+                        // 禁止返回键关闭（可选）
+                        dismissOnBackPress = true
+                    )
+                ) {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth(0.8f) // 对话框宽度占屏幕80%
+                            .padding(16.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Text(
+                                text = "搜索文件",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+
+                            OutlinedTextField(
+                                value = searchText,
+                                onValueChange = { searchText = it },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .focusRequester(focusRequester),
+                                label = { Text("输入文件名或关键词") },
+                                singleLine = true,
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                    focusedLabelColor = MaterialTheme.colorScheme.primary,
+                                    cursorColor = MaterialTheme.colorScheme.primary
+                                ),
+                                keyboardOptions = KeyboardOptions(
+                                    imeAction = ImeAction.Search // 输入法显示搜索按钮
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onSearch = {
+                                        // 回车/搜索按钮触发的逻辑
+                                        if (searchText.isNotBlank()) {
+                                            // 执行搜索操作（替换为你的实际搜索逻辑）
+                                            viewModel.listFiles(viewModel.currentPath,searchText)
+                                        }else{
+                                            viewModel.listFiles(viewModel.currentPath)
+                                        }
+                                        // 隐藏对话框
+                                        showSearchDialog = false
+                                    }
+                                )
+                            )
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End,
+                            ) {
+                                TextButton(
+                                    onClick = { showSearchDialog = false }
+                                ) {
+                                    Text("取消")
+                                }
+
+                                TextButton(
+                                    onClick = {
+                                        if (searchText.isNotBlank()) {
+                                            viewModel.listFiles(viewModel.currentPath,searchText)
+                                        }
+                                        showSearchDialog = false
+                                    },
+                                    enabled = searchText.isNotBlank() // 输入不为空才启用
+                                ) {
+                                    Text("搜索")
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // 对话框显示时自动获取焦点，弹出输入法
+                LaunchedEffect(showSearchDialog) {
+                    if (showSearchDialog) {
+                        focusRequester.requestFocus()
+                    }
+                }
+            }
 
             // 文件列表区域
             if (viewModel.connected) {
-                Text(
-                    text = "文件列表",
-                    style = MaterialTheme.typography.titleSmall.copy(
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                )
+                // 1. 悬浮通知（最上层）
+
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -470,7 +605,15 @@ fun FtpScreen(
                                             viewModel.listFiles(file.path)
                                         }
                                     },
-                                    onDownload = { viewModel.download(file, File("./${file.name}")) },
+                                    onDownload = {
+                                        var localfile = File("./${file.name}")
+                                        viewModel.download(file, localfile).let {
+                                            if (it)
+                                                rememberPopupState.show("下载成功，地址为：${localfile.absolutePath}")
+                                            else
+                                                rememberPopupState.show("下载失败")
+                                        }
+                                    },
                                     onDelete = { viewModel.delete(file) },
                                     onRename = { /* 实现重命名逻辑 */ }
                                 )
@@ -560,7 +703,7 @@ private fun FileItem(
                 fontWeight = if (file.isDirectory) FontWeight.SemiBold else FontWeight.Normal
             ),
             maxLines = 1,
-            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis
         )
 
         // 文件大小
@@ -570,7 +713,7 @@ private fun FileItem(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             ),
             modifier = Modifier.width(100.dp),
-            textAlign = androidx.compose.ui.text.style.TextAlign.End
+            textAlign = TextAlign.End
         )
 
         // 操作按钮
@@ -607,7 +750,13 @@ private fun FileItem(
                 DropdownMenuItem(
                     text = { Text("重命名") },
                     onClick = {
+                        expandedMenu = false
                         onRename()
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text("创建目录") },
+                    onClick = {
                         expandedMenu = false
                     }
                 )
