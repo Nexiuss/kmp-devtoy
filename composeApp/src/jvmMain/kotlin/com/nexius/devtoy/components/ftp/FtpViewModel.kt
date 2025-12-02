@@ -1,21 +1,23 @@
 package com.nexius.devtoy.components.ftp
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.*
-import androidx.compose.runtime.*
 import java.io.File
+
 enum class ProtocolType { FTP, SFTP }
 
 class FtpViewModel : ViewModel() {
     var isLoading by mutableStateOf(false)
-    var protocolType by mutableStateOf(ProtocolType.FTP)
+    var protocolType by mutableStateOf(ProtocolType.SFTP)
     var files by mutableStateOf<List<FtpFile>>(emptyList())
     var connected by mutableStateOf(false)
     var currentPath by mutableStateOf("")
     var ftp = FtpManager()
     var sft = SftpManager()
     private val fileManager: RemoteFileManager
-        get() = if (protocolType == ProtocolType.SFTP) ftp else sft
+        get() = if (protocolType == ProtocolType.SFTP) sft else ftp
     fun connect(host: String, port: Int, user: String, pass: String) {
         connected = fileManager.connect(host, port, user, pass)
         if (connected) listFiles("/")

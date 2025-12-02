@@ -69,11 +69,10 @@ fun FtpScreen(
     viewModel: FtpViewModel = remember { FtpViewModel() }
 ) {
     // 状态管理
-    var host by remember { mutableStateOf("47.120.59.111") }
-    var port by remember { mutableStateOf("22") }
+    var host by remember { mutableStateOf("") }
+    var port by remember { mutableStateOf("") }
     var user by remember { mutableStateOf("root") }
-    var pass by remember { mutableStateOf("Nexius@123") }
-    var selectedProtocol by remember { mutableStateOf(ProtocolType.FTP) }
+    var pass by remember { mutableStateOf("") }
     var expandedProtocol by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
     // 新增：控制配置界面显示/隐藏的状态
@@ -185,7 +184,7 @@ fun FtpScreen(
                                 modifier = Modifier.weight(1f),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
-                                Text(text = selectedProtocol.name)
+                                Text(text = viewModel.protocolType.name)
                             }
                             DropdownMenu(
                                 expanded = expandedProtocol,
@@ -195,7 +194,7 @@ fun FtpScreen(
                                     DropdownMenuItem(
                                         text = { Text(protocol.name) },
                                         onClick = {
-                                            selectedProtocol = protocol
+                                            viewModel.protocolType = protocol
                                             expandedProtocol = false
                                         }
                                     )
