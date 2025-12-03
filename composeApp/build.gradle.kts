@@ -58,6 +58,7 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
             implementation("commons-net:commons-net:3.9.0") // JVM FTP Client
             implementation("com.jcraft:jsch:0.1.55") // SFTP用
+            implementation("com.mohamedrejeb.calf:calf-file-picker:0.9.0")
         }
         commonMain{
             resources.srcDirs("src/jvmMain/resources")

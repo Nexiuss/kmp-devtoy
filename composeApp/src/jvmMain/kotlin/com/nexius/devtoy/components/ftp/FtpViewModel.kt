@@ -18,9 +18,15 @@ class FtpViewModel : ViewModel() {
     var sft = SftpManager()
     private val fileManager: RemoteFileManager
         get() = if (protocolType == ProtocolType.SFTP) sft else ftp
-    fun connect(host: String, port: Int, user: String, pass: String) {
-        connected = fileManager.connect(host, port, user, pass)
+    fun connect(host: String, port: Int, user: String, pass: String): String? {
+        try {
+            connected = fileManager.connect(host, port, user, pass)
+        } catch (e: Exception) {
+            println("连接失败: ${e.message}")
+            return "连接失败: ${e.message}"
+        }
         if (connected) listFiles("/")
+        return null
     }
 
     fun listFiles(path: String) {

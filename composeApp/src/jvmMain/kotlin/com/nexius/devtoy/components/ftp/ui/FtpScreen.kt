@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,7 +38,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.Popup
+import com.mohamedrejeb.calf.core.PlatformContext
+import com.mohamedrejeb.calf.io.KmpFile
+import com.mohamedrejeb.calf.io.getName
+import com.mohamedrejeb.calf.io.getPath
+import com.mohamedrejeb.calf.io.readByteArray
+import com.mohamedrejeb.calf.picker.FilePickerFileType
 import com.mohamedrejeb.richeditor.model.RichTextState
+import com.nexius.devtoy.components.FilePicker
 import com.nexius.devtoy.components.ftp.FtpFile
 import com.nexius.devtoy.components.ftp.FtpViewModel
 import com.nexius.devtoy.components.ftp.ProtocolType
@@ -80,7 +88,6 @@ fun FtpScreen(
 
     // 控制查询对话框显示/隐藏的状态
     var showSearchDialog by remember { mutableStateOf(false) }
-    var showPopup by remember { mutableStateOf(false) }
     // 存储查询输入内容
     var searchText by remember { mutableStateOf("") }
     // 用于处理输入框焦点
@@ -281,7 +288,7 @@ fun FtpScreen(
                                         port = port.toIntOrNull() ?: 22,
                                         user = user,
                                         pass = pass
-                                    )
+                                    )?.let { rememberPopupState.show(it) }
                                 },
                                 modifier = Modifier.weight(1f),
                                 enabled = !viewModel.connected && !isLoading,
@@ -355,10 +362,9 @@ fun FtpScreen(
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
-
+            BasicPopup(rememberPopupState)
             // 目录导航栏
             if (viewModel.connected) {
-                BasicPopup(rememberPopupState)
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
@@ -414,6 +420,29 @@ fun FtpScreen(
                                 Icon(
                                     imageVector = Icons.Default.Refresh,
                                     contentDescription = "刷新",
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            var filePicker = FilePicker(FilePickerFileType.All,{
+                                    files, context ->
+                                files.firstOrNull()?.let { file ->
+                                    rememberPopupState.show("开始上传文件${file.file}")
+                                    viewModel.upload(file.file, file.file.name)
+                                    rememberPopupState.show("上传文件${file.file}成功")
+                                }
+                            })
+                            IconButton(
+                                onClick = {
+                                    filePicker.launch()
+                                },
+                                modifier = Modifier
+                                    .size(36.dp)
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Upload,
+                                    contentDescription = "上传",
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             }
