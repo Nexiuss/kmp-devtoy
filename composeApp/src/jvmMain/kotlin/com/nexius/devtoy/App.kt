@@ -197,6 +197,9 @@ fun getContent(menuItem: MenuItem){
         "ftp" -> {
             FtpScreen()
         }
+        "httpClient"->{
+            HttpClientGui()
+        }
     }
 }
 

@@ -42,6 +42,7 @@ import compose.icons.fontawesomeicons.solid.Forward
 import compose.icons.fontawesomeicons.solid.Genderless
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.MoneyBillWaveAlt
+import compose.icons.fontawesomeicons.solid.NetworkWired
 import compose.icons.fontawesomeicons.solid.Qrcode
 
 // 菜单项数据类
@@ -176,6 +177,19 @@ val menuItems = listOf(
                 path = "root/text/markdown",
                 name = "Markdown预览",
                 icon = FontAwesomeIcons.Solid.FileWord)
+        )
+    ),MenuItem(
+        id = "net",
+        name =  "网络",
+        path =  "root/net",
+        icon = FeatherIcons.FileText,
+        expandedIcon = FontAwesomeIcons.Solid.NetworkWired,
+        children = listOf(
+            MenuItem(
+                id = "httpClient",
+                path = "root/net/httpClient",
+                name = "Http客户端",
+                icon = FontAwesomeIcons.Solid.NetworkWired)
         )
     ),
     MenuItem(
