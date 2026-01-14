@@ -200,6 +200,9 @@ fun getContent(menuItem: MenuItem){
         "httpClient"->{
             HttpClientGui()
         }
+        "home"->{
+            Home()
+        }
     }
 }
 

@@ -175,7 +175,7 @@ val menuItems = listOf(
             MenuItem(
                 id = "markdown",
                 path = "root/text/markdown",
-                name = "Markdown预览",
+                name = "Markdown",
                 icon = FontAwesomeIcons.Solid.FileWord)
         )
     ),MenuItem(
@@ -331,4 +331,25 @@ fun FontAwesomeMenuTreeContainer() {
             }
         }
     }
+}
+/**
+ * 递归遍历菜单树，获取所有叶子节点（无子菜单的MenuItem）
+ * @param tree 菜单树（顶层或某一级子菜单列表）
+ * @return 所有叶子节点组成的列表
+ */
+fun getAllLeafMenuItems(tree: List<MenuItem>): List<MenuItem> {
+    // 用于收集所有叶子节点
+    val leafItems = mutableListOf<MenuItem>()
+
+    tree.forEach { menuItem ->
+        // 判定叶子节点：children为空列表
+        if (menuItem.children.isEmpty()) {
+            leafItems.add(menuItem)
+        } else {
+            // 非叶子节点，递归遍历其子菜单，收集子菜单中的叶子节点
+            leafItems.addAll(getAllLeafMenuItems(menuItem.children))
+        }
+    }
+
+    return leafItems
 }
