@@ -34,23 +34,6 @@ fun App() {
     layout()
 }
 
-
-fun loadIcon(path: String): ImageBitmap {
-    // path 例如 "icons/folder.png"
-    return useResource(path, ::loadImageBitmap)
-}
-
-
-@Composable
-fun IconImage(path: String, modifier: Modifier = Modifier) {
-    val imageBitmap = loadIcon(path)
-    Image(
-        bitmap = imageBitmap,
-        contentDescription = null,
-        modifier = modifier
-    )
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun layout() {

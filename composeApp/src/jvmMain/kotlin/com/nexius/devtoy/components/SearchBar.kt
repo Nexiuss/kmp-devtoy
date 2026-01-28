@@ -16,43 +16,28 @@
 
 package com.example.compose.snippets.components
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nexius.ui.Icons
 
 @Preview
 @Composable
@@ -178,7 +163,7 @@ fun CustomizableSearchBar(
     modifier: Modifier = Modifier,
     // Customization options
     placeholder: @Composable () -> Unit = { Text("Search") },
-    leadingIcon: @Composable (() -> Unit)? = { Icon(Icons.Default.Search.toVector(), contentDescription = "Search") },
+    leadingIcon: @Composable (() -> Unit)? = { Icon(Icons.Default.Search, contentDescription = "Search") },
     trailingIcon: @Composable (() -> Unit)? = null,
     supportingContent: (@Composable (String) -> Unit)? = null,
     leadingContent: (@Composable () -> Unit)? = null,
@@ -269,10 +254,10 @@ fun CustomizableSearchBarExample() {
             onResultClick = { query = it },
             // Customize appearance with optional parameters
             placeholder = { Text("Search desserts") },
-            leadingIcon = { Icon(Icons.Default.Search.toVector(), contentDescription = "Search") },
-            trailingIcon = { Icon(Icons.Default.MoreVert.toVector(), contentDescription = "More options") },
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
+            trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = "More options") },
             supportingContent = { Text("Android dessert") },
-            leadingContent = { Icon(Icons.Filled.Star.toVector(), contentDescription = "Starred item") }
+            leadingContent = { Icon(Icons.Default.Star, contentDescription = "Starred item") }
         )
 
         // Display the filtered list below the search bar
