@@ -16,7 +16,6 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             api(compose.ui)
-            api(compose.material)
             api(compose.material3)
             api(compose.materialIconsExtended)
             implementation(compose.components.resources)
@@ -27,7 +26,6 @@ kotlin {
             implementation(libs.zxing.core)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.jetbrains.markdown)
-            implementation(libs.coil.compose)
             implementation(libs.richeditor.compose)
 
             // Coil
@@ -41,13 +39,8 @@ kotlin {
             // Navigation
             implementation(libs.navigation.compose)
 
-
             // SQLite JDBC驱动
-            implementation(libs.sqlite.jdbc)
-            // SQLDelight核心库
-            //implementation(sqldelight.runtime)
-            //implementation(sqldelight.sqliteDriver)
-            //implementation(sqldelight.coroutinesExtensions)
+            //implementation(libs.sqlite.jdbc)
 
             // 协程
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
@@ -59,7 +52,6 @@ kotlin {
             implementation("com.mohamedrejeb.calf:calf-file-picker:0.9.0")
         }
         commonMain{
-            resources.srcDirs("src/jvmMain/resources")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
