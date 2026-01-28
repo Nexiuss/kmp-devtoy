@@ -182,8 +182,8 @@ val menuItems = listOf(
         id = "net",
         name =  "网络",
         path =  "root/net",
-        icon = FeatherIcons.FileText,
-        expandedIcon = FontAwesomeIcons.Solid.NetworkWired,
+        icon = FontAwesomeIcons.Solid.NetworkWired,
+        expandedIcon = FontAwesomeIcons.Solid.FolderOpen,
         children = listOf(
             MenuItem(
                 id = "httpClient",
