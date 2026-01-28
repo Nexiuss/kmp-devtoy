@@ -1,10 +1,17 @@
 package com.nexius.devtoy.components
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,19 +21,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.nexius.devtoy.utils.SqlFormatter
+import com.nexius.devtoy.utils.SqlSyntaxHighlightTransformation
 import compose.icons.FeatherIcons
-import compose.icons.FontAwesomeIcons
 import compose.icons.feathericons.Tool
-import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.RemoveFormat
-import compose.icons.fontawesomeicons.solid.Search
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.w3c.dom.Document
 import java.io.ByteArrayInputStream
-import java.io.StringBufferInputStream
-import java.io.StringReader
 import java.io.StringWriter
 import java.nio.charset.StandardCharsets
 import javax.xml.parsers.DocumentBuilderFactory
@@ -137,4 +141,66 @@ fun String.formatXml(
     // 格式化失败时返回原始字符串
     e.printStackTrace()
     this
+}
+
+
+@Composable
+fun SqlFormat() {
+    // 改用TextFieldValue保存输入状态，更好支持光标位置、文本选择等编辑特性
+    var sqlInput by remember { mutableStateOf(TextFieldValue("SELECT * FROM table;")) }
+    var formattedSql by remember { mutableStateOf("") }
+
+    // 整体布局：垂直排列，占满可用空间，内边距16dp
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        // 1. 左侧SQL输入框
+        // 1. 左侧SQL输入框
+        BasicTextField(
+            value = sqlInput,
+            onValueChange = { sqlInput = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f) // 占满剩余垂直空间，与右侧输出框等高
+                .border(1.dp, Color.Gray, MaterialTheme.shapes.small)
+                .padding(8.dp),
+            textStyle = MaterialTheme.typography.bodyLarge,
+            visualTransformation = SqlSyntaxHighlightTransformation()
+        )
+        Row(Modifier.align(Alignment.CenterHorizontally), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+
+            // 2. 格式化按钮：居中显示，添加点击反馈
+            Button(
+                onClick = {
+                    try {
+                        formattedSql = SqlFormatter.format(sqlInput.text) ?: ""
+                    } catch (e: Exception) {
+                        formattedSql = "SQL格式错误，格式化失败：${e.message}"
+                    }
+                }) {
+                Text(text = "格式化SQL")
+            }
+
+            Button(onClick = { formattedSql = SqlFormatter.compress(sqlInput.text) ?: "" }) { Text("压缩") }
+            Button(onClick = { formattedSql = SqlFormatter.validateSql(sqlInput.text)}) { Text("验证") }
+            Button(onClick = { sqlInput = TextFieldValue(""); formattedSql = "" }) { Text("清空") }
+        }
+
+        // 3. 右侧SQL输出框（只读，显示格式化结果）
+        BasicTextField(
+            value = formattedSql,
+            onValueChange = {}, // 空实现，设为只读
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .border(1.dp, Color.Gray, MaterialTheme.shapes.small)
+                .padding(8.dp),
+            textStyle = MaterialTheme.typography.bodyLarge.copy(Color(0xFF006600)), // 绿色字体更易读
+            enabled = false, // 禁用编辑，保留文本选择/复制功能
+            visualTransformation = SqlSyntaxHighlightTransformation()
+        )
+    }
 }
