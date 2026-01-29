@@ -16,6 +16,7 @@ fun Home(navController: NavHostController) {
     FlowRow(modifier = Modifier.padding(8.dp)) {
         var leafMenus = getAllLeafMenuItems(menuItems)
         for (menu in leafMenus) {
+            if(menu.id == "home")continue
             Chip(onClick = {
                 navController.navigate(menu.id)
             }){
