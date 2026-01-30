@@ -20,6 +20,8 @@
 ### 参考文档
 - [Carbon Compose](https://gabrieldrn.github.io/carbon-compose/)
 - [compose Android Document](https://developer.android.com/develop/ui/compose/documentation?hl=zh-cn)
+- [Calf](https://github.com/MohamedRejeb/Calf)
+- [KMP示例](https://klibs.io/?platforms=jvm)
 ### 环境要求
 
 - Gradle 8.0 或更高版本

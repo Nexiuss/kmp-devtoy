@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import compose.icons.FeatherIcons
 import compose.icons.FontAwesomeIcons
+import compose.icons.feathericons.FileText
 import compose.icons.feathericons.Maximize
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
@@ -33,6 +34,7 @@ import compose.icons.fontawesomeicons.brands.Html5
 import compose.icons.fontawesomeicons.solid.ChevronDown
 import compose.icons.fontawesomeicons.solid.ChevronRight
 import compose.icons.fontawesomeicons.solid.Cog
+import compose.icons.fontawesomeicons.solid.FileUpload
 import compose.icons.fontawesomeicons.solid.FileVideo
 import compose.icons.fontawesomeicons.solid.FileWord
 import compose.icons.fontawesomeicons.solid.FolderOpen
@@ -40,6 +42,7 @@ import compose.icons.fontawesomeicons.solid.Forward
 import compose.icons.fontawesomeicons.solid.Genderless
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.MoneyBillWaveAlt
+import compose.icons.fontawesomeicons.solid.NetworkWired
 import compose.icons.fontawesomeicons.solid.Qrcode
 
 // 菜单项数据类
@@ -163,34 +166,38 @@ val menuItems = listOf(
         )
     ),
     MenuItem(
-        id = "s3",
-        name =  "S3工具",
-        path =  "root/s3tool",
-        icon = FontAwesomeIcons.Solid.Genderless,
+        id = "text",
+        name =  "文本处理",
+        path =  "root/text",
+        icon = FeatherIcons.FileText,
         expandedIcon = FontAwesomeIcons.Solid.FolderOpen,
         children = listOf(
             MenuItem(
-                id = "s3json",
-                path = "root/s3/s3json",
-                name = "S3Json加签",
-                icon = FontAwesomeIcons.Solid.FileWord),
-            MenuItem(
-                id = "cmbRsa",
-                path = "root/s3/cmbRsa",
-                name = "招商RSA",
-                icon = FontAwesomeIcons.Solid.FileWord),
-            MenuItem(
-                id = "s5Rsa",
-                path = "root/s3/s5Rsa",
-                name = "S5RSA",
-                icon = FontAwesomeIcons.Solid.FileWord),
-            MenuItem(
-                id = "ccicMD5",
-                path = "root/s3/ccicMD5",
-                name = "大地MD5",
+                id = "markdown",
+                path = "root/text/markdown",
+                name = "Markdown",
                 icon = FontAwesomeIcons.Solid.FileWord)
         )
-    )
+    ),MenuItem(
+        id = "net",
+        name =  "网络",
+        path =  "root/net",
+        icon = FontAwesomeIcons.Solid.NetworkWired,
+        expandedIcon = FontAwesomeIcons.Solid.FolderOpen,
+        children = listOf(
+            MenuItem(
+                id = "httpClient",
+                path = "root/net/httpClient",
+                name = "Http客户端",
+                icon = FontAwesomeIcons.Solid.NetworkWired)
+        )
+    ),
+    MenuItem(
+        id = "ftp",
+        path = "root/ftp",
+        name = "FTP",
+        icon = FontAwesomeIcons.Solid.FileUpload,
+    ),
 )
 
 // 菜单树组件
@@ -324,4 +331,25 @@ fun FontAwesomeMenuTreeContainer() {
             }
         }
     }
+}
+/**
+ * 递归遍历菜单树，获取所有叶子节点（无子菜单的MenuItem）
+ * @param tree 菜单树（顶层或某一级子菜单列表）
+ * @return 所有叶子节点组成的列表
+ */
+fun getAllLeafMenuItems(tree: List<MenuItem>): List<MenuItem> {
+    // 用于收集所有叶子节点
+    val leafItems = mutableListOf<MenuItem>()
+
+    tree.forEach { menuItem ->
+        // 判定叶子节点：children为空列表
+        if (menuItem.children.isEmpty()) {
+            leafItems.add(menuItem)
+        } else {
+            // 非叶子节点，递归遍历其子菜单，收集子菜单中的叶子节点
+            leafItems.addAll(getAllLeafMenuItems(menuItem.children))
+        }
+    }
+
+    return leafItems
 }
