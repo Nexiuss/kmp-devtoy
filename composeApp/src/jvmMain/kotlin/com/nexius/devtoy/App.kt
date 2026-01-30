@@ -2,28 +2,24 @@ package com.nexius.devtoy
 
 import androidx.compose.foundation.ContextMenuArea
 import androidx.compose.foundation.ContextMenuItem
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.res.loadImageBitmap
-import androidx.compose.ui.res.useResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.gabrieldrn.carbon.tab.TabItem
 import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.devtoy.components.*
-import com.nexius.devtoy.components.MenuItem
 import com.nexius.devtoy.components.ftp.ui.FtpScreen
 import compose.icons.FeatherIcons
+import compose.icons.feathericons.ArrowLeft
+import compose.icons.feathericons.Home
 import compose.icons.feathericons.Menu
-import compose.icons.feathericons.Settings
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,29 +30,13 @@ fun App() {
     layout()
 }
 
-
-fun loadIcon(path: String): ImageBitmap {
-    // path 例如 "icons/folder.png"
-    return useResource(path, ::loadImageBitmap)
-}
-
-
-@Composable
-fun IconImage(path: String, modifier: Modifier = Modifier) {
-    val imageBitmap = loadIcon(path)
-    Image(
-        bitmap = imageBitmap,
-        contentDescription = null,
-        modifier = modifier
-    )
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun layout() {
     val home = getById("home")
     var menuVisiable by remember { mutableStateOf(true) }
     var selectedItem: MenuItem by remember { mutableStateOf(home) }
+    val navigator = rememberNavController()
 
     val tabs = remember { mutableStateListOf(toTab(home)) }
     var selectedTab by remember { mutableStateOf(toTab(home)) }
@@ -89,6 +69,7 @@ fun layout() {
                                 modifier = Modifier.fillMaxWidth(), tabs = tabs, selectedTab = selectedTab, onTabSelected = {
                                     selectedTab = it
                                     selectedItem = getByName(it.label)
+                                    navigator.navigate(selectedItem.id)
                                 }
                             )
                         }
@@ -97,8 +78,11 @@ fun layout() {
 
                 },
                 actions = {
-                    IconButton(onClick = { /* 用户信息 */ }) {
-                        Icon(FeatherIcons.Settings, contentDescription = "用户")
+                    IconButton(onClick = { navigator.popBackStack() }) {
+                        Icon(FeatherIcons.ArrowLeft, contentDescription = "后退")
+                    }
+                    IconButton(onClick = { navigator.navigate("home") }) {
+                        Icon(FeatherIcons.Home, contentDescription = "首页")
                     }
                 }
             )
@@ -135,6 +119,7 @@ fun layout() {
                                     if(!tabs.contains(toTab(it))){
                                         tabs.add(toTab(it))
                                     }
+                                    navigator.navigate(it.id)
                                 }
                             })
                         }
@@ -152,7 +137,7 @@ fun layout() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    getContent(selectedItem)
+                    Navigation(navigator)
                 }
             }
         }
@@ -192,13 +177,19 @@ fun getContent(menuItem: MenuItem){
             XmlFormat()
         }
         "sql" -> {
-            //SqlFormat()
+            SqlFormat()
         }
         "ftp" -> {
             FtpScreen()
         }
         "httpClient"->{
             HttpClientGui()
+        }
+        "ccicMD5" -> {
+            ccicPayDecrypt()
+        }
+        "s3json"->{
+            S3JsonSignUnSign()
         }
     }
 }
