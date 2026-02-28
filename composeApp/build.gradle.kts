@@ -72,7 +72,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.nexius.devtoy"
+            packageName = "kmp-devtoy"
             packageVersion = "1.0.1"
         }
     }
