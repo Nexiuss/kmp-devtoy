@@ -2,26 +2,19 @@ package com.nexius.devtoy.components
 
 import androidx.compose.foundation.ContextMenuArea
 import androidx.compose.foundation.ContextMenuItem
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.*
-import com.gabrieldrn.carbon.textinput.TextArea
-import compose.icons.FeatherIcons
-import androidx.compose.material3.Icon
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.gabrieldrn.carbon.notification.NotificationStatus
 import com.gabrieldrn.carbon.notification.ToastNotification
-import com.nexius.devtoy.utils.generateQrCode
+import com.gabrieldrn.carbon.textinput.TextArea
+import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronsDown
 import compose.icons.feathericons.ChevronsUp
-import org.jetbrains.skia.Bitmap
-import java.awt.image.BufferedImage
-import java.io.File
 import java.net.URLDecoder
 import java.net.URLEncoder
-import java.util.Base64
-import javax.imageio.ImageIO
+import java.util.*
 
 @Composable
 fun UrlDeEncode() {
@@ -171,7 +164,7 @@ fun QrCode() {
             }
         )
     }) {
-        Image(imageVector = generateQrCode( url), contentDescription = "二维码")
+        QrCodeImage(url)
     }
     if(toastVisibility){
         ToastNotification(
