@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.gabrieldrn.carbon.tab.TabItem
 import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.devtoy.components.*
+import com.nexius.devtoy.components.filerename.ui.FileRenameView
 import com.nexius.devtoy.components.ftp.ui.FtpScreen
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowLeft
@@ -184,6 +185,9 @@ fun getContent(menuItem: MenuItem){
         }
         "httpClient"->{
             HttpClientGui()
+        }
+        "fileRename"->{
+            FileRenameView()
         }
     }
 }

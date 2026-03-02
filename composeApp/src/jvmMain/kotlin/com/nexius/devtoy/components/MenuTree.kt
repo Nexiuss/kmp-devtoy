@@ -198,6 +198,12 @@ val menuItems = listOf(
         name = "FTP",
         icon = FontAwesomeIcons.Solid.FileUpload,
     ),
+    MenuItem(
+        id = "fileRename",
+        path = "root/fileRename",
+        name = "文件重命名",
+        icon = FontAwesomeIcons.Solid.FileUpload,
+    ),
 )
 
 // 菜单树组件
