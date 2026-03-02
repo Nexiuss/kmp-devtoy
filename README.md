@@ -15,8 +15,31 @@
 - &zwnj;**现代化 UI**&zwnj;: 使用 Jetpack Compose 构建响应式用户界面
 - &zwnj;**桌面应用**&zwnj;: 专为桌面环境优化的原生体验
 - &zwnj;**简洁高效**&zwnj;: 轻量级工具，快速启动和运行
+
+## 支持功能
+- [x] 编解码器：
+  - [x] base64
+  - [x] Html
+  - [x] url
+  - [x] 二维码
+- [x] 格式化：
+  - [x] json 
+  - [x] sql 
+  - [x] xml
+- [ ] 生成器：
+  - [x] uuid 
+- [ ] 文本处理：
+  - [x] markdown
+- [x] 网络：
+  - [x] http客户端
+- [x] FTP：
+  - [x] sftp客户端 
+  - [x] ftp客户端
+- [] 文件处理：
+  - [] 批量重命名
+  - [] 文件编码转换
 ### 示例图片
-![example.png](images/example.png)
+![example.png](images/example.png)  
 ### 参考文档
 - [Carbon Compose](https://gabrieldrn.github.io/carbon-compose/)
 - [compose Android Document](https://developer.android.com/develop/ui/compose/documentation?hl=zh-cn)
