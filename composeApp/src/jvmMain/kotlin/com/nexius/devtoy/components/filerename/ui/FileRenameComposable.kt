@@ -4,12 +4,15 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -55,45 +58,79 @@ class AppState {
 @Composable
 fun FileRenameView() {
     val appState = remember { AppState() }
+    val scrollState = rememberScrollState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize() // 充满父窗口
-            .verticalScroll(rememberScrollState()) // 垂直滚动
-            .padding(16.dp)
+    // 现代化主题色
+    val primaryColor = Color(0xFF4A6FFF)
+    val surfaceColor = Color(0xFFFAFAFA)
+    val cardColor = Color.White
+    val dividerColor = Color(0xFFEEEEEE)
+
+    MaterialTheme(
+        colors = MaterialTheme.colors.copy(
+            primary = primaryColor,
+            surface = surfaceColor,
+            background = surfaceColor
+        )
     ) {
-        // 1. 文件选择区域
-        FileSelectionArea(
-            selectedFiles = appState.selectedFiles,
-            onFilesSelected = { files ->
-                appState.selectedFiles.clear()
-                appState.selectedFiles.addAll(files)
-                appState.refreshPreview()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
+                .verticalScroll(scrollState)
+                .padding(24.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            // 1. 文件选择区域
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                elevation = 2.dp,
+                backgroundColor = cardColor
+            ) {
+                Column(Modifier.padding(20.dp)) {
+                    FileSelectionArea(
+                        selectedFiles = appState.selectedFiles,
+                        onFilesSelected = { files ->
+                            appState.selectedFiles.clear()
+                            appState.selectedFiles.addAll(files)
+                            appState.refreshPreview()
+                        }
+                    )
+                }
             }
-        )
 
-        Spacer(Modifier.height(16.dp))
-        Divider()
-        Spacer(Modifier.height(16.dp))
+            // 2. 规则配置区域
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                elevation = 2.dp,
+                backgroundColor = cardColor
+            ) {
+                Column(Modifier.padding(20.dp)) {
+                    RuleConfigArea(appState = appState)
+                }
+            }
 
-        // 2. 规则配置区域
-        RuleConfigArea(
-            appState = appState
-        )
-
-        Spacer(Modifier.height(16.dp))
-        Divider()
-        Spacer(Modifier.height(16.dp))
-
-        // 3. 预览和执行区域
-        PreviewAndExecuteArea(
-            renameFiles = appState.renameFiles.value,
-            onExecute = {
-                val (success, fail) = BatchRenameUtil.executeRename(it)
-                appState.operationResult.value = "执行完成：成功 $success 个，失败 $fail 个"
-            },
-            operationResult = appState.operationResult.value
-        )
+            // 3. 预览和执行区域
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                elevation = 2.dp,
+                backgroundColor = cardColor
+            ) {
+                Column(Modifier.padding(20.dp)) {
+                    PreviewAndExecuteArea(
+                        renameFiles = appState.renameFiles.value,
+                        onExecute = {
+                            val (success, fail) = BatchRenameUtil.executeRename(it)
+                            appState.operationResult.value = "✅ 执行完成：成功 $success 个，失败 $fail 个"
+                        },
+                        operationResult = appState.operationResult.value
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -103,7 +140,15 @@ fun FileSelectionArea(
     selectedFiles: List<Path>,
     onFilesSelected: (List<Path>) -> Unit
 ) {
-    Column {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(
+            "文件选择",
+            style = MaterialTheme.typography.h6.copy(fontSize = 18.sp),
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+
         Button(
             onClick = {
                 val fileDialog = FileDialog(Frame(), "选择文件", FileDialog.LOAD).apply {
@@ -112,27 +157,44 @@ fun FileSelectionArea(
                 }
                 val files = fileDialog.files?.map { Paths.get(it.absolutePath) } ?: emptyList()
                 onFilesSelected(files)
-            }
+            },
+            modifier = Modifier
+                .height(44.dp)
+                .clip(RoundedCornerShape(12.dp)),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = MaterialTheme.colors.primary
+            )
         ) {
-            Text("选择文件")
+            Text("选择文件", fontSize = 14.sp)
         }
 
-        Spacer(Modifier.height(8.dp))
-        Text("已选择文件：${selectedFiles.size} 个")
+        Text("已选择：${selectedFiles.size} 个文件", style = MaterialTheme.typography.body2)
 
         if (selectedFiles.isNotEmpty()) {
-            Text(
-                text = buildString {
-                    append(selectedFiles.take(3).joinToString("\n") { it.fileName.toString() })
-                    if (selectedFiles.size > 3) append("\n... 共 ${selectedFiles.size} 个文件")
-                },
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp)
-                    .border(1.dp, Color.Gray)
-                    .padding(8.dp)
+                    .height(100.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color(0xFFF5F7FF))
+                    .padding(12.dp)
                     .verticalScroll(rememberScrollState())
-            )
+            ) {
+                val displayFiles = selectedFiles.take(5)
+                displayFiles.forEach { path ->
+                    Text(
+                        text = path.fileName.toString(),
+                        style = MaterialTheme.typography.body2,
+                        modifier = Modifier.padding(vertical = 2.dp)
+                    )
+                }
+                if (selectedFiles.size > 5) {
+                    Text(
+                        "... 共 ${selectedFiles.size} 个文件",
+                        style = MaterialTheme.typography.body2.copy(color = Color.Gray)
+                    )
+                }
+            }
         }
     }
 }
@@ -140,173 +202,257 @@ fun FileSelectionArea(
 // 2. 规则配置区域
 @Composable
 fun RuleConfigArea(appState: AppState) {
-    Column {
-        Text("重命名规则配置", style = MaterialTheme.typography.h6)
-        Spacer(Modifier.height(8.dp))
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(
+            "重命名规则",
+            style = MaterialTheme.typography.h6.copy(fontSize = 18.sp),
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
 
         // 前缀
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextField(
+        RuleRow(label = "前缀") {
+            OutlinedTextField(
                 value = appState.prefixText.value,
                 onValueChange = { appState.prefixText.value = it },
-                label = { Text("前缀") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(50.dp),
+                shape = RoundedCornerShape(12.dp),
+                textStyle = TextStyle(fontSize = 14.sp)
             )
-            Spacer(Modifier.width(8.dp))
-            Button(onClick = {
-                appState.activeRules.add(RenameRule(RenameRuleType.PREFIX, appState.prefixText.value))
-                appState.refreshPreview()
-            }) {
-                Text("添加前缀")
+
+            Spacer(Modifier.width(12.dp))
+
+            Button(
+                onClick = {
+                    appState.activeRules.add(RenameRule(RenameRuleType.PREFIX, appState.prefixText.value))
+                    appState.refreshPreview()
+                },
+                modifier = Modifier.height(50.dp).clip(RoundedCornerShape(12.dp))
+            ) {
+                Text("添加前缀", fontSize = 14.sp)
             }
         }
-
-        Spacer(Modifier.height(8.dp))
 
         // 后缀
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextField(
+        RuleRow(label = "后缀") {
+            OutlinedTextField(
                 value = appState.suffixText.value,
                 onValueChange = { appState.suffixText.value = it },
-                label = { Text("后缀") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(50.dp),
+                shape = RoundedCornerShape(12.dp),
+                textStyle = TextStyle(fontSize = 14.sp)
             )
-            Spacer(Modifier.width(8.dp))
-            Button(onClick = {
-                appState.activeRules.add(RenameRule(RenameRuleType.SUFFIX, appState.suffixText.value))
-                appState.refreshPreview()
-            }) {
-                Text("添加后缀")
+
+            Spacer(Modifier.width(12.dp))
+
+            Button(
+                onClick = {
+                    appState.activeRules.add(RenameRule(RenameRuleType.SUFFIX, appState.suffixText.value))
+                    appState.refreshPreview()
+                },
+                modifier = Modifier.height(50.dp).clip(RoundedCornerShape(12.dp))
+            ) {
+                Text("添加后缀", fontSize = 14.sp)
             }
         }
-
-        Spacer(Modifier.height(8.dp))
 
         // 替换
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextField(
+        RuleRow(label = "替换") {
+            OutlinedTextField(
                 value = appState.replaceTarget.value,
                 onValueChange = { appState.replaceTarget.value = it },
-                label = { Text("替换目标") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(50.dp),
+                shape = RoundedCornerShape(12.dp),
+                placeholder = { Text("目标文本", fontSize = 13.sp) },
+                textStyle = TextStyle(fontSize = 14.sp)
             )
-            Spacer(Modifier.width(8.dp))
-            TextField(
+
+            Spacer(Modifier.width(12.dp))
+
+            OutlinedTextField(
                 value = appState.replaceValue.value,
                 onValueChange = { appState.replaceValue.value = it },
-                label = { Text("替换为") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(50.dp),
+                shape = RoundedCornerShape(12.dp),
+                placeholder = { Text("替换为", fontSize = 13.sp) },
+                textStyle = TextStyle(fontSize = 14.sp)
             )
-            Spacer(Modifier.width(8.dp))
-            Button(onClick = {
-                appState.activeRules.add(
-                    RenameRule(
-                        type = RenameRuleType.REPLACE,
-                        value = appState.replaceValue.value,
-                        replaceTarget = appState.replaceTarget.value
+
+            Spacer(Modifier.width(12.dp))
+
+            Button(
+                onClick = {
+                    appState.activeRules.add(
+                        RenameRule(
+                            type = RenameRuleType.REPLACE,
+                            value = appState.replaceValue.value,
+                            replaceTarget = appState.replaceTarget.value
+                        )
                     )
-                )
-                appState.refreshPreview()
-            }) {
-                Text("替换文本")
+                    appState.refreshPreview()
+                },
+                modifier = Modifier.height(50.dp).clip(RoundedCornerShape(12.dp))
+            ) {
+                Text("替换", fontSize = 14.sp)
             }
         }
-
-        Spacer(Modifier.height(8.dp))
 
         // 序号
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextField(
+        RuleRow(label = "序号") {
+            OutlinedTextField(
                 value = appState.numberStart.value.toString(),
                 onValueChange = { appState.numberStart.value = it.toIntOrNull() ?: 1 },
-                label = { Text("序号起始值") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(50.dp),
+                shape = RoundedCornerShape(12.dp),
+                placeholder = { Text("起始值", fontSize = 13.sp) },
+                textStyle = TextStyle(fontSize = 14.sp)
             )
-            Spacer(Modifier.width(8.dp))
-            TextField(
+
+            Spacer(Modifier.width(12.dp))
+
+            OutlinedTextField(
                 value = appState.numberPadding.value.toString(),
                 onValueChange = { appState.numberPadding.value = it.toIntOrNull() ?: 2 },
-                label = { Text("序号补零位数") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(50.dp),
+                shape = RoundedCornerShape(12.dp),
+                placeholder = { Text("补零位数", fontSize = 13.sp) },
+                textStyle = TextStyle(fontSize = 14.sp)
             )
-            Spacer(Modifier.width(8.dp))
-            Button(onClick = {
-                appState.activeRules.add(
-                    RenameRule(
-                        type = RenameRuleType.NUMBERING,
-                        numberStart = appState.numberStart.value,
-                        numberPadding = appState.numberPadding.value
+
+            Spacer(Modifier.width(12.dp))
+
+            Button(
+                onClick = {
+                    appState.activeRules.add(
+                        RenameRule(
+                            type = RenameRuleType.NUMBERING,
+                            numberStart = appState.numberStart.value,
+                            numberPadding = appState.numberPadding.value
+                        )
                     )
-                )
-                appState.refreshPreview()
-            }) {
-                Text("添加序号")
+                    appState.refreshPreview()
+                },
+                modifier = Modifier.height(50.dp).clip(RoundedCornerShape(12.dp))
+            ) {
+                Text("添加序号", fontSize = 14.sp)
             }
         }
-
-        Spacer(Modifier.height(8.dp))
 
         // 大小写
-        Row {
-            Button(onClick = {
-                appState.activeRules.add(RenameRule(RenameRuleType.UPPER_CASE))
-                appState.refreshPreview()
-            }) {
-                Text("转为大写")
+        RuleRow(label = "大小写") {
+            Button(
+                onClick = {
+                    appState.activeRules.add(RenameRule(RenameRuleType.UPPER_CASE))
+                    appState.refreshPreview()
+                },
+                modifier = Modifier.height(50.dp).clip(RoundedCornerShape(12.dp))
+            ) {
+                Text("转为大写", fontSize = 14.sp)
             }
-            Spacer(Modifier.width(8.dp))
-            Button(onClick = {
-                appState.activeRules.add(RenameRule(RenameRuleType.LOWER_CASE))
-                appState.refreshPreview()
-            }) {
-                Text("转为小写")
+
+            Spacer(Modifier.width(12.dp))
+
+            Button(
+                onClick = {
+                    appState.activeRules.add(RenameRule(RenameRuleType.LOWER_CASE))
+                    appState.refreshPreview()
+                },
+                modifier = Modifier.height(50.dp).clip(RoundedCornerShape(12.dp))
+            ) {
+                Text("转为小写", fontSize = 14.sp)
             }
         }
 
-        // 可删除标签列表（正确版）
+        // 已添加规则标签
         if (appState.activeRules.isNotEmpty()) {
-            Spacer(Modifier.height(8.dp))
-            Text("已添加规则：", style = MaterialTheme.typography.subtitle1)
-            Spacer(Modifier.height(6.dp))
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text("已应用规则", style = MaterialTheme.typography.subtitle1)
 
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                appState.activeRules.forEachIndexed { index, rule ->
-                    Surface(
-                        shape = MaterialTheme.shapes.small,
-                        color = Color(0xFFE3F2FD),
-                        modifier = Modifier.height(32.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        ) {
-                            Text(
-                                text = when (rule.type) {
-                                    RenameRuleType.PREFIX -> "前缀：${rule.value}"
-                                    RenameRuleType.SUFFIX -> "后缀：${rule.value}"
-                                    RenameRuleType.REPLACE -> "替换"
-                                    RenameRuleType.NUMBERING -> "序号"
-                                    RenameRuleType.UPPER_CASE -> "大写"
-                                    RenameRuleType.LOWER_CASE -> "小写"
-                                },
-                                style = MaterialTheme.typography.body2
-                            )
-                            Spacer(Modifier.width(6.dp))
-                            ClickableText(
-                                text = AnnotatedString("×"),
-                                style = TextStyle(color = Color.Red, fontSize = 16.sp),
-                                onClick = {
-                                    appState.activeRules.removeAt(index)
-                                    appState.refreshPreview()
-                                }
-                            )
-                        }
+                FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    appState.activeRules.forEachIndexed { index, rule ->
+                        RuleTag(
+                            rule = rule,
+                            onDelete = {
+                                appState.activeRules.removeAt(index)
+                                appState.refreshPreview()
+                            }
+                        )
                     }
                 }
+            }
+        }
+    }
+}
+
+// 规则行统一样式
+@Composable
+fun RuleRow(
+    label: String,
+    content: @Composable () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(label, style = MaterialTheme.typography.body2.copy(color = Color(0xFF666666)))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            content()
+        }
+    }
+}
+
+// 规则标签（美观版）
+@Composable
+fun RuleTag(
+    rule: RenameRule,
+    onDelete: () -> Unit
+) {
+    val tagColor = Color(0xFFE3F2FD)
+    val textColor = MaterialTheme.colors.primary
+
+    Surface(
+        modifier = Modifier.shadow(1.dp, RoundedCornerShape(16.dp)),
+        shape = RoundedCornerShape(16.dp),
+        color = tagColor
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+        ) {
+            Text(
+                text = when (rule.type) {
+                    RenameRuleType.PREFIX -> "前缀：${rule.value}"
+                    RenameRuleType.SUFFIX -> "后缀：${rule.value}"
+                    RenameRuleType.REPLACE -> "替换文本"
+                    RenameRuleType.NUMBERING -> "序号"
+                    RenameRuleType.UPPER_CASE -> "大写"
+                    RenameRuleType.LOWER_CASE -> "小写"
+                },
+                style = TextStyle(fontSize = 13.sp, color = textColor)
+            )
+
+            Spacer(Modifier.width(6.dp))
+
+            Box(
+                modifier = Modifier
+                    .size(18.dp)
+                    .clip(CircleShape)
+                    .clickable { onDelete() },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    "×",
+                    style = TextStyle(fontSize = 14.sp, color = Color(0xFFD32F2F))
+                )
             }
         }
     }
@@ -319,50 +465,96 @@ fun PreviewAndExecuteArea(
     onExecute: (List<RenameFile>) -> Unit,
     operationResult: String
 ) {
-    Column {
-        Text("重命名预览", style = MaterialTheme.typography.h6)
-        Spacer(Modifier.height(8.dp))
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(
+            "预览与执行",
+            style = MaterialTheme.typography.h6.copy(fontSize = 18.sp),
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
 
+        // 预览列表
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
-                .border(1.dp, Color.Gray)
+                .height(240.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color(0xFFF9FAFC))
+                .border(1.dp, Color(0xFFEAEAEA), RoundedCornerShape(12.dp)),
+            verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             items(renameFiles) { file ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(file.originalName, modifier = Modifier.weight(1f))
-                    Text("→", modifier = Modifier.padding(horizontal = 8.dp))
+                    Text(
+                        file.originalName,
+                        modifier = Modifier.weight(1f),
+                        style = TextStyle(fontSize = 14.sp)
+                    )
+                    Text(
+                        "→",
+                        modifier = Modifier.padding(horizontal = 12.dp),
+                        color = Color.Gray
+                    )
                     Text(
                         file.newName,
-                        color = if (file.isValid) Color.Black else Color.Red,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            color = if (file.isValid) Color.Black else Color(0xFFD32F2F)
+                        )
                     )
                     if (file.errorMsg.isNotEmpty()) {
-                        Text("(${file.errorMsg})", color = Color.Red, fontSize = 12.sp)
+                        Text(
+                            "(${file.errorMsg})",
+                            color = Color(0xFFD32F2F),
+                            fontSize = 12.sp,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
                     }
                 }
-                Divider()
+                if (renameFiles.last() != file) {
+                    Divider(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        color = Color(0xFFEEEEEE)
+                    )
+                }
             }
         }
 
-        Spacer(Modifier.height(8.dp))
-
+        // 执行按钮
         Button(
             onClick = { onExecute(renameFiles) },
-            enabled = renameFiles.isNotEmpty() && renameFiles.all { it.isValid }
+            enabled = renameFiles.isNotEmpty() && renameFiles.all { it.isValid },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .clip(RoundedCornerShape(12.dp)),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = if (renameFiles.isNotEmpty() && renameFiles.all { it.isValid }) {
+                    MaterialTheme.colors.primary
+                } else {
+                    Color(0xFFBDBDBD)
+                }
+            )
         ) {
-            Text("执行批量重命名")
+            Text("执行批量重命名", fontSize = 15.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Medium)
         }
 
+        // 操作结果
         if (operationResult.isNotEmpty()) {
-            Spacer(Modifier.height(8.dp))
-            Text(operationResult, color = Color.Green)
+            Text(
+                operationResult,
+                color = Color(0xFF2E7D32),
+                style = MaterialTheme.typography.body2,
+                modifier = Modifier.padding(top = 4.dp)
+            )
         }
     }
 }
