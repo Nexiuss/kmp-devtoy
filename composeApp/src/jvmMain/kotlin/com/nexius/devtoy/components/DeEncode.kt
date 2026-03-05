@@ -2,114 +2,50 @@ package com.nexius.devtoy.components
 
 import androidx.compose.foundation.ContextMenuArea
 import androidx.compose.foundation.ContextMenuItem
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.*
 import com.gabrieldrn.carbon.notification.NotificationStatus
 import com.gabrieldrn.carbon.notification.ToastNotification
 import com.gabrieldrn.carbon.textinput.TextArea
-import compose.icons.FeatherIcons
-import compose.icons.feathericons.ChevronsDown
-import compose.icons.feathericons.ChevronsUp
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
 
 @Composable
 fun UrlDeEncode() {
-    //左边输入框
-    var leftTextFieldValue by remember { mutableStateOf("") }
-    //右边输入框
-    var rightTextFieldValue by remember { mutableStateOf("") }
-
-
-    TextArea(
-        value = leftTextFieldValue,
-        onValueChange = { leftTextFieldValue = it },
-        label = "明文"
-    )
-    Row {
-        IconButton(onClick = {
-            rightTextFieldValue = URLEncoder.encode(leftTextFieldValue, "utf-8")
-        }){
-            Icon(FeatherIcons.ChevronsDown, contentDescription = "编码")
-        }
-        IconButton(onClick = {
-            leftTextFieldValue = URLDecoder.decode(rightTextFieldValue, "utf-8")
-        }){
-            Icon(FeatherIcons.ChevronsUp, contentDescription = "编码")
-        }
-    }
-    TextArea(
-        value = rightTextFieldValue,
-        onValueChange = { rightTextFieldValue = it },
-        label = "密文"
+    TextConvertComponent(
+        forwardConvert = {
+            URLEncoder.encode(it, "utf-8")
+        },
+        backwardConvert = {
+            URLDecoder.decode(it, "utf-8")
+        },
     )
 }
 
 @Composable
 fun HtmlDeEncode() {
-    //左边输入框
-    var leftTextFieldValue by remember { mutableStateOf("") }
-    //右边输入框
-    var rightTextFieldValue by remember { mutableStateOf("") }
-
-
-    TextArea(
-        value = leftTextFieldValue,
-        onValueChange = { leftTextFieldValue = it },
-        label = "明文"
-    )
-    Row {
-        IconButton(onClick = {
-            rightTextFieldValue = encodeHtml(leftTextFieldValue)
-        }){
-            Icon(FeatherIcons.ChevronsDown, contentDescription = "编码")
-        }
-        IconButton(onClick = {
-            leftTextFieldValue =decodeHtml(rightTextFieldValue)
-        }){
-            Icon(FeatherIcons.ChevronsUp, contentDescription = "编码")
-        }
-    }
-    TextArea(
-        value = rightTextFieldValue,
-        onValueChange = { rightTextFieldValue = it },
-        label = "密文"
+    TextConvertComponent(
+        forwardConvert = {
+            encodeHtml(it)
+        },
+        backwardConvert = {
+            decodeHtml(it)
+        },
+        inputLabel = "编码",
+        outputLabel = "解码"
     )
 }
 
 
 @Composable
 fun Base64DeEncode() {
-    //左边输入框
-    var leftTextFieldValue by remember { mutableStateOf("") }
-    //右边输入框
-    var rightTextFieldValue by remember { mutableStateOf("") }
-
-
-    TextArea(
-        value = leftTextFieldValue,
-        onValueChange = { leftTextFieldValue = it },
-        label = "明文"
-    )
-    Row {
-        IconButton(onClick = {
-            rightTextFieldValue = Base64.getEncoder().encodeToString(leftTextFieldValue.toByteArray())
-        }){
-            Icon(FeatherIcons.ChevronsDown, contentDescription = "编码")
-        }
-        IconButton(onClick = {
-            leftTextFieldValue =String(Base64.getDecoder().decode(rightTextFieldValue))
-        }){
-            Icon(FeatherIcons.ChevronsUp, contentDescription = "编码")
-        }
-    }
-    TextArea(
-        value = rightTextFieldValue,
-        onValueChange = { rightTextFieldValue = it },
-        label = "密文"
+    TextConvertComponent(
+        forwardConvert = {
+            Base64.getEncoder().encodeToString(it.toByteArray())
+        },
+        backwardConvert = {
+            String(Base64.getDecoder().decode(it))
+        },
     )
 }
 
