@@ -43,4 +43,4 @@ jobs:
       with:
         name: DevToy-desktop-distribution
         path: |
-          composeApp/build/compose/jvm/
+          composeApp/build/compose/binaries/main/dmg
