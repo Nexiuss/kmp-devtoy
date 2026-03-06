@@ -49,4 +49,4 @@ jobs:
       with:
         name: DevToy-desktop-${{ runner.os }}
         path: |
-          composeApp/build/compose/jvm/
+          composeApp/build/compose/binaries/main
