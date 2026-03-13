@@ -55,13 +55,13 @@ jobs:
     - name: Build desktop package
       run: ./gradlew :composeApp:packageDistributionForCurrentOS
 
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: DevToy-desktop-${{ runner.os }}
-        path: |
-          composeApp/build/compose/binaries/main
-      # 上传构建产物到 GitHub Release（仅标签推送/手动选择发布时执行）
+#    - name: Upload build artifacts #把编译好的文件临时保存到 GitHub Actions 运行记录里，方便下载查看（90天过期）
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: DevToy-desktop-${{ runner.os }}
+#        path: |
+#          composeApp/build/compose/binaries/main
+#      # 上传构建产物到 GitHub Release（仅标签推送/手动选择发布时执行）
     - name: Upload to GitHub Release
       uses: softprops/action-gh-release@v2
       if: |
