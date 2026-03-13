@@ -85,6 +85,7 @@ fun layout() {
                     IconButton(onClick = { navigator.navigate("home") }) {
                         Icon(FeatherIcons.Home, contentDescription = "首页")
                     }
+                    MinimalDropdownMenu()
                 }
             )
         },
