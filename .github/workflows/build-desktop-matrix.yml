@@ -1,11 +1,17 @@
 name: Build Desktop App (Matrix)
 
+# 核心：开启标签触发
 on:
   push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
-  workflow_dispatch:
+    tags:
+      - 'v*'  # 匹配所有 v 开头的标签
+  workflow_dispatch:  # 保留手动触发
+    inputs:
+      release:
+        description: '发布版本'
+        required: true
+        default: false
+        type: boolean
 
 jobs:
   build-matrix:
