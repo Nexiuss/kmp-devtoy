@@ -28,6 +28,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-tags: true  # 关键：拉取所有 Git 标签
+        fetch-depth: 0   # 可选，拉取完整历史（保险）
 
     - name: Set up JDK
       uses: actions/setup-java@v4
