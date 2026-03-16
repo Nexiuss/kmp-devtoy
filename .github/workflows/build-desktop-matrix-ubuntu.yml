@@ -1,0 +1,78 @@
+name: Build Desktop App (ubuntu)
+permissions:
+  contents: write  # 允许创建/编辑 Release
+  packages: write  # 允许上传附件（必须加）
+# 核心：开启标签触发
+on:
+  push:
+    tags:
+      - 'v*'  # 匹配所有 v 开头的标签
+  workflow_dispatch:  # 保留手动触发
+    inputs:
+      release:
+        description: '发布版本'
+        required: true
+        default: false
+        type: boolean
+      tag:
+        description: '发布的 Git Tag'
+        required: false
+
+jobs:
+  build-matrix:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    env:
+      JDK_VERSION: '17'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-tags: true  # 关键：拉取所有 Git 标签
+        fetch-depth: 0   # 可选，拉取完整历史（保险）
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: ${{ env.JDK_VERSION }}
+
+    - name: Cache gradle
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Grant execute permissions to Gradle wrapper
+      run: chmod +x ./gradlew
+      if: runner.os != 'Windows'
+
+    - name: Build desktop package
+      run: ./gradlew :composeApp:packageDistributionForCurrentOS
+
+#    - name: Upload build artifacts #把编译好的文件临时保存到 GitHub Actions 运行记录里，方便下载查看（90天过期）
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: DevToy-desktop-${{ runner.os }}
+#        path: |
+#          composeApp/build/compose/binaries/main
+#      # 上传构建产物到 GitHub Release（仅标签推送/手动选择发布时执行）
+    - name: Upload to GitHub Release
+      uses: softprops/action-gh-release@v2
+      if: |
+        startsWith(github.ref, 'refs/tags/v') || 
+        (github.event_name == 'workflow_dispatch' && inputs.release == true)
+      with:
+        tag_name: ${{ github.ref_name || inputs.tag }}
+        files: |
+          composeApp/build/compose/binaries/main/**/*.dmg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
