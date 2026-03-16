@@ -73,6 +73,6 @@ jobs:
       with:
         tag_name: ${{ github.ref_name || inputs.tag }}
         files: |
-          composeApp/build/compose/binaries/main/**/*.dmg
+          composeApp/build/compose/binaries/main/**/*.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
