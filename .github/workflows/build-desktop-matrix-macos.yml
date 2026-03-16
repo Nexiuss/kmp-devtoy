@@ -1,4 +1,4 @@
-name: Build Desktop App (Matrix)
+name: Build Desktop App (MacOS)
 permissions:
   contents: write  # 允许创建/编辑 Release
   packages: write  # 允许上传附件（必须加）
