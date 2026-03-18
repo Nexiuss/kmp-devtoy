@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -121,7 +122,7 @@ fun FileRenameView() {
             ) {
                 Column(Modifier.padding(20.dp)) {
                     PreviewAndExecuteArea(
-                        renameFiles = appState.renameFiles.value,
+                        renameFiles = appState.renameFiles,
                         onExecute = {
                             val (success, fail) = BatchRenameUtil.executeRename(it)
                             appState.operationResult.value = "✅ 执行完成：成功 $success 个，失败 $fail 个"
@@ -399,12 +400,12 @@ fun RuleRow(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(label, style = MaterialTheme.typography.body2.copy(color = Color(0xFF666666)))
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
+            Text(label, style = MaterialTheme.typography.body2.copy(color = Color(0xFF666666)))
             content()
         }
     }
@@ -461,7 +462,7 @@ fun RuleTag(
 // 3. 预览和执行区域
 @Composable
 fun PreviewAndExecuteArea(
-    renameFiles: List<RenameFile>,
+    renameFiles: MutableState<List<RenameFile>>,
     onExecute: (List<RenameFile>) -> Unit,
     operationResult: String
 ) {
@@ -484,7 +485,7 @@ fun PreviewAndExecuteArea(
                 .border(1.dp, Color(0xFFEAEAEA), RoundedCornerShape(12.dp)),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            items(renameFiles) { file ->
+            items(renameFiles.value) { file ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -502,13 +503,20 @@ fun PreviewAndExecuteArea(
                         modifier = Modifier.padding(horizontal = 12.dp),
                         color = Color.Gray
                     )
-                    Text(
-                        file.newName,
-                        modifier = Modifier.weight(1f),
-                        style = TextStyle(
+                    BasicTextField(
+                        value = file.newName,
+                        onValueChange = { file.newName = it },
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(Color.White)
+                            .border(1.dp, Color(0xFFE0E0E0), RoundedCornerShape(6.dp))
+                            .padding(horizontal = 8.dp, vertical = 6.dp),
+                        textStyle = TextStyle(
                             fontSize = 14.sp,
                             color = if (file.isValid) Color.Black else Color(0xFFD32F2F)
-                        )
+                        ),
+                        singleLine = true
                     )
                     if (file.errorMsg.isNotEmpty()) {
                         Text(
@@ -519,7 +527,7 @@ fun PreviewAndExecuteArea(
                         )
                     }
                 }
-                if (renameFiles.last() != file) {
+                if (renameFiles.value.last() != file) {
                     Divider(
                         modifier = Modifier.padding(horizontal = 16.dp),
                         color = Color(0xFFEEEEEE)
@@ -530,14 +538,14 @@ fun PreviewAndExecuteArea(
 
         // 执行按钮
         Button(
-            onClick = { onExecute(renameFiles) },
-            enabled = renameFiles.isNotEmpty() && renameFiles.all { it.isValid },
+            onClick = { onExecute(renameFiles.value) },
+            enabled = renameFiles.value.isNotEmpty() && renameFiles.value.all { it.isValid },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
                 .clip(RoundedCornerShape(12.dp)),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = if (renameFiles.isNotEmpty() && renameFiles.all { it.isValid }) {
+                backgroundColor = if (renameFiles.value.isNotEmpty() && renameFiles.value.all { it.isValid }) {
                     MaterialTheme.colors.primary
                 } else {
                     Color(0xFFBDBDBD)
