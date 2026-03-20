@@ -50,6 +50,10 @@ kotlin {
             implementation("commons-net:commons-net:3.9.0") // JVM FTP Client
             implementation("com.jcraft:jsch:0.1.55") // SFTP用
             implementation("com.mohamedrejeb.calf:calf-file-picker:0.9.0")
+            //table
+            implementation("io.github.windedge.table:table-m3:0.2.3")
+
+
         }
         commonMain{
         }
