@@ -190,6 +190,9 @@ fun getContent(menuItem: MenuItem){
         "fileRename"->{
             FileRenameView()
         }
+        "jwt"->{
+            JwtDecode()
+        }
     }
 }
 

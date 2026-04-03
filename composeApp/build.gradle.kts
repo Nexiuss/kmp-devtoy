@@ -52,6 +52,8 @@ kotlin {
             implementation("com.mohamedrejeb.calf:calf-file-picker:0.9.0")
             //table
             implementation("io.github.windedge.table:table-m3:0.2.3")
+            //jwt
+            implementation("com.appstractive:jwt-kt:1.2.0")
 
 
         }

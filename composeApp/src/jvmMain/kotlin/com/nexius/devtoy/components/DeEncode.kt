@@ -2,10 +2,28 @@ package com.nexius.devtoy.components
 
 import androidx.compose.foundation.ContextMenuArea
 import androidx.compose.foundation.ContextMenuItem
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.appstractive.jwt.JWT
+import com.appstractive.jwt.from
 import com.gabrieldrn.carbon.notification.NotificationStatus
 import com.gabrieldrn.carbon.notification.ToastNotification
 import com.gabrieldrn.carbon.textinput.TextArea
+import kotlinx.serialization.json.Json
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
@@ -47,6 +65,115 @@ fun Base64DeEncode() {
             String(Base64.getDecoder().decode(it))
         },
     )
+}
+
+@Composable
+fun JwtDecode() {
+    // JWT解码状态管理
+    var jwtToken by remember { mutableStateOf("") }
+    var jwtHeader by remember { mutableStateOf("") }
+    var jwtClaims by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        // 输入区域
+        OutlinedTextField(
+            value = jwtToken,
+            onValueChange = { jwtToken = it },
+            label = { Text("JWT Token") },
+            modifier = Modifier.fillMaxWidth().height(100.dp),
+            singleLine = false,
+            maxLines = Int.MAX_VALUE
+        )
+
+        // 解码按钮
+        Button(
+            onClick = {
+                try {
+                    val jwt = JWT.from(jwtToken)
+                    
+                    // 格式化JSON
+                    val json = Json { prettyPrint = true; ignoreUnknownKeys = true }
+                    
+                    // 解析并格式化头部
+                    jwtHeader = jwt.header.toString()
+                    
+                    // 解析并格式化载荷
+                    val claimsJson = Json.parseToJsonElement(jwt.claims.toString())
+                    jwtClaims = json.encodeToString(claimsJson)
+                    
+                    errorMessage = ""
+                } catch (e: Exception) {
+                    jwtHeader = ""
+                    jwtClaims = ""
+                    errorMessage = "解码失败：${e.message ?: "未知错误"}"
+                }
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text("解码 JWT")
+        }
+
+        // 错误信息显示
+        if (errorMessage.isNotBlank()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+
+        // 结果展示：使用Row布局并排显示头部和载荷
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // JWT头部显示
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = "JWT 头部",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                OutlinedTextField(
+                    value = jwtHeader,
+                    onValueChange = {},
+                    label = { Text("头部信息") },
+                    readOnly = true,
+                    modifier = Modifier.fillMaxWidth().height(150.dp),
+                    singleLine = false,
+                    maxLines = Int.MAX_VALUE
+                )
+            }
+
+            // JWT载荷显示
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = "JWT 载荷",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                OutlinedTextField(
+                    value = jwtClaims,
+                    onValueChange = {},
+                    label = { Text("载荷信息") },
+                    readOnly = true,
+                    modifier = Modifier.fillMaxWidth().height(150.dp),
+                    singleLine = false,
+                    maxLines = Int.MAX_VALUE
+                )
+            }
+        }
+    }
 }
 
 fun decodeHtml(input: String): String {
