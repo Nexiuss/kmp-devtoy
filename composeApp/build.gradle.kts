@@ -43,17 +43,17 @@ kotlin {
             //implementation(libs.sqlite.jdbc)
 
             // 协程
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+            implementation(libs.kotlinx.coroutines.core)
 
             // 数据结构
-            implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
-            implementation("commons-net:commons-net:3.9.0") // JVM FTP Client
-            implementation("com.jcraft:jsch:0.1.55") // SFTP用
-            implementation("com.mohamedrejeb.calf:calf-file-picker:0.9.0")
+            implementation(libs.kotlinx.collections.immutable)
+            implementation(libs.commons.net) // JVM FTP Client
+            implementation(libs.jsch) // SFTP用
+            implementation(libs.calf.file.picker)
             //table
-            implementation("io.github.windedge.table:table-m3:0.2.3")
+            implementation(libs.table.m3)
             //jwt
-            implementation("com.appstractive:jwt-kt:1.2.0")
+            implementation(libs.jwt.kt)
 
 
         }
