@@ -138,10 +138,6 @@ fun JwtDecode() {
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = "JWT 头部",
-                    style = MaterialTheme.typography.bodyMedium
-                )
                 OutlinedTextField(
                     value = jwtHeader,
                     onValueChange = {},
@@ -158,10 +154,6 @@ fun JwtDecode() {
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = "JWT 载荷",
-                    style = MaterialTheme.typography.bodyMedium
-                )
                 OutlinedTextField(
                     value = jwtClaims,
                     onValueChange = {},
