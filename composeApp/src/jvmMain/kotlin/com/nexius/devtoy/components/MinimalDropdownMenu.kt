@@ -106,7 +106,7 @@ data class Settings(val language: String)
 fun setting() = Column(
     modifier = Modifier.fillMaxSize(),
     horizontalAlignment = Alignment.CenterHorizontally,
-) {
-
+    verticalArrangement = Arrangement.Center) {
+    Text("敬请期待")
 
 }
