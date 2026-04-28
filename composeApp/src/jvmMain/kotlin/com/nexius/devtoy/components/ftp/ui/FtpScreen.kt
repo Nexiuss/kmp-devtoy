@@ -10,23 +10,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Divider
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FolderOpen
-import androidx.compose.material.icons.filled.InsertDriveFile
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Upload
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -37,24 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.Popup
-import com.mohamedrejeb.calf.core.PlatformContext
-import com.mohamedrejeb.calf.io.KmpFile
-import com.mohamedrejeb.calf.io.getName
-import com.mohamedrejeb.calf.io.getPath
-import com.mohamedrejeb.calf.io.readByteArray
 import com.mohamedrejeb.calf.picker.FilePickerFileType
-import com.mohamedrejeb.richeditor.model.RichTextState
 import com.nexius.devtoy.components.FilePicker
 import com.nexius.devtoy.components.ftp.FtpFile
 import com.nexius.devtoy.components.ftp.FtpViewModel
 import com.nexius.devtoy.components.ftp.ProtocolType
-import com.nexius.devtoy.components.popup.PopupState
 import com.nexius.devtoy.components.popup.rememberPopupState
 import com.nexius.devtoy.components.popup.ui.BasicPopup
-import compose.icons.FeatherIcons
-import compose.icons.feathericons.*
-import kotlinx.coroutines.launch
 import java.io.File
 import java.text.DecimalFormat
 
@@ -127,7 +110,7 @@ fun FtpScreen(
                             .background(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f))
                     ) {
                         Icon(
-                            imageVector = if (isConfigVisible) FeatherIcons.ChevronUp else FeatherIcons.ChevronDown,
+                            imageVector = if (isConfigVisible) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                             contentDescription = if (isConfigVisible) "隐藏配置" else "显示配置",
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
@@ -172,7 +155,7 @@ fun FtpScreen(
                                 modifier = Modifier.size(28.dp)
                             ) {
                                 Icon(
-                                    imageVector = FeatherIcons.X,
+                                    imageVector = Icons.Default.Close,
                                     contentDescription = "关闭配置",
                                     tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                                 )
@@ -347,7 +330,7 @@ fun FtpScreen(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Icon(
-                                imageVector = FeatherIcons.ChevronUp,
+                                imageVector = Icons.Default.KeyboardArrowUp,
                                 contentDescription = "显示配置",
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -390,7 +373,7 @@ fun FtpScreen(
                                     .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
                             ) {
                                 Icon(
-                                    imageVector = FeatherIcons.ArrowLeft,
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                     contentDescription = "后退",
                                     tint = MaterialTheme.colorScheme.primary
                                 )
@@ -404,7 +387,7 @@ fun FtpScreen(
                                     .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
                             ) {
                                 Icon(
-                                    imageVector = FeatherIcons.MousePointer,
+                                    imageVector = Icons.Default.MyLocation,
                                     contentDescription = "当前路径",
                                     tint = MaterialTheme.colorScheme.primary
                                 )
@@ -478,7 +461,7 @@ fun FtpScreen(
                         ) {
                             Icon(
                                 // 使用搜索图标，保持与其他图标风格统一（FeatherIcons 或 Material Icons）
-                                imageVector = FeatherIcons.Search, // 或 Icons.Default.Search
+                                imageVector = Icons.Default.Search, // 或 Icons.Default.Search
                                 contentDescription = "查询",
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -752,7 +735,7 @@ private fun FileItem(
                     modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
-                        imageVector = FeatherIcons.Download,
+                        imageVector = Icons.Default.Download,
                         contentDescription = "下载",
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -765,7 +748,7 @@ private fun FileItem(
                 modifier = Modifier.size(32.dp)
             ) {
                 Icon(
-                    imageVector = FeatherIcons.MoreVertical,
+                    imageVector = Icons.Default.MoreVert,
                     contentDescription = "更多操作",
                     tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
@@ -796,7 +779,7 @@ private fun FileItem(
                     },
                     leadingIcon = {
                         Icon(
-                            imageVector = FeatherIcons.Trash2,
+                            imageVector = Icons.Default.Delete,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.error
                         )

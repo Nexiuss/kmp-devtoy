@@ -2,6 +2,9 @@
 package com.nexius.devtoy.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -9,10 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import compose.icons.FontAwesomeIcons
-import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.Copy
-import compose.icons.fontawesomeicons.solid.Check
 import kotlinx.coroutines.delay
 import java.util.UUID
 
@@ -93,8 +92,8 @@ fun UuidGenerator() {
                 }
             ) {
                 Icon(
-                    imageVector = if (showCopied) FontAwesomeIcons.Solid.Check
-                    else FontAwesomeIcons.Solid.Copy,
+                    imageVector = if (showCopied) Icons.Default.Check
+                    else Icons.Default.ContentCopy,
                     contentDescription = "复制",
                     modifier = Modifier.size(16.dp)
                 )

@@ -20,8 +20,6 @@ kotlin {
             api(compose.materialIconsExtended)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.composeIcons.fontAwesome)
-            implementation(libs.composeIcons.feather)
             implementation(libs.composeUI.carbon)
             implementation(libs.zxing.core)
             implementation(libs.kotlinx.serialization.json)
