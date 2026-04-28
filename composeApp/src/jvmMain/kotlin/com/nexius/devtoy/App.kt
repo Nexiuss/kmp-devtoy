@@ -5,6 +5,10 @@ import androidx.compose.foundation.ContextMenuItem
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,10 +21,6 @@ import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.devtoy.components.*
 import com.nexius.devtoy.components.filerename.ui.FileRenameView
 import com.nexius.devtoy.components.ftp.ui.FtpScreen
-import compose.icons.FeatherIcons
-import compose.icons.feathericons.ArrowLeft
-import compose.icons.feathericons.Home
-import compose.icons.feathericons.Menu
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,7 +49,7 @@ fun layout() {
                         IconButton(onClick = {
                             menuVisiable = !menuVisiable
                         }) {
-                            Icon(FeatherIcons.Menu, contentDescription = "图标", modifier = Modifier.size(24.dp))
+                            Icon(Icons.Default.Menu, contentDescription = "图标", modifier = Modifier.size(24.dp))
                         }
 
                         Spacer(modifier = Modifier.weight(1f))
@@ -80,10 +80,10 @@ fun layout() {
                 },
                 actions = {
                     IconButton(onClick = { navigator.popBackStack() }) {
-                        Icon(FeatherIcons.ArrowLeft, contentDescription = "后退")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "后退")
                     }
                     IconButton(onClick = { navigator.navigate("home") }) {
-                        Icon(FeatherIcons.Home, contentDescription = "首页")
+                        Icon(Icons.Default.Home, contentDescription = "首页")
                     }
                     MinimalDropdownMenu()
                 }
@@ -192,6 +192,9 @@ fun getContent(menuItem: MenuItem){
         }
         "jwt"->{
             JwtDecode()
+        }
+        "loanCalculator"->{
+            LoanCalculatorScreen()
         }
     }
 }
