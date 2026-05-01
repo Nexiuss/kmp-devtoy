@@ -21,7 +21,6 @@ import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.devtoy.components.*
 import com.nexius.devtoy.components.filerename.ui.FileRenameView
 import com.nexius.devtoy.components.ftp.ui.FtpScreen
-import com.nexius.devtoy.components.markitdown.DocumentToMarkdownPanel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -196,9 +195,6 @@ fun getContent(menuItem: MenuItem){
         }
         "loanCalculator"->{
             LoanCalculatorScreen()
-        }
-        "markitdown"->{
-            DocumentToMarkdownPanel()
         }
     }
 }

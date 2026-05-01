@@ -15,8 +15,6 @@ pluginManagement {
             }
         }
         mavenCentral()
-        // 加载本地 Maven 仓库 ~/.m2/repository
-        mavenLocal()
         gradlePluginPortal()
     }
 }
@@ -32,8 +30,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven(uri("https://jitpack.io"))
-        // 加载本地 Maven 仓库 ~/.m2/repository
-        mavenLocal()
     }
 }
 

@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.CoffeeMaker
 import androidx.compose.material.icons.filled.DataArray
 import androidx.compose.material.icons.filled.DriveFolderUpload
 import androidx.compose.material.icons.filled.FilePresent
@@ -187,15 +186,9 @@ val menuItems = listOf(
                 id = "markdown",
                 path = "root/text/markdown",
                 name = "Markdown",
-                icon = Icons.Filled.Article),
-            MenuItem(
-                id = "markitdown",
-                path = "root/text/markitdown",
-                name = "markitdown",
-                icon = Icons.Filled.CoffeeMaker),
+                icon = Icons.Filled.Article)
         )
-    ),
-    MenuItem(
+    ),MenuItem(
         id = "net",
         name =  "网络",
         path =  "root/net",
