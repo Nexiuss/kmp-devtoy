@@ -52,8 +52,8 @@ kotlin {
             implementation(libs.table.m3)
             //jwt
             implementation(libs.jwt.kt)
-
-
+            //markitdown
+            implementation("com.markitdown:markitdown-java:1.0.0-SNAPSHOT")
         }
         commonMain{
         }
