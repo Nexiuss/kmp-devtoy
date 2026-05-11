@@ -43,6 +43,7 @@ object BatchRenameUtil {
                 RenameRuleType.PREFIX -> addPrefix(renameFiles, rule.value)
                 RenameRuleType.SUFFIX -> addSuffix(renameFiles, rule.value)
                 RenameRuleType.REPLACE -> replaceText(renameFiles, rule.replaceTarget, rule.value)
+                RenameRuleType.EX_REPLACE -> exReplaceText(renameFiles, rule.replaceTarget, rule.value)
                 RenameRuleType.NUMBERING -> addNumbering(renameFiles, rule.numberStart, rule.numberPadding)
                 RenameRuleType.UPPER_CASE -> changeCase(renameFiles, toUpper = true)
                 RenameRuleType.LOWER_CASE -> changeCase(renameFiles, toUpper = false)
@@ -100,6 +101,11 @@ object BatchRenameUtil {
     private fun replaceText(files: MutableList<RenameFile>, target: String, replacement: String) {
         if (target.isBlank()) return
         files.forEach { it.newName = it.newName.replace(target, replacement) }
+    }
+
+    private fun exReplaceText(files: MutableList<RenameFile>, regex: String, replacement: String) {
+        if (regex.isBlank()) return
+        files.forEach { it.newName = it.newName.replace(regex.toRegex(), replacement) }
     }
 
     private fun addNumbering(files: MutableList<RenameFile>, start: Int, padding: Int) {

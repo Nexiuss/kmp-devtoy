@@ -269,7 +269,7 @@ fun RuleConfigArea(appState: AppState) {
                 textStyle = TextStyle(fontSize = 14.sp)
             )
 
-            Spacer(Modifier.width(12.dp))
+            Text("->")
 
             OutlinedTextField(
                 value = appState.replaceValue.value,
@@ -297,10 +297,27 @@ fun RuleConfigArea(appState: AppState) {
             ) {
                 Text("替换", fontSize = 14.sp)
             }
+
+            Button(
+                onClick = {
+                    appState.activeRules.add(
+                        RenameRule(
+                            type = RenameRuleType.EX_REPLACE,
+                            value = appState.replaceValue.value,
+                            replaceTarget = appState.replaceTarget.value
+                        )
+                    )
+                    appState.refreshPreview()
+                },
+                modifier = Modifier.height(50.dp).clip(RoundedCornerShape(12.dp))
+            ) {
+                Text("替换(正则)", fontSize = 14.sp)
+            }
         }
 
         // 序号
         RuleRow(label = "序号") {
+            Text("起始值", fontSize = 14.sp)
             OutlinedTextField(
                 value = appState.numberStart.value.toString(),
                 onValueChange = { appState.numberStart.value = it.toIntOrNull() ?: 1 },
@@ -310,7 +327,7 @@ fun RuleConfigArea(appState: AppState) {
                 textStyle = TextStyle(fontSize = 14.sp)
             )
 
-            Spacer(Modifier.width(12.dp))
+            Text("补零位数", fontSize = 14.sp)
 
             OutlinedTextField(
                 value = appState.numberPadding.value.toString(),
@@ -434,6 +451,7 @@ fun RuleTag(
                     RenameRuleType.PREFIX -> "前缀：${rule.value}"
                     RenameRuleType.SUFFIX -> "后缀：${rule.value}"
                     RenameRuleType.REPLACE -> "替换文本"
+                    RenameRuleType.EX_REPLACE -> "替换文本(正则)"
                     RenameRuleType.NUMBERING -> "序号"
                     RenameRuleType.UPPER_CASE -> "大写"
                     RenameRuleType.LOWER_CASE -> "小写"

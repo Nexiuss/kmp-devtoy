@@ -24,6 +24,7 @@ enum class RenameRuleType {
     PREFIX,        // 前缀
     SUFFIX,        // 后缀
     REPLACE,       // 文本替换
+    EX_REPLACE,       // 正则替换
     NUMBERING,     // 数字序号
     UPPER_CASE,    // 大写
     LOWER_CASE     // 小写
