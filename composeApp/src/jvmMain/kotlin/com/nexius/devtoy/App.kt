@@ -7,8 +7,29 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AddBox
+import androidx.compose.material.icons.filled.Article
+import androidx.compose.material.icons.filled.Calculate
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.DataArray
+import androidx.compose.material.icons.filled.DriveFolderUpload
+import androidx.compose.material.icons.filled.FilePresent
+import androidx.compose.material.icons.filled.FolderOpen
+import androidx.compose.material.icons.filled.FormatPaint
+import androidx.compose.material.icons.filled.GppGood
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Html
+import androidx.compose.material.icons.filled.Http
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.NetworkPing
+import androidx.compose.material.icons.filled.QrCode
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.filled.TextFormat
+import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material.icons.filled.Transform
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -150,6 +171,157 @@ fun toTab(menuItem: MenuItem): TabItem {
     return TabItem(menuItem.name)
 }
 
+
+// 示例菜单数据 - 使用Font Awesome图标
+val menuItems = listOf(
+    MenuItem(
+        id = "home",
+        path = "root/home",
+        name = "首页",
+        icon = Icons.Default.Home ,
+    ),
+    MenuItem(
+        id = "endecode",
+        path = "root/endecode",
+        name = "编解码器",
+        icon = Icons.Default.Transform,
+        expandedIcon = Icons.Default.FolderOpen,
+        children = listOf(
+            MenuItem(
+                id = "base64",
+                path = "root/endecode/base64",
+                name = "base64文本",
+                icon = Icons.Default.Code),
+            MenuItem(
+                id = "html",
+                path = "root/endecode/html",
+                name = "HTML",
+                icon = Icons.Default.Html,
+                expandedIcon = Icons.Default.FolderOpen
+            ),
+            MenuItem(
+                id = "url",
+                path =  "root/endecode/url",
+                name = "URL",
+                icon = Icons.Default.Link,
+                expandedIcon = Icons.Default.FolderOpen
+            ),
+            MenuItem(
+                id = "qrCode",
+                path =  "root/endecode/qrCode",
+                name = "二维码",
+                icon = Icons.Default.QrCode,
+                expandedIcon = Icons.Default.FolderOpen
+            ),
+            MenuItem(
+                id = "jwt",
+                path =  "root/endecode/jwt",
+                name = "JWT",
+                icon = Icons.Default.Verified,
+                expandedIcon = Icons.Default.FolderOpen
+            )
+        )
+    ),
+    MenuItem(
+        id = "format",
+        name =  "格式化工具",
+        path =  "root/format",
+        icon = Icons.Default.FormatPaint,
+        expandedIcon = Icons.Default.FolderOpen,
+        children = listOf(
+            MenuItem(
+                id = "json",
+                path = "root/format/json",
+                name = "JSON",
+                icon = Icons.Default.DataArray),
+            MenuItem(
+                id = "sql",
+                path = "root/format/sql",
+                name = "SQL",
+                icon = Icons.Default.Storage,
+                expandedIcon = Icons.Default.FolderOpen
+            ),
+            MenuItem(
+                id = "xml",
+                path =  "root/format/xml",
+                name = "XML",
+                icon = Icons.Default.Html,
+                expandedIcon = Icons.Default.FolderOpen
+            )
+        )
+    ),
+    MenuItem(
+        id = "generator",
+        name =  "生成器",
+        path =  "root/generator",
+        icon = Icons.Default.AddBox,
+        expandedIcon = Icons.Default.FolderOpen,
+        children = listOf(
+            MenuItem(
+                id = "uuid",
+                path = "root/generator/uuid",
+                name = "UUID",
+                icon = Icons.Default.GppGood)
+        )
+    ),
+    MenuItem(
+        id = "text",
+        name =  "文本处理",
+        path =  "root/text",
+        icon = Icons.Default.TextFormat,
+        expandedIcon = Icons.Default.FolderOpen,
+        children = listOf(
+            MenuItem(
+                id = "markdown",
+                path = "root/text/markdown",
+                name = "Markdown",
+                icon = Icons.Filled.Article),
+            MenuItem(
+                id = "regexCheck",
+                path = "root/text/regexCheck",
+                name = "正则速查",
+                icon = Icons.Filled.Search)
+        )
+    ),MenuItem(
+        id = "net",
+        name =  "网络",
+        path =  "root/net",
+        icon = Icons.Default.NetworkPing,
+        expandedIcon = Icons.Default.FolderOpen,
+        children = listOf(
+            MenuItem(
+                id = "httpClient",
+                path = "root/net/httpClient",
+                name = "Http客户端",
+                icon = Icons.Default.Http)
+        )
+    ),
+    MenuItem(
+        id = "ftp",
+        path = "root/ftp",
+        name = "FTP",
+        icon = Icons.Default.DriveFolderUpload,
+    ),
+    MenuItem(
+        id = "fileRename",
+        path = "root/fileRename",
+        name = "文件重命名",
+        icon = Icons.Filled.FilePresent,
+    ),
+    MenuItem(
+        id = "loanCalculator",
+        path = "root/LoanCalculator",
+        name = "贷款计算",
+        icon = Icons.Default.Calculate,
+    ),
+    MenuItem(
+        id = "timestampConverter",
+        path = "root/timestampConverter",
+        name = "时间戳转换",
+        icon = Icons.Default.Timer,
+    ),
+)
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun getContent(menuItem: MenuItem){
@@ -195,6 +367,12 @@ fun getContent(menuItem: MenuItem){
         }
         "loanCalculator"->{
             LoanCalculatorScreen()
+        }
+        "regexCheck"->{
+            RegexCheck()
+        }
+        "timestampConverter"->{
+            TimestampConverter()
         }
     }
 }

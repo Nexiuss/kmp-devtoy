@@ -2,51 +2,20 @@ package com.nexius.devtoy.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddBox
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Article
-import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.DataArray
-import androidx.compose.material.icons.filled.DriveFolderUpload
-import androidx.compose.material.icons.filled.FilePresent
-import androidx.compose.material.icons.filled.FolderOpen
-import androidx.compose.material.icons.filled.FormatPaint
-import androidx.compose.material.icons.filled.GppGood
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Html
-import androidx.compose.material.icons.filled.Http
-import androidx.compose.material.icons.filled.Link
-import androidx.compose.material.icons.filled.NetworkPing
-import androidx.compose.material.icons.filled.QrCode
-import androidx.compose.material.icons.filled.Storage
-import androidx.compose.material.icons.filled.TextFormat
-import androidx.compose.material.icons.filled.Transform
-import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.nexius.devtoy.menuItems
 
 // 菜单项数据类
 data class MenuItem(
@@ -83,150 +52,11 @@ fun getItem(tree: List<MenuItem>, filter:(MenuItem)-> Boolean): MenuItem? {
     return null
 }
 
-// 示例菜单数据 - 使用Font Awesome图标
-val menuItems = listOf(
-    MenuItem(
-        id = "home",
-        path = "root/home",
-        name = "首页",
-        icon = Icons.Default.Home ,
-    ),
-    MenuItem(
-        id = "endecode",
-        path = "root/endecode",
-        name = "编解码器",
-        icon = Icons.Default.Transform,
-        expandedIcon = Icons.Default.FolderOpen,
-        children = listOf(
-            MenuItem(
-                id = "base64",
-                path = "root/endecode/base64",
-                name = "base64文本",
-                icon = Icons.Default.Code),
-            MenuItem(
-                id = "html",
-                path = "root/endecode/html",
-                name = "HTML",
-                icon = Icons.Default.Html,
-                expandedIcon = Icons.Default.FolderOpen
-            ),
-            MenuItem(
-                id = "url",
-                path =  "root/endecode/url",
-                name = "URL",
-                icon = Icons.Default.Link,
-                expandedIcon = Icons.Default.FolderOpen
-            ),
-            MenuItem(
-                id = "qrCode",
-                path =  "root/endecode/qrCode",
-                name = "二维码",
-                icon = Icons.Default.QrCode,
-                expandedIcon = Icons.Default.FolderOpen
-            ),
-            MenuItem(
-                id = "jwt",
-                path =  "root/endecode/jwt",
-                name = "JWT",
-                icon = Icons.Default.Verified,
-                expandedIcon = Icons.Default.FolderOpen
-            )
-        )
-    ),
-    MenuItem(
-        id = "format",
-        name =  "格式化工具",
-        path =  "root/format",
-        icon = Icons.Default.FormatPaint,
-        expandedIcon = Icons.Default.FolderOpen,
-        children = listOf(
-            MenuItem(
-                id = "json",
-                path = "root/format/json",
-                name = "JSON",
-                icon = Icons.Default.DataArray),
-            MenuItem(
-                id = "sql",
-                path = "root/format/sql",
-                name = "SQL",
-                icon = Icons.Default.Storage,
-                expandedIcon = Icons.Default.FolderOpen
-            ),
-            MenuItem(
-                id = "xml",
-                path =  "root/format/xml",
-                name = "XML",
-                icon = Icons.Default.Html,
-                expandedIcon = Icons.Default.FolderOpen
-            )
-        )
-    ),
-    MenuItem(
-        id = "generator",
-        name =  "生成器",
-        path =  "root/generator",
-        icon = Icons.Default.AddBox,
-        expandedIcon = Icons.Default.FolderOpen,
-        children = listOf(
-            MenuItem(
-                id = "uuid",
-                path = "root/generator/uuid",
-                name = "UUID",
-                icon = Icons.Default.GppGood)
-        )
-    ),
-    MenuItem(
-        id = "text",
-        name =  "文本处理",
-        path =  "root/text",
-        icon = Icons.Default.TextFormat,
-        expandedIcon = Icons.Default.FolderOpen,
-        children = listOf(
-            MenuItem(
-                id = "markdown",
-                path = "root/text/markdown",
-                name = "Markdown",
-                icon = Icons.Filled.Article)
-        )
-    ),MenuItem(
-        id = "net",
-        name =  "网络",
-        path =  "root/net",
-        icon = Icons.Default.NetworkPing,
-        expandedIcon = Icons.Default.FolderOpen,
-        children = listOf(
-            MenuItem(
-                id = "httpClient",
-                path = "root/net/httpClient",
-                name = "Http客户端",
-                icon = Icons.Default.Http)
-        )
-    ),
-    MenuItem(
-        id = "ftp",
-        path = "root/ftp",
-        name = "FTP",
-        icon = Icons.Default.DriveFolderUpload,
-    ),
-    MenuItem(
-        id = "fileRename",
-        path = "root/fileRename",
-        name = "文件重命名",
-        icon = Icons.Filled.FilePresent,
-    ),
-    MenuItem(
-        id = "loanCalculator",
-        path = "root/LoanCalculator",
-        name = "贷款计算",
-        icon = Icons.Default.Calculate,
-    ),
-)
-
 // 菜单树组件
 @Composable
 fun FontAwesomeMenuTree(
     modifier: Modifier = Modifier,
-    menuItems: List<MenuItem> = com.nexius.devtoy.components.menuItems,
+    menuItems: List<MenuItem> = com.nexius.devtoy.menuItems,
     level: Int = 0,
     onClick: (MenuItem) -> Unit= {}
 ) {

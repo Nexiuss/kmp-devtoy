@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.nexius.devtoy.getContent
+import com.nexius.devtoy.menuItems
 
 /**
  * 创建导航,需要传递一个 rememberNavController()
