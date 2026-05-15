@@ -78,7 +78,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "kmp-devtoy"
-            packageVersion = "1.0.5.1"
+            packageVersion = "1.0.6"
         }
     }
 }
