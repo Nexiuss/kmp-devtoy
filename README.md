@@ -22,12 +22,14 @@
   - [x] Html
   - [x] url
   - [x] 二维码
+  - [x] JWT
 - [x] 格式化：
   - [x] json 
   - [x] sql 
   - [x] xml
 - [ ] 生成器：
   - [x] uuid 
+  - [x] 正则速查 
 - [ ] 文本处理：
   - [x] markdown
 - [x] 网络：
@@ -39,6 +41,7 @@
   - [x] 批量重命名
   - [x] 文件编码转换
 - [x] 贷款计算器
+- [x] 时间戳转换
 ### 示例图片
 ![example.png](images/example.png)  
 ### 参考文档
