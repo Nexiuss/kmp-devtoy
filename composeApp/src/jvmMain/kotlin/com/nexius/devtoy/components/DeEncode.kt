@@ -197,38 +197,3 @@ fun encodeHtml(input: String): String {
     }
     return sb.toString()
 }
-
-
-@Composable
-fun QrCode() {
-    //左边输入框
-    var url by remember { mutableStateOf("http://www.baidu.com") }
-
-    var toastBody by remember { mutableStateOf("暂时不支持保存二维码") }
-    var toastVisibility by remember { mutableStateOf(false) }
-
-    TextArea(
-        value = url,
-        onValueChange = { url = it },
-        label = "链接"
-    )
-    ContextMenuArea(items = {
-        listOf(
-            ContextMenuItem("保存"){
-                toastVisibility = true
-            }
-        )
-    }) {
-        QrCodeImage(url)
-    }
-    if(toastVisibility){
-        ToastNotification(
-            title = "提示",
-            body = toastBody,
-            status = NotificationStatus.Informational,
-            onClose = {
-                toastVisibility = false
-            }
-        )
-    }
-}

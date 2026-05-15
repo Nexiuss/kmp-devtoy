@@ -336,7 +336,7 @@ fun getContent(menuItem: MenuItem){
             Base64DeEncode()
         }
         "qrCode" -> {
-            QrCode()
+            QrcodeToolComponent()
         }
         "uuid" -> {
             UuidGenerator()
