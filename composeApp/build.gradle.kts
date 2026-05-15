@@ -22,6 +22,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.composeUI.carbon)
             implementation(libs.zxing.core)
+            implementation(libs.zxing.javase)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.jetbrains.markdown)
             implementation(libs.richeditor.compose)
