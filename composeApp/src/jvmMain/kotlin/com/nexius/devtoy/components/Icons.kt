@@ -13,44 +13,47 @@ object Icons {
 
     val ArrowBack: ImageVector
         get() {
-            if (_arrowBack != null) return _arrowBack!!
-            _arrowBack = ImageVector.Builder(
-                name = "arrow_back",
-                defaultWidth = 24.dp,
-                defaultHeight = 24.dp,
-                viewportWidth = 24f,
-                viewportHeight = 24f,
-            )
-                .apply {
-                    path(
-                        fill = SolidColor(Color.Black),
-                        fillAlpha = 1f,
-                        stroke = null,
-                        strokeAlpha = 1f,
-                        strokeLineWidth = 1f,
-                        strokeLineCap = StrokeCap.Butt,
-                        strokeLineJoin = StrokeJoin.Bevel,
-                        strokeLineMiter = 1f,
-                        pathFillType = PathFillType.Companion.NonZero,
-                    ) {
-                        moveTo(19f, 13f)
-                        horizontalLineTo(9.83f)
-                        lineToRelative(4.88f, -4.88f)
-                        lineToRelative(-1.41f, -1.41f)
-                        lineTo(4f, 12f)
-                        lineToRelative(9.29f, 9.29f)
-                        lineToRelative(1.41f, -1.41f)
-                        lineTo(9.83f, 13f)
-                        horizontalLineTo(19f)
-                        verticalLineToRelative(-2f)
-                        close()
+            if (_arrow_back != null) {
+                return _arrow_back!!
+            }
+            _arrow_back =
+                ImageVector.Builder(
+                    name = "arrow_back",
+                    defaultWidth = 24.dp,
+                    defaultHeight = 24.dp,
+                    viewportWidth = 24f,
+                    viewportHeight = 24f,
+                )
+                    .apply {
+                        path(
+                            fill = SolidColor(Color.Black),
+                            fillAlpha = 1f,
+                            stroke = null,
+                            strokeAlpha = 1f,
+                            strokeLineWidth = 1f,
+                            strokeLineCap = StrokeCap.Butt,
+                            strokeLineJoin = StrokeJoin.Bevel,
+                            strokeLineMiter = 1f,
+                            pathFillType = PathFillType.Companion.NonZero,
+                        ) {
+                            moveTo(7.83f, 13f)
+                            lineToRelative(5.6f, 5.6f)
+                            lineTo(12f, 20f)
+                            lineTo(4f, 12f)
+                            lineTo(12f, 4f)
+                            lineToRelative(1.43f, 1.4f)
+                            lineTo(7.83f, 11f)
+                            horizontalLineTo(20f)
+                            verticalLineToRelative(2f)
+                            horizontalLineTo(7.83f)
+                            close()
+                        }
                     }
-                }
-                .build()
-            return _arrowBack!!
+                    .build()
+            return _arrow_back!!
         }
 
-    private var _arrowBack: ImageVector? = null
+    private var _arrow_back: ImageVector? = null
 
 
     val AddBox: ImageVector
@@ -1095,42 +1098,56 @@ object Icons {
 
     val Home: ImageVector
         get() {
-            if (_home != null) return _home!!
-            _home = ImageVector.Builder(
-                name = "home",
-                defaultWidth = 24.dp,
-                defaultHeight = 24.dp,
-                viewportWidth = 24f,
-                viewportHeight = 24f,
-            )
-                .apply {
-                    path(
-                        fill = SolidColor(Color.Black),
-                        fillAlpha = 1f,
-                        stroke = null,
-                        strokeAlpha = 1f,
-                        strokeLineWidth = 1f,
-                        strokeLineCap = StrokeCap.Butt,
-                        strokeLineJoin = StrokeJoin.Bevel,
-                        strokeLineMiter = 1f,
-                        pathFillType = PathFillType.Companion.NonZero,
-                    ) {
-                        moveTo(12f, 3f)
-                        lineTo(2f, 12f)
-                        horizontalLineToRelative(3f)
-                        verticalLineToRelative(8f)
-                        horizontalLineTo(16f)
-                        verticalLineToRelative(-8f)
-                        horizontalLineToRelative(3f)
-                        close()
-                        moveTo(10f, 20f)
-                        verticalLineTo(14f)
-                        horizontalLineToRelative(4f)
-                        verticalLineToRelative(6f)
-                        close()
+            if (_home != null) {
+                return _home!!
+            }
+            _home =
+                ImageVector.Builder(
+                    name = "home",
+                    defaultWidth = 24.dp,
+                    defaultHeight = 24.dp,
+                    viewportWidth = 24f,
+                    viewportHeight = 24f,
+                )
+                    .apply {
+                        path(
+                            fill = SolidColor(Color.Black),
+                            fillAlpha = 1f,
+                            stroke = null,
+                            strokeAlpha = 1f,
+                            strokeLineWidth = 1f,
+                            strokeLineCap = StrokeCap.Butt,
+                            strokeLineJoin = StrokeJoin.Bevel,
+                            strokeLineMiter = 1f,
+                            pathFillType = PathFillType.Companion.NonZero,
+                        ) {
+                            moveTo(6f, 19f)
+                            horizontalLineTo(9f)
+                            verticalLineTo(13f)
+                            horizontalLineToRelative(6f)
+                            verticalLineToRelative(6f)
+                            horizontalLineToRelative(3f)
+                            verticalLineTo(10f)
+                            lineTo(12f, 5.5f)
+                            lineTo(6f, 10f)
+                            verticalLineToRelative(9f)
+                            close()
+                            moveTo(4f, 21f)
+                            verticalLineTo(9f)
+                            lineTo(12f, 3f)
+                            lineToRelative(8f, 6f)
+                            verticalLineTo(21f)
+                            horizontalLineTo(13f)
+                            verticalLineTo(15f)
+                            horizontalLineTo(11f)
+                            verticalLineToRelative(6f)
+                            horizontalLineTo(4f)
+                            close()
+                            moveToRelative(8f, -8.75f)
+                            close()
+                        }
                     }
-                }
-                .build()
+                    .build()
             return _home!!
         }
 
@@ -1356,63 +1373,66 @@ object Icons {
 
     val MoreVert: ImageVector
         get() {
-            if (_moreVert != null) return _moreVert!!
-            _moreVert = ImageVector.Builder(
-                name = "more_vert",
-                defaultWidth = 24.dp,
-                defaultHeight = 24.dp,
-                viewportWidth = 24f,
-                viewportHeight = 24f,
-            )
-                .apply {
-                    path(
-                        fill = SolidColor(Color.Black),
-                        fillAlpha = 1f,
-                        stroke = null,
-                        strokeAlpha = 1f,
-                        strokeLineWidth = 1f,
-                        strokeLineCap = StrokeCap.Butt,
-                        strokeLineJoin = StrokeJoin.Bevel,
-                        strokeLineMiter = 1f,
-                        pathFillType = PathFillType.Companion.NonZero,
-                    ) {
-                        moveTo(12f, 8f)
-                        quadToRelative(1.1f, 0f, 1.99f, -0.9f)
-                        reflectiveQuadTo(14f, 5.1f)
-                        reflectiveQuadToRelative(-0.9f, -1.99f)
-                        reflectiveQuadTo(11f, 2.1f)
-                        reflectiveQuadToRelative(-1.99f, 0.9f)
-                        reflectiveQuadTo(8f, 5.1f)
-                        reflectiveQuadToRelative(0.9f, 1.99f)
-                        reflectiveQuadTo(11f, 8.1f)
-                        close()
-                        moveTo(12f, 14f)
-                        quadToRelative(1.1f, 0f, 1.99f, -0.9f)
-                        reflectiveQuadTo(14f, 11.1f)
-                        reflectiveQuadToRelative(-0.9f, -1.99f)
-                        reflectiveQuadTo(11f, 8.1f)
-                        reflectiveQuadToRelative(-1.99f, 0.9f)
-                        reflectiveQuadTo(8f, 11.1f)
-                        reflectiveQuadToRelative(0.9f, 1.99f)
-                        reflectiveQuadTo(11f, 14.1f)
-                        close()
-                        moveTo(12f, 20f)
-                        quadToRelative(1.1f, 0f, 1.99f, -0.9f)
-                        reflectiveQuadTo(14f, 17.1f)
-                        reflectiveQuadToRelative(-0.9f, -1.99f)
-                        reflectiveQuadTo(11f, 14.1f)
-                        reflectiveQuadToRelative(-1.99f, 0.9f)
-                        reflectiveQuadTo(8f, 17.1f)
-                        reflectiveQuadToRelative(0.9f, 1.99f)
-                        reflectiveQuadTo(11f, 20.1f)
-                        close()
+            if (_more_vert != null) {
+                return _more_vert!!
+            }
+            _more_vert =
+                ImageVector.Builder(
+                    name = "more_vert",
+                    defaultWidth = 24.dp,
+                    defaultHeight = 24.dp,
+                    viewportWidth = 24f,
+                    viewportHeight = 24f,
+                )
+                    .apply {
+                        path(
+                            fill = SolidColor(Color.Black),
+                            fillAlpha = 1f,
+                            stroke = null,
+                            strokeAlpha = 1f,
+                            strokeLineWidth = 1f,
+                            strokeLineCap = StrokeCap.Butt,
+                            strokeLineJoin = StrokeJoin.Bevel,
+                            strokeLineMiter = 1f,
+                            pathFillType = PathFillType.Companion.NonZero,
+                        ) {
+                            moveTo(12f, 20f)
+                            quadToRelative(-0.82f, 0f, -1.41f, -0.59f)
+                            reflectiveQuadTo(10f, 18f)
+                            reflectiveQuadToRelative(0.59f, -1.41f)
+                            reflectiveQuadTo(12f, 16f)
+                            reflectiveQuadToRelative(1.41f, 0.59f)
+                            quadTo(14f, 17.18f, 14f, 18f)
+                            reflectiveQuadToRelative(-0.59f, 1.41f)
+                            reflectiveQuadTo(12f, 20f)
+                            close()
+                            moveToRelative(0f, -6f)
+                            quadToRelative(-0.82f, 0f, -1.41f, -0.59f)
+                            reflectiveQuadTo(10f, 12f)
+                            reflectiveQuadToRelative(0.59f, -1.41f)
+                            reflectiveQuadTo(12f, 10f)
+                            reflectiveQuadToRelative(1.41f, 0.59f)
+                            quadTo(14f, 11.18f, 14f, 12f)
+                            reflectiveQuadToRelative(-0.59f, 1.41f)
+                            reflectiveQuadTo(12f, 14f)
+                            close()
+                            moveTo(12f, 8f)
+                            quadTo(11.18f, 8f, 10.59f, 7.41f)
+                            reflectiveQuadTo(10f, 6f)
+                            reflectiveQuadTo(10.59f, 4.59f)
+                            reflectiveQuadTo(12f, 4f)
+                            reflectiveQuadToRelative(1.41f, 0.59f)
+                            quadTo(14f, 5.18f, 14f, 6f)
+                            reflectiveQuadTo(13.41f, 7.41f)
+                            reflectiveQuadTo(12f, 8f)
+                            close()
+                        }
                     }
-                }
-                .build()
-            return _moreVert!!
+                    .build()
+            return _more_vert!!
         }
 
-    private var _moreVert: ImageVector? = null
+    private var _more_vert: ImageVector? = null
 
 
     val NetworkPing: ImageVector
