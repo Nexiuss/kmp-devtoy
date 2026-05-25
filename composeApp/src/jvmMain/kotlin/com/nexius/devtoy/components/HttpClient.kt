@@ -4,8 +4,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+
+import com.nexius.devtoy.components.Icons.AttachFile
+import com.nexius.devtoy.components.Icons.Clear
+import com.nexius.devtoy.components.Icons.ClearAll
+import com.nexius.devtoy.components.Icons.Close
+import com.nexius.devtoy.components.Icons.Delete
+import com.nexius.devtoy.components.Icons.Restore
+import com.nexius.devtoy.components.Icons.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -308,7 +314,7 @@ fun HttpClientGui() {
                         selectedFiles = emptyList()
                         uploadFieldName = TextFieldValue(DEFAULT_UPLOAD_FIELD_NAME)
                     }) {
-                        Icon(Icons.Default.ClearAll, contentDescription = "清空所有")
+                        Icon(ClearAll, contentDescription = "清空所有")
                     }
                 }
             )
@@ -369,7 +375,7 @@ fun HttpClientGui() {
                     trailingIcon = {
                         if (url.text.isNotEmpty()) {
                             IconButton(onClick = { url = TextFieldValue("") }) {
-                                Icon(Icons.Default.Clear, contentDescription = "清空URL")
+                                Icon(Clear, contentDescription = "清空URL")
                             }
                         }
                     }
@@ -388,7 +394,7 @@ fun HttpClientGui() {
                             strokeWidth = 2.dp
                         )
                     } else {
-                        Icon(Icons.Default.Send, contentDescription = "发送请求", modifier = Modifier.size(18.dp))
+                        Icon(Send, contentDescription = "发送请求", modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(4.dp))
                         Text("发送")
                     }
@@ -410,7 +416,7 @@ fun HttpClientGui() {
                     trailingIcon = {
                         if (requestHeaders.text.isNotEmpty()) {
                             IconButton(onClick = { requestHeaders = TextFieldValue("") }) {
-                                Icon(Icons.Default.Clear, contentDescription = "清空请求头")
+                                Icon(Clear, contentDescription = "清空请求头")
                             }
                         }
                     }
@@ -441,7 +447,7 @@ fun HttpClientGui() {
                                     modifier = Modifier.height(40.dp),
                                     enabled = !isLoading
                                 ) {
-                                    Icon(Icons.Default.AttachFile, contentDescription = "选择文件", modifier = Modifier.size(18.dp))
+                                    Icon(AttachFile, contentDescription = "选择文件", modifier = Modifier.size(18.dp))
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text("选择文件")
                                 }
@@ -453,7 +459,7 @@ fun HttpClientGui() {
                                         modifier = Modifier.size(40.dp),
                                         enabled = !isLoading
                                     ) {
-                                        Icon(Icons.Default.Clear, contentDescription = "清除文件")
+                                        Icon(Clear, contentDescription = "清除文件")
                                     }
                                 }
                             }
@@ -471,7 +477,7 @@ fun HttpClientGui() {
                             trailingIcon = {
                                 if (uploadFieldName.text != DEFAULT_UPLOAD_FIELD_NAME) {
                                     IconButton(onClick = { uploadFieldName = TextFieldValue(DEFAULT_UPLOAD_FIELD_NAME) }) {
-                                        Icon(Icons.Default.Restore, contentDescription = "恢复默认")
+                                        Icon(Restore, contentDescription = "恢复默认")
                                     }
                                 }
                             }
@@ -508,7 +514,7 @@ fun HttpClientGui() {
                                             modifier = Modifier.size(24.dp),
                                             enabled = !isLoading
                                         ) {
-                                            Icon(Icons.Default.Close, contentDescription = "移除文件", modifier = Modifier.size(16.dp))
+                                            Icon(Close, contentDescription = "移除文件", modifier = Modifier.size(16.dp))
                                         }
                                     }
                                 }
@@ -543,7 +549,7 @@ fun HttpClientGui() {
                     trailingIcon = {
                         if (requestBody.text.isNotEmpty()) {
                             IconButton(onClick = { requestBody = TextFieldValue("") }, enabled = !isLoading) {
-                                Icon(Icons.Default.Clear, contentDescription = "清空请求体")
+                                Icon(Clear, contentDescription = "清空请求体")
                             }
                         }
                     },
@@ -631,7 +637,7 @@ fun HttpClientGui() {
                                         modifier = Modifier.height(36.dp),
                                         enabled = !isLoading
                                     ) {
-                                        Icon(Icons.Default.Delete, contentDescription = "清空日志", modifier = Modifier.size(16.dp))
+                                        Icon(Delete, contentDescription = "清空日志", modifier = Modifier.size(16.dp))
                                         Spacer(modifier = Modifier.width(4.dp))
                                         Text("清空日志")
                                     }

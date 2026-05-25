@@ -1,9 +1,7 @@
 package com.nexius.devtoy.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDownward
-import androidx.compose.material.icons.filled.ArrowUpward
+
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -12,6 +10,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.nexius.devtoy.components.Icons.ArrowDownward
+import com.nexius.devtoy.components.Icons.ArrowUpward
 
 /**
  * 通用双向文本转换组件
@@ -59,7 +59,7 @@ fun TextConvertComponent(
                     "转换失败：${e.message ?: "未知错误"}"
                 }
             }) {
-                Icon(Icons.Default.ArrowDownward, contentDescription = "正向转换")
+                Icon(ArrowDownward, contentDescription = "正向转换")
             }
 
             // 反向转换按钮
@@ -70,7 +70,7 @@ fun TextConvertComponent(
                     "转换失败：${e.message ?: "未知错误"}"
                 }
             }) {
-                Icon(Icons.Default.ArrowUpward, contentDescription = "反向转换")
+                Icon(ArrowUpward, contentDescription = "反向转换")
             }
         }
         OutlinedTextField(

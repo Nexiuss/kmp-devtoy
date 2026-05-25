@@ -1,8 +1,8 @@
 package com.nexius.devtoy.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
+
+import com.nexius.devtoy.components.Icons.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -29,7 +29,7 @@ fun MinimalDropdownMenu() {
             .padding(16.dp)
     ) {
         IconButton(onClick = { expanded = !expanded }) {
-            Icon(Icons.Default.MoreVert, contentDescription = "More options")
+            Icon(MoreVert, contentDescription = "More options")
         }
         DropdownMenu(
             expanded = expanded,

@@ -10,9 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.*
+
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,6 +31,18 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mohamedrejeb.calf.picker.FilePickerFileType
 import com.nexius.devtoy.components.FilePicker
+import com.nexius.devtoy.components.Icons.ArrowBack
+import com.nexius.devtoy.components.Icons.Close
+import com.nexius.devtoy.components.Icons.Delete
+import com.nexius.devtoy.components.Icons.Download
+import com.nexius.devtoy.components.Icons.Files
+import com.nexius.devtoy.components.Icons.FolderOpen
+import com.nexius.devtoy.components.Icons.KeyboardArrowDown
+import com.nexius.devtoy.components.Icons.KeyboardArrowUp
+import com.nexius.devtoy.components.Icons.MoreVert
+import com.nexius.devtoy.components.Icons.MyLocation
+import com.nexius.devtoy.components.Icons.Search
+import com.nexius.devtoy.components.Icons.Upload
 import com.nexius.devtoy.components.ftp.FtpFile
 import com.nexius.devtoy.components.ftp.FtpViewModel
 import com.nexius.devtoy.components.ftp.ProtocolType
@@ -110,7 +120,7 @@ fun FtpScreen(
                             .background(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f))
                     ) {
                         Icon(
-                            imageVector = if (isConfigVisible) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                            imageVector = if (isConfigVisible) KeyboardArrowUp else KeyboardArrowDown,
                             contentDescription = if (isConfigVisible) "隐藏配置" else "显示配置",
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
@@ -155,7 +165,7 @@ fun FtpScreen(
                                 modifier = Modifier.size(28.dp)
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.Close,
+                                    imageVector = Close,
                                     contentDescription = "关闭配置",
                                     tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                                 )
@@ -330,7 +340,7 @@ fun FtpScreen(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Icon(
-                                imageVector = Icons.Default.KeyboardArrowUp,
+                                imageVector = KeyboardArrowUp,
                                 contentDescription = "显示配置",
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -373,7 +383,7 @@ fun FtpScreen(
                                     .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
                             ) {
                                 Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    imageVector = ArrowBack,
                                     contentDescription = "后退",
                                     tint = MaterialTheme.colorScheme.primary
                                 )
@@ -387,7 +397,7 @@ fun FtpScreen(
                                     .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.MyLocation,
+                                    imageVector = MyLocation,
                                     contentDescription = "当前路径",
                                     tint = MaterialTheme.colorScheme.primary
                                 )
@@ -401,7 +411,7 @@ fun FtpScreen(
                                     .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.Refresh,
+                                    imageVector = com.nexius.devtoy.components.Icons.Refresh,
                                     contentDescription = "刷新",
                                     tint = MaterialTheme.colorScheme.primary
                                 )
@@ -424,7 +434,7 @@ fun FtpScreen(
                                     .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.Upload,
+                                    imageVector = Upload,
                                     contentDescription = "上传",
                                     tint = MaterialTheme.colorScheme.primary
                                 )
@@ -461,7 +471,7 @@ fun FtpScreen(
                         ) {
                             Icon(
                                 // 使用搜索图标，保持与其他图标风格统一（FeatherIcons 或 Material Icons）
-                                imageVector = Icons.Default.Search, // 或 Icons.Default.Search
+                                imageVector = Search, // 或 Search
                                 contentDescription = "查询",
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -693,9 +703,9 @@ private fun FileItem(
         // 文件图标
         Icon(
             imageVector = if (file.isDirectory) {
-                Icons.Default.FolderOpen
+                FolderOpen
             } else {
-                Icons.Default.InsertDriveFile
+                Files
             },
             contentDescription = if (file.isDirectory) "文件夹" else "文件",
             modifier = Modifier.size(24.dp),
@@ -735,7 +745,7 @@ private fun FileItem(
                     modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Download,
+                        imageVector = Download,
                         contentDescription = "下载",
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -748,7 +758,7 @@ private fun FileItem(
                 modifier = Modifier.size(32.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.MoreVert,
+                    imageVector = MoreVert,
                     contentDescription = "更多操作",
                     tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
@@ -779,7 +789,7 @@ private fun FileItem(
                     },
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Default.Delete,
+                            imageVector = Delete,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.error
                         )

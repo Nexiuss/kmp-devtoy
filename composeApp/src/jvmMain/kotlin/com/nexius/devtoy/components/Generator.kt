@@ -2,9 +2,9 @@
 package com.nexius.devtoy.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.ContentCopy
+
+import com.nexius.devtoy.components.Icons.Check
+import com.nexius.devtoy.components.Icons.ContentCopy
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -92,8 +92,8 @@ fun UuidGenerator() {
                 }
             ) {
                 Icon(
-                    imageVector = if (showCopied) Icons.Default.Check
-                    else Icons.Default.ContentCopy,
+                    imageVector = if (showCopied) Check
+                    else ContentCopy,
                     contentDescription = "复制",
                     modifier = Modifier.size(16.dp)
                 )

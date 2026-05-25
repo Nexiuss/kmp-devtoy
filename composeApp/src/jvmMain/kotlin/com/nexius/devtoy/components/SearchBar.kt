@@ -24,10 +24,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
+
+import com.nexius.devtoy.components.Icons.MoreVert
+import com.nexius.devtoy.components.Icons.Search
+import com.nexius.devtoy.components.Icons.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -163,7 +163,7 @@ fun CustomizableSearchBar(
     modifier: Modifier = Modifier,
     // Customization options
     placeholder: @Composable () -> Unit = { Text("Search") },
-    leadingIcon: @Composable (() -> Unit)? = { Icon(Icons.Default.Search, contentDescription = "Search") },
+    leadingIcon: @Composable (() -> Unit)? = { Icon(Search, contentDescription = "Search") },
     trailingIcon: @Composable (() -> Unit)? = null,
     supportingContent: (@Composable (String) -> Unit)? = null,
     leadingContent: (@Composable () -> Unit)? = null,
@@ -254,10 +254,10 @@ fun CustomizableSearchBarExample() {
             onResultClick = { query = it },
             // Customize appearance with optional parameters
             placeholder = { Text("Search desserts") },
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
-            trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = "More options") },
+            leadingIcon = { Icon(Search, contentDescription = "Search") },
+            trailingIcon = { Icon(MoreVert, contentDescription = "More options") },
             supportingContent = { Text("Android dessert") },
-            leadingContent = { Icon(Icons.Default.Star, contentDescription = "Starred item") }
+            leadingContent = { Icon(Star, contentDescription = "Starred item") }
         )
 
         // Display the filtered list below the search bar

@@ -19,11 +19,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material.icons.filled.QrCodeScanner
+
+import com.nexius.devtoy.components.Icons.CheckCircle
+import com.nexius.devtoy.components.Icons.Clear
+import com.nexius.devtoy.components.Icons.ContentCopy
+import com.nexius.devtoy.components.Icons.QrCodeScanner
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -100,7 +100,7 @@ fun QrCodeImage(url: String) {
             if(downloadStatus.isNotEmpty()){
                 Row {
                     Icon(
-                        imageVector = Icons.Default.CheckCircle,
+                        imageVector = CheckCircle,
                         contentDescription = null,
                         tint = AppColors.Success,
                         modifier = Modifier.size(16.dp)
@@ -287,7 +287,7 @@ private fun QrcodeDecodeTab() {
                         )
                     } else {
                         Icon(
-                            imageVector = Icons.Default.QrCodeScanner,
+                            imageVector = QrCodeScanner,
                             contentDescription = null,
                             modifier = Modifier.size(20.dp)
                         )
@@ -334,7 +334,7 @@ private fun QrcodeDecodeTab() {
                             }
                         ) {
                             Icon(
-                                imageVector = Icons.Default.ContentCopy,
+                                imageVector = ContentCopy,
                                 contentDescription = "复制",
                                 tint = AppColors.Primary
                             )
@@ -383,7 +383,7 @@ private fun QrcodeDecodeTab() {
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Clear,
+                                imageVector = Clear,
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp)
                             )
@@ -402,7 +402,7 @@ private fun QrcodeDecodeTab() {
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Default.ContentCopy,
+                                imageVector = ContentCopy,
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp)
                             )

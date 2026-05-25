@@ -3,9 +3,9 @@ package com.nexius.devtoy.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ChevronRight
+
+import com.nexius.devtoy.components.Icons.ArrowDropDown
+import com.nexius.devtoy.components.Icons.ChevronRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -109,7 +109,7 @@ private fun MenuItem(
             // 展开/折叠指示器
             if (hasChildren) {
                 Image(
-                    imageVector = if (isExpanded) Icons.Default.ArrowDropDown else Icons.Default.ChevronRight,
+                    imageVector = if (isExpanded) ArrowDropDown else ChevronRight,
                     contentDescription = if (isExpanded) "折叠" else "展开",
                     modifier = Modifier.size(16.dp)
                 )

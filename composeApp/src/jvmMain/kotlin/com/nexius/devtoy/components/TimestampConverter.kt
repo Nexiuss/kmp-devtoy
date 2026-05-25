@@ -6,8 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,6 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nexius.devtoy.components.Icons.ContentCopy
+import com.nexius.devtoy.components.Icons.KeyboardArrowDown
+import com.nexius.devtoy.components.Icons.KeyboardArrowUp
+import com.nexius.devtoy.components.Icons.Schedule
 import com.nexius.devtoy.theme.AppColors
 import kotlinx.coroutines.delay
 import kotlinx.datetime.*
@@ -69,7 +72,7 @@ fun TimestampConverter(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Icon(
-                imageVector = Icons.Default.Schedule,
+                imageVector = Schedule,
                 contentDescription = null,
                 tint = AppColors.Primary,
                 modifier = Modifier.size(32.dp)
@@ -193,7 +196,7 @@ private fun CurrentTimestampCard(
                                 color = AppColors.Primary
                             )
                             Icon(
-                                imageVector = if (showDropdown) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                                imageVector = if (showDropdown) KeyboardArrowUp else KeyboardArrowDown,
                                 contentDescription = null,
                                 tint = AppColors.Primary,
                                 modifier = Modifier.size(16.dp)
@@ -257,7 +260,7 @@ private fun CurrentTimestampCard(
                         }
                     ) {
                         Icon(
-                            imageVector = Icons.Default.ContentCopy,
+                            imageVector = ContentCopy,
                             contentDescription = "复制",
                             tint = AppColors.Primary
                         )
@@ -339,7 +342,7 @@ private fun TimezoneSelector(
                             color = AppColors.TextPrimary
                         )
                         Icon(
-                            imageVector = if (showDropdown) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                            imageVector = if (showDropdown) KeyboardArrowUp else KeyboardArrowDown,
                             contentDescription = null,
                             tint = AppColors.TextSecondary
                         )
@@ -440,7 +443,7 @@ private fun TimestampToDatetimeCard(
                                 color = AppColors.Primary
                             )
                             Icon(
-                                imageVector = if (showUnitDropdown) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                                imageVector = if (showUnitDropdown) KeyboardArrowUp else KeyboardArrowDown,
                                 contentDescription = null,
                                 tint = AppColors.Primary,
                                 modifier = Modifier.size(16.dp)
@@ -550,7 +553,7 @@ private fun TimestampToDatetimeCard(
                             }
                         ) {
                             Icon(
-                                imageVector = Icons.Default.ContentCopy,
+                                imageVector = ContentCopy,
                                 contentDescription = "复制",
                                 tint = AppColors.Primary
                             )
@@ -660,7 +663,7 @@ private fun DatetimeToTimestampCard(
                                 }
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.ContentCopy,
+                                    imageVector = ContentCopy,
                                     contentDescription = "复制",
                                     tint = AppColors.Primary
                                 )
@@ -701,7 +704,7 @@ private fun DatetimeToTimestampCard(
                                 }
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.ContentCopy,
+                                    imageVector = ContentCopy,
                                     contentDescription = "复制",
                                     tint = AppColors.Primary
                                 )

@@ -3,8 +3,8 @@ package com.nexius.devtoy.components
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
+
+import com.nexius.devtoy.components.Icons.Build
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -58,7 +58,7 @@ fun JsonFormat() {
             modifier = Modifier.padding(horizontal = 8.dp)
         ) {
             Icon(
-                Icons.Default.Build,
+                Build,
                 contentDescription = "格式化JSON"
             )
         }
@@ -91,7 +91,7 @@ fun XmlFormat() {
             },
             modifier = Modifier.padding(horizontal = 8.dp)
         ) {
-            Icon(Icons.Default.Build,
+            Icon(Build,
                 contentDescription = "格式化Xml"
             )
         }

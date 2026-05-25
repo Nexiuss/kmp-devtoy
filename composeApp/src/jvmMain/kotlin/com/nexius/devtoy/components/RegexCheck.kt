@@ -7,8 +7,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,6 +18,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nexius.devtoy.components.Icons.Cancel
+import com.nexius.devtoy.components.Icons.CheckCircle
+import com.nexius.devtoy.components.Icons.ContentCopy
+import com.nexius.devtoy.components.Icons.Search
+import com.nexius.devtoy.components.Icons.FindInPage
+import com.nexius.devtoy.components.Icons.KeyboardArrowDown
+import com.nexius.devtoy.components.Icons.KeyboardArrowUp
+import com.nexius.devtoy.components.Icons.PlayArrow
 import com.nexius.devtoy.theme.AppColors
 
 /**
@@ -103,7 +109,7 @@ private fun LeftSidebar(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Icon(
-                imageVector = Icons.Default.FindInPage,
+                imageVector = FindInPage,
                 contentDescription = null,
                 tint = AppColors.Primary,
                 modifier = Modifier.size(24.dp)
@@ -123,7 +129,7 @@ private fun LeftSidebar(
             placeholder = { Text("搜索正则表达式...", fontSize = 14.sp) },
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Default.Search,
+                    imageVector = Search,
                     contentDescription = null,
                     tint = AppColors.TextSecondary
                 )
@@ -258,7 +264,7 @@ private fun RightPanel(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.FindInPage,
+                    imageVector = FindInPage,
                     contentDescription = null,
                     tint = AppColors.TextSecondary,
                     modifier = Modifier.size(64.dp)
@@ -337,7 +343,7 @@ private fun RightPanel(
                                         color = AppColors.Primary
                                     )
                                     Icon(
-                                        imageVector = if (showLanguageDropdown) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                                        imageVector = if (showLanguageDropdown) KeyboardArrowUp else KeyboardArrowDown,
                                         contentDescription = null,
                                         tint = AppColors.Primary,
                                         modifier = Modifier.size(16.dp)
@@ -395,7 +401,7 @@ private fun RightPanel(
                                 }
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.ContentCopy,
+                                    imageVector = ContentCopy,
                                     contentDescription = "复制",
                                     tint = Color.White
                                 )
@@ -510,7 +516,7 @@ private fun RightPanel(
                         )
                     ) {
                         Icon(
-                            imageVector = Icons.Default.PlayArrow,
+                            imageVector = PlayArrow,
                             contentDescription = null,
                             modifier = Modifier.size(20.dp)
                         )
@@ -540,7 +546,7 @@ private fun RightPanel(
                                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                                     ) {
                                         Icon(
-                                            imageVector = Icons.Default.Error,
+                                            imageVector = Icons.Error,
                                             contentDescription = null,
                                             tint = AppColors.Error,
                                             modifier = Modifier.size(20.dp)
@@ -558,7 +564,7 @@ private fun RightPanel(
                                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                                     ) {
                                         Icon(
-                                            imageVector = Icons.Default.CheckCircle,
+                                            imageVector = CheckCircle,
                                             contentDescription = null,
                                             tint = AppColors.Success,
                                             modifier = Modifier.size(20.dp)
@@ -607,7 +613,7 @@ private fun RightPanel(
                                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                                     ) {
                                         Icon(
-                                            imageVector = Icons.Default.Cancel,
+                                            imageVector = Cancel,
                                             contentDescription = null,
                                             tint = AppColors.TextSecondary,
                                             modifier = Modifier.size(20.dp)
@@ -667,7 +673,7 @@ private fun ExampleItem(example: RegexExample) {
             )
             
             Icon(
-                imageVector = if (example.isMatch) Icons.Default.CheckCircle else Icons.Default.Cancel,
+                imageVector = if (example.isMatch) CheckCircle else Cancel,
                 contentDescription = null,
                 tint = if (example.isMatch) AppColors.Success else AppColors.Error,
                 modifier = Modifier.size(20.dp)

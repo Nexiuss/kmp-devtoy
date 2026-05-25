@@ -5,31 +5,30 @@ import androidx.compose.foundation.ContextMenuItem
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.AddBox
-import androidx.compose.material.icons.filled.Article
-import androidx.compose.material.icons.filled.Calculate
-import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.DataArray
-import androidx.compose.material.icons.filled.DriveFolderUpload
-import androidx.compose.material.icons.filled.FilePresent
-import androidx.compose.material.icons.filled.FolderOpen
-import androidx.compose.material.icons.filled.FormatPaint
-import androidx.compose.material.icons.filled.GppGood
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Html
-import androidx.compose.material.icons.filled.Http
-import androidx.compose.material.icons.filled.Link
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.NetworkPing
-import androidx.compose.material.icons.filled.QrCode
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Storage
-import androidx.compose.material.icons.filled.TextFormat
-import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material.icons.filled.Transform
-import androidx.compose.material.icons.filled.Verified
+
+import com.nexius.devtoy.components.Icons.AddBox
+import com.nexius.devtoy.components.Icons.Article
+import com.nexius.devtoy.components.Icons.Calculate
+import com.nexius.devtoy.components.Icons.Code
+import com.nexius.devtoy.components.Icons.DataArray
+import com.nexius.devtoy.components.Icons.DriveFolderUpload
+import com.nexius.devtoy.components.Icons.FilePresent
+import com.nexius.devtoy.components.Icons.FolderOpen
+import com.nexius.devtoy.components.Icons.FormatPaint
+import com.nexius.devtoy.components.Icons.GppGood
+import com.nexius.devtoy.components.Icons.Home
+import com.nexius.devtoy.components.Icons.Html
+import com.nexius.devtoy.components.Icons.Http
+import com.nexius.devtoy.components.Icons.Link
+import com.nexius.devtoy.components.Icons.Menu
+import com.nexius.devtoy.components.Icons.NetworkPing
+import com.nexius.devtoy.components.Icons.QrCode
+import com.nexius.devtoy.components.Icons.Search
+import com.nexius.devtoy.components.Icons.Storage
+import com.nexius.devtoy.components.Icons.TextFormat
+import com.nexius.devtoy.components.Icons.Timer
+import com.nexius.devtoy.components.Icons.Transform
+import com.nexius.devtoy.components.Icons.Verified
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -40,6 +39,7 @@ import androidx.navigation.compose.rememberNavController
 import com.gabrieldrn.carbon.tab.TabItem
 import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.devtoy.components.*
+import com.nexius.devtoy.components.Icons.ArrowBack
 import com.nexius.devtoy.components.filerename.ui.FileRenameView
 import com.nexius.devtoy.components.ftp.ui.FtpScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -70,7 +70,7 @@ fun layout() {
                         IconButton(onClick = {
                             menuVisiable = !menuVisiable
                         }) {
-                            Icon(Icons.Default.Menu, contentDescription = "图标", modifier = Modifier.size(24.dp))
+                            Icon(Menu, contentDescription = "图标", modifier = Modifier.size(24.dp))
                         }
 
                         Spacer(modifier = Modifier.weight(1f))
@@ -101,10 +101,10 @@ fun layout() {
                 },
                 actions = {
                     IconButton(onClick = { navigator.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "后退")
+                        Icon(ArrowBack, contentDescription = "后退")
                     }
                     IconButton(onClick = { navigator.navigate("home") }) {
-                        Icon(Icons.Default.Home, contentDescription = "首页")
+                        Icon(Home, contentDescription = "首页")
                     }
                     MinimalDropdownMenu()
                 }
@@ -178,47 +178,47 @@ val menuItems = listOf(
         id = "home",
         path = "root/home",
         name = "首页",
-        icon = Icons.Default.Home ,
+        icon = Home ,
     ),
     MenuItem(
         id = "endecode",
         path = "root/endecode",
         name = "编解码器",
-        icon = Icons.Default.Transform,
-        expandedIcon = Icons.Default.FolderOpen,
+        icon = Transform,
+        expandedIcon = FolderOpen,
         children = listOf(
             MenuItem(
                 id = "base64",
                 path = "root/endecode/base64",
                 name = "base64文本",
-                icon = Icons.Default.Code),
+                icon = Code),
             MenuItem(
                 id = "html",
                 path = "root/endecode/html",
                 name = "HTML",
-                icon = Icons.Default.Html,
-                expandedIcon = Icons.Default.FolderOpen
+                icon = Html,
+                expandedIcon = FolderOpen
             ),
             MenuItem(
                 id = "url",
                 path =  "root/endecode/url",
                 name = "URL",
-                icon = Icons.Default.Link,
-                expandedIcon = Icons.Default.FolderOpen
+                icon = Link,
+                expandedIcon = FolderOpen
             ),
             MenuItem(
                 id = "qrCode",
                 path =  "root/endecode/qrCode",
                 name = "二维码",
-                icon = Icons.Default.QrCode,
-                expandedIcon = Icons.Default.FolderOpen
+                icon = QrCode,
+                expandedIcon = FolderOpen
             ),
             MenuItem(
                 id = "jwt",
                 path =  "root/endecode/jwt",
                 name = "JWT",
-                icon = Icons.Default.Verified,
-                expandedIcon = Icons.Default.FolderOpen
+                icon = Verified,
+                expandedIcon = FolderOpen
             )
         )
     ),
@@ -226,27 +226,27 @@ val menuItems = listOf(
         id = "format",
         name =  "格式化工具",
         path =  "root/format",
-        icon = Icons.Default.FormatPaint,
-        expandedIcon = Icons.Default.FolderOpen,
+        icon = FormatPaint,
+        expandedIcon = FolderOpen,
         children = listOf(
             MenuItem(
                 id = "json",
                 path = "root/format/json",
                 name = "JSON",
-                icon = Icons.Default.DataArray),
+                icon = DataArray),
             MenuItem(
                 id = "sql",
                 path = "root/format/sql",
                 name = "SQL",
-                icon = Icons.Default.Storage,
-                expandedIcon = Icons.Default.FolderOpen
+                icon = Storage,
+                expandedIcon = FolderOpen
             ),
             MenuItem(
                 id = "xml",
                 path =  "root/format/xml",
                 name = "XML",
-                icon = Icons.Default.Html,
-                expandedIcon = Icons.Default.FolderOpen
+                icon = Html,
+                expandedIcon = FolderOpen
             )
         )
     ),
@@ -254,71 +254,71 @@ val menuItems = listOf(
         id = "generator",
         name =  "生成器",
         path =  "root/generator",
-        icon = Icons.Default.AddBox,
-        expandedIcon = Icons.Default.FolderOpen,
+        icon = AddBox,
+        expandedIcon = FolderOpen,
         children = listOf(
             MenuItem(
                 id = "uuid",
                 path = "root/generator/uuid",
                 name = "UUID",
-                icon = Icons.Default.GppGood)
+                icon = GppGood)
         )
     ),
     MenuItem(
         id = "text",
         name =  "文本处理",
         path =  "root/text",
-        icon = Icons.Default.TextFormat,
-        expandedIcon = Icons.Default.FolderOpen,
+        icon = TextFormat,
+        expandedIcon = FolderOpen,
         children = listOf(
             MenuItem(
                 id = "markdown",
                 path = "root/text/markdown",
                 name = "Markdown",
-                icon = Icons.Filled.Article),
+                icon = Article),
             MenuItem(
                 id = "regexCheck",
                 path = "root/text/regexCheck",
                 name = "正则速查",
-                icon = Icons.Filled.Search)
+                icon = Search)
         )
     ),MenuItem(
         id = "net",
         name =  "网络",
         path =  "root/net",
-        icon = Icons.Default.NetworkPing,
-        expandedIcon = Icons.Default.FolderOpen,
+        icon = NetworkPing,
+        expandedIcon = FolderOpen,
         children = listOf(
             MenuItem(
                 id = "httpClient",
                 path = "root/net/httpClient",
                 name = "Http客户端",
-                icon = Icons.Default.Http)
+                icon = Http)
         )
     ),
     MenuItem(
         id = "ftp",
         path = "root/ftp",
         name = "FTP",
-        icon = Icons.Default.DriveFolderUpload,
+        icon = DriveFolderUpload,
     ),
     MenuItem(
         id = "fileRename",
         path = "root/fileRename",
         name = "文件重命名",
-        icon = Icons.Filled.FilePresent,
+        icon = FilePresent,
     ),
     MenuItem(
         id = "loanCalculator",
         path = "root/LoanCalculator",
         name = "贷款计算",
-        icon = Icons.Default.Calculate,
+        icon = Calculate,
     ),
     MenuItem(
         id = "timestampConverter",
         path = "root/timestampConverter",
         name = "时间戳转换",
-        icon = Icons.Default.Timer,
+        icon = Timer,
     ),
 )
 

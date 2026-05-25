@@ -17,7 +17,6 @@ kotlin {
             implementation(compose.foundation)
             api(compose.ui)
             api(compose.material3)
-            api(compose.materialIconsExtended)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.composeUI.carbon)

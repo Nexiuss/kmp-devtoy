@@ -5,8 +5,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Folder
+
+import com.nexius.devtoy.components.Icons.Folder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -108,7 +108,7 @@ fun FileInputField(
                     .background(AppColors.Primary)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Folder,
+                    imageVector = Folder,
                     contentDescription = "选择${if (isDirectory) "文件夹" else "文件"}",
                     tint = Color.White,
                     modifier = Modifier.size(24.dp)
@@ -181,7 +181,7 @@ fun FileDropZone(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Folder,
+                    imageVector = Folder,
                     contentDescription = null,
                     tint = if (isDragging) AppColors.Primary else AppColors.TextTertiary,
                     modifier = Modifier.size(32.dp)
