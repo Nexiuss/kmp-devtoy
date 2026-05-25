@@ -40,6 +40,8 @@ import com.gabrieldrn.carbon.tab.TabItem
 import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.devtoy.components.*
 import com.nexius.devtoy.components.Icons.ArrowBack
+import com.nexius.devtoy.components.Icons.CodeXml
+import com.nexius.devtoy.components.Icons.Markdown
 import com.nexius.devtoy.components.filerename.ui.FileRenameView
 import com.nexius.devtoy.components.ftp.ui.FtpScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -245,7 +247,7 @@ val menuItems = listOf(
                 id = "xml",
                 path =  "root/format/xml",
                 name = "XML",
-                icon = Html,
+                icon = CodeXml,
                 expandedIcon = FolderOpen
             )
         )
@@ -275,7 +277,7 @@ val menuItems = listOf(
                 id = "markdown",
                 path = "root/text/markdown",
                 name = "Markdown",
-                icon = Article),
+                icon = Markdown),
             MenuItem(
                 id = "regexCheck",
                 path = "root/text/regexCheck",
