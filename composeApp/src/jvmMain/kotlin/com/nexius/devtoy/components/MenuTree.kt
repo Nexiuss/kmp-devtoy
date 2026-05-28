@@ -27,16 +27,6 @@ data class MenuItem(
     val children: List<MenuItem> = emptyList()
 )
 
-fun getById(id: String): MenuItem {
-    return getItem(tree = menuItems, filter = { it.id == id })
-        ?: throw IllegalArgumentException("No menu item found with id $id")
-}
-
-fun getByName(name: String): MenuItem {
-    return getItem(tree = menuItems, filter = { it.name == name })
-        ?: throw IllegalArgumentException("No menu item found with name $name")
-}
-
 fun getItem(tree: List<MenuItem>, filter:(MenuItem)-> Boolean): MenuItem? {
     tree.forEach {
         if (filter(it)) {

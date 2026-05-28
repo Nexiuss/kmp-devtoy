@@ -84,7 +84,6 @@ fun layout() {
                                     selectedTab = it
                                     val item = getByName(it.label)
                                     if (item != null) {
-                                        selectedItem = item
                                         navigator.navigate(item.id)
                                     }
                                 }
@@ -186,14 +185,13 @@ fun layout() {
 fun toTab(menuItem: MenuItem): TabItem {
     return TabItem(menuItem.name)
 }
-
-// 安全获取菜单（修复空指针）
 fun getById(id: String): MenuItem {
-    return menuItems.find { it.id == id } ?: menuItems.first()
+    return getItem(tree = menuItems, filter = { it.id == id })
+        ?: throw IllegalArgumentException("No menu item found with id $id")
 }
-
-fun getByName(name: String): MenuItem? {
-    return menuItems.find { it.name == name }
+fun getByName(name: String): MenuItem {
+    return getItem(tree = menuItems, filter = { it.name == name })
+        ?: throw IllegalArgumentException("No menu item found with name $name")
 }
 
 // ====================== 菜单数据（无修改） ======================
