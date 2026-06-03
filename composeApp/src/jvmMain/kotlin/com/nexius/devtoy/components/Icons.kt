@@ -3928,4 +3928,143 @@ object Icons {
         }
 
     private var _drag_indicator: ImageVector? = null
+
+    val TextFile: ImageVector by lazy { ImageVector.Builder(
+        name = "TextFileIcon",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f
+    ).apply {
+        path(
+            fill = SolidColor(Color.Black),
+            fillAlpha = 1f,
+            stroke = null,
+            strokeAlpha = 1f,
+            strokeLineWidth = 1f,
+            strokeLineCap = StrokeCap.Butt,
+            strokeLineJoin = StrokeJoin.Miter,
+            strokeLineMiter = 1f,
+            pathFillType = PathFillType.NonZero
+        ) {
+            // 文件轮廓
+            moveTo(4f, 2f)
+            curveTo(3.45f, 2f, 3f, 2.45f, 3f, 3f)
+            lineTo(3f, 21f)
+            curveTo(3f, 21.55f, 3.45f, 22f, 4f, 22f)
+            lineTo(20f, 22f)
+            curveTo(20.55f, 22f, 21f, 21.55f, 21f, 21f)
+            lineTo(21f, 7f)
+            lineTo(14f, 7f)
+            curveTo(13.45f, 7f, 13f, 6.55f, 13f, 6f)
+            lineTo(13f, 2f)
+            lineTo(4f, 2f)
+            close()
+
+            // 折角
+            moveTo(14f, 2f)
+            lineTo(21f, 9f)
+            lineTo(21f, 6f)
+            curveTo(21f, 4.9f, 20.1f, 4f, 19f, 4f)
+            lineTo(14f, 4f)
+            lineTo(14f, 2f)
+            close()
+
+            // 文字横线
+            moveTo(8f, 11f)
+            lineTo(16f, 11f)
+            moveTo(8f, 14f)
+            lineTo(16f, 14f)
+            moveTo(8f, 17f)
+            lineTo(14f, 17f)
+        }
+    }.build() }
+
+    val convertToText: ImageVector
+        get() {
+            if (_convert_to_text != null) {
+                return _convert_to_text!!
+            }
+            _convert_to_text =
+                ImageVector.Builder(
+                    name = "convert_to_text",
+                    defaultWidth = 24.dp,
+                    defaultHeight = 24.dp,
+                    viewportWidth = 24f,
+                    viewportHeight = 24f,
+                )
+                    .apply {
+                        path(
+                            fill = SolidColor(Color.Black),
+                            fillAlpha = 1f,
+                            stroke = null,
+                            strokeAlpha = 1f,
+                            strokeLineWidth = 1f,
+                            strokeLineCap = StrokeCap.Butt,
+                            strokeLineJoin = StrokeJoin.Bevel,
+                            strokeLineMiter = 1f,
+                            pathFillType = PathFillType.Companion.NonZero,
+                        ) {
+                            moveTo(10f, 17f)
+                            horizontalLineToRelative(4f)
+                            verticalLineTo(15f)
+                            horizontalLineTo(10f)
+                            verticalLineToRelative(2f)
+                            close()
+                            moveToRelative(0f, -4f)
+                            horizontalLineToRelative(7f)
+                            verticalLineTo(11f)
+                            horizontalLineTo(10f)
+                            verticalLineToRelative(2f)
+                            close()
+                            moveTo(7f, 9f)
+                            horizontalLineTo(17f)
+                            verticalLineTo(7f)
+                            horizontalLineTo(7f)
+                            verticalLineTo(9f)
+                            close()
+                            moveToRelative(5f, 3f)
+                            close()
+                            moveTo(2f, 22f)
+                            verticalLineTo(20f)
+                            horizontalLineTo(4.55f)
+                            quadTo(3.35f, 19.43f, 2.61f, 18.3f)
+                            reflectiveQuadTo(1.88f, 15.75f)
+                            quadToRelative(0f, -1.98f, 1.39f, -3.36f)
+                            reflectiveQuadTo(6.63f, 11f)
+                            verticalLineToRelative(2f)
+                            quadTo(5.5f, 13f, 4.69f, 13.8f)
+                            reflectiveQuadTo(3.88f, 15.75f)
+                            quadToRelative(0f, 0.98f, 0.6f, 1.73f)
+                            reflectiveQuadTo(6f, 18.43f)
+                            verticalLineTo(16f)
+                            horizontalLineTo(8f)
+                            verticalLineToRelative(6f)
+                            horizontalLineTo(2f)
+                            close()
+                            moveToRelative(8f, -1f)
+                            verticalLineTo(19f)
+                            horizontalLineToRelative(9f)
+                            verticalLineTo(5f)
+                            horizontalLineTo(5f)
+                            verticalLineTo(9f)
+                            horizontalLineTo(3f)
+                            verticalLineTo(5f)
+                            quadTo(3f, 4.17f, 3.59f, 3.59f)
+                            reflectiveQuadTo(5f, 3f)
+                            horizontalLineTo(19f)
+                            quadToRelative(0.83f, 0f, 1.41f, 0.59f)
+                            reflectiveQuadTo(21f, 5f)
+                            verticalLineTo(19f)
+                            quadToRelative(0f, 0.82f, -0.59f, 1.41f)
+                            reflectiveQuadTo(19f, 21f)
+                            horizontalLineTo(10f)
+                            close()
+                        }
+                    }
+                    .build()
+            return _convert_to_text!!
+        }
+
+    private var _convert_to_text: ImageVector? = null
 }

@@ -210,6 +210,7 @@ val menuItems = listOf(
         expandedIcon = Icons.FolderOpen,
         children = listOf(
             MenuItem(id = "base64", path = "root/endecode/base64", name = "base64文本", icon = Icons.Code),
+            MenuItem(id = "base85", path = "root/endecode/base85", name = "base85文本文件", icon = Icons.TextFile),
             MenuItem(id = "html", path = "root/endecode/html", name = "HTML", icon = Icons.Html, expandedIcon = Icons.FolderOpen),
             MenuItem(id = "url", path = "root/endecode/url", name = "URL", icon = Icons.Link, expandedIcon = Icons.FolderOpen),
             MenuItem(id = "qrCode", path = "root/endecode/qrCode", name = "二维码", icon = Icons.QrCode, expandedIcon = Icons.FolderOpen),
@@ -316,6 +317,9 @@ fun getContent(menuItem: MenuItem){
         }
         "timestampConverter"->{
             TimestampConverter()
+        }
+        "base85"->{
+            Base85DeEncode()
         }
     }
 }
