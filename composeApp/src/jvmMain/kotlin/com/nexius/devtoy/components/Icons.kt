@@ -4067,4 +4067,235 @@ object Icons {
         }
 
     private var _convert_to_text: ImageVector? = null
+
+    val SwitchIcon: ImageVector
+        get() {
+            val current = _switchIcon
+            if (current != null) return current
+
+            return ImageVector.Builder(
+                name = "material.SwitchIcon",
+                defaultWidth = 200.0.dp,
+                defaultHeight = 200.0.dp,
+                viewportWidth = 1024.0f,
+                viewportHeight = 1024.0f,
+            ).apply {
+                // M128 522.67 c17.07 0 32 -14.94 32 -32 V320 c0 -6.4 4.27 -10.67 10.67 -10.67 h652.8 l-83.2 83.2 c-12.8 12.8 -12.8 34.14 0 46.94 6.4 6.4 14.93 10.66 23.46 10.66 s17.07 -4.26 23.47 -10.66 L932.27 294.4 c12.8 -12.8 12.8 -34.13 0 -46.93 L787.2 102.4 c-12.8 -12.8 -34.13 -12.8 -46.93 0 s-12.8 34.13 0 46.93 l93.86 93.87 H170.67 c-40.54 0 -74.67 34.13 -74.67 74.67 v170.66 c0 19.2 14.93 34.14 32 34.14 m778.67 -21.34 c-17.07 0 -32 14.94 -32 32 V704 c0 6.4 -4.27 10.67 -10.67 10.67 H211.2 l83.2 -83.2 c12.8 -12.8 12.8 -34.14 0 -46.94 s-34.13 -12.8 -46.93 0 L102.4 729.6 c-12.8 12.8 -12.8 34.13 0 46.93 L247.47 921.6 c6.4 6.4 14.93 10.67 23.46 10.67 S288 928 294.4 921.6 c12.8 -12.8 12.8 -34.13 0 -46.93 l-93.87 -93.87 H864 c40.53 0 74.67 -34.13 74.67 -74.67 V535.47 c0 -19.2 -12.8 -34.14 -32 -34.14
+                path(
+                    fill = SolidColor(Color.Black),
+                ) {
+                    // M 128 522.67
+                    moveTo(x = 128.0f, y = 522.67f)
+                    // c 17.07 0 32 -14.94 32 -32
+                    curveToRelative(
+                        dx1 = 17.07f,
+                        dy1 = 0.0f,
+                        dx2 = 32.0f,
+                        dy2 = -14.94f,
+                        dx3 = 32.0f,
+                        dy3 = -32.0f,
+                    )
+                    // V 320
+                    verticalLineTo(y = 320.0f)
+                    // c 0 -6.4 4.27 -10.67 10.67 -10.67
+                    curveToRelative(
+                        dx1 = 0.0f,
+                        dy1 = -6.4f,
+                        dx2 = 4.27f,
+                        dy2 = -10.67f,
+                        dx3 = 10.67f,
+                        dy3 = -10.67f,
+                    )
+                    // h 652.8
+                    horizontalLineToRelative(dx = 652.8f)
+                    // l -83.2 83.2
+                    lineToRelative(dx = -83.2f, dy = 83.2f)
+                    // c -12.8 12.8 -12.8 34.14 0 46.94
+                    curveToRelative(
+                        dx1 = -12.8f,
+                        dy1 = 12.8f,
+                        dx2 = -12.8f,
+                        dy2 = 34.14f,
+                        dx3 = 0.0f,
+                        dy3 = 46.94f,
+                    )
+                    // c 6.4 6.4 14.93 10.66 23.46 10.66
+                    curveToRelative(
+                        dx1 = 6.4f,
+                        dy1 = 6.4f,
+                        dx2 = 14.93f,
+                        dy2 = 10.66f,
+                        dx3 = 23.46f,
+                        dy3 = 10.66f,
+                    )
+                    // s 17.07 -4.26 23.47 -10.66
+                    reflectiveCurveToRelative(
+                        dx1 = 17.07f,
+                        dy1 = -4.26f,
+                        dx2 = 23.47f,
+                        dy2 = -10.66f,
+                    )
+                    // L 932.27 294.4
+                    lineTo(x = 932.27f, y = 294.4f)
+                    // c 12.8 -12.8 12.8 -34.13 0 -46.93
+                    curveToRelative(
+                        dx1 = 12.8f,
+                        dy1 = -12.8f,
+                        dx2 = 12.8f,
+                        dy2 = -34.13f,
+                        dx3 = 0.0f,
+                        dy3 = -46.93f,
+                    )
+                    // L 787.2 102.4
+                    lineTo(x = 787.2f, y = 102.4f)
+                    // c -12.8 -12.8 -34.13 -12.8 -46.93 0
+                    curveToRelative(
+                        dx1 = -12.8f,
+                        dy1 = -12.8f,
+                        dx2 = -34.13f,
+                        dy2 = -12.8f,
+                        dx3 = -46.93f,
+                        dy3 = 0.0f,
+                    )
+                    // s -12.8 34.13 0 46.93
+                    reflectiveCurveToRelative(
+                        dx1 = -12.8f,
+                        dy1 = 34.13f,
+                        dx2 = 0.0f,
+                        dy2 = 46.93f,
+                    )
+                    // l 93.86 93.87
+                    lineToRelative(dx = 93.86f, dy = 93.87f)
+                    // H 170.67
+                    horizontalLineTo(x = 170.67f)
+                    // c -40.54 0 -74.67 34.13 -74.67 74.67
+                    curveToRelative(
+                        dx1 = -40.54f,
+                        dy1 = 0.0f,
+                        dx2 = -74.67f,
+                        dy2 = 34.13f,
+                        dx3 = -74.67f,
+                        dy3 = 74.67f,
+                    )
+                    // v 170.66
+                    verticalLineToRelative(dy = 170.66f)
+                    // c 0 19.2 14.93 34.14 32 34.14
+                    curveToRelative(
+                        dx1 = 0.0f,
+                        dy1 = 19.2f,
+                        dx2 = 14.93f,
+                        dy2 = 34.14f,
+                        dx3 = 32.0f,
+                        dy3 = 34.14f,
+                    )
+                    // m 778.67 -21.34
+                    moveToRelative(dx = 778.67f, dy = -21.34f)
+                    // c -17.07 0 -32 14.94 -32 32
+                    curveToRelative(
+                        dx1 = -17.07f,
+                        dy1 = 0.0f,
+                        dx2 = -32.0f,
+                        dy2 = 14.94f,
+                        dx3 = -32.0f,
+                        dy3 = 32.0f,
+                    )
+                    // V 704
+                    verticalLineTo(y = 704.0f)
+                    // c 0 6.4 -4.27 10.67 -10.67 10.67
+                    curveToRelative(
+                        dx1 = 0.0f,
+                        dy1 = 6.4f,
+                        dx2 = -4.27f,
+                        dy2 = 10.67f,
+                        dx3 = -10.67f,
+                        dy3 = 10.67f,
+                    )
+                    // H 211.2
+                    horizontalLineTo(x = 211.2f)
+                    // l 83.2 -83.2
+                    lineToRelative(dx = 83.2f, dy = -83.2f)
+                    // c 12.8 -12.8 12.8 -34.14 0 -46.94
+                    curveToRelative(
+                        dx1 = 12.8f,
+                        dy1 = -12.8f,
+                        dx2 = 12.8f,
+                        dy2 = -34.14f,
+                        dx3 = 0.0f,
+                        dy3 = -46.94f,
+                    )
+                    // s -34.13 -12.8 -46.93 0
+                    reflectiveCurveToRelative(
+                        dx1 = -34.13f,
+                        dy1 = -12.8f,
+                        dx2 = -46.93f,
+                        dy2 = 0.0f,
+                    )
+                    // L 102.4 729.6
+                    lineTo(x = 102.4f, y = 729.6f)
+                    // c -12.8 12.8 -12.8 34.13 0 46.93
+                    curveToRelative(
+                        dx1 = -12.8f,
+                        dy1 = 12.8f,
+                        dx2 = -12.8f,
+                        dy2 = 34.13f,
+                        dx3 = 0.0f,
+                        dy3 = 46.93f,
+                    )
+                    // L 247.47 921.6
+                    lineTo(x = 247.47f, y = 921.6f)
+                    // c 6.4 6.4 14.93 10.67 23.46 10.67
+                    curveToRelative(
+                        dx1 = 6.4f,
+                        dy1 = 6.4f,
+                        dx2 = 14.93f,
+                        dy2 = 10.67f,
+                        dx3 = 23.46f,
+                        dy3 = 10.67f,
+                    )
+                    // S 288 928 294.4 921.6
+                    reflectiveCurveTo(
+                        x1 = 288.0f,
+                        y1 = 928.0f,
+                        x2 = 294.4f,
+                        y2 = 921.6f,
+                    )
+                    // c 12.8 -12.8 12.8 -34.13 0 -46.93
+                    curveToRelative(
+                        dx1 = 12.8f,
+                        dy1 = -12.8f,
+                        dx2 = 12.8f,
+                        dy2 = -34.13f,
+                        dx3 = 0.0f,
+                        dy3 = -46.93f,
+                    )
+                    // l -93.87 -93.87
+                    lineToRelative(dx = -93.87f, dy = -93.87f)
+                    // H 864
+                    horizontalLineTo(x = 864.0f)
+                    // c 40.53 0 74.67 -34.13 74.67 -74.67
+                    curveToRelative(
+                        dx1 = 40.53f,
+                        dy1 = 0.0f,
+                        dx2 = 74.67f,
+                        dy2 = -34.13f,
+                        dx3 = 74.67f,
+                        dy3 = -74.67f,
+                    )
+                    // V 535.47
+                    verticalLineTo(y = 535.47f)
+                    // c 0 -19.2 -12.8 -34.14 -32 -34.14
+                    curveToRelative(
+                        dx1 = 0.0f,
+                        dy1 = -19.2f,
+                        dx2 = -12.8f,
+                        dy2 = -34.14f,
+                        dx3 = -32.0f,
+                        dy3 = -34.14f,
+                    )
+                }
+            }.build().also { _switchIcon = it }
+        }
+
+    @Suppress("ObjectPropertyName")
+    private var _switchIcon: ImageVector? = null
 }

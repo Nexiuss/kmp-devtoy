@@ -396,6 +396,202 @@ fun JwtDecode() {
     }
 }
 
+/**
+ * 文本命名格式转换工具
+ * 支持：大驼峰、小驼峰、下划线、大写下划线、连字符
+ */
+@Composable
+fun TextCaseConvert() {
+    // 输入输出状态
+    var inputText by remember { mutableStateOf("") }
+    var outputText by remember { mutableStateOf("") }
+    var convertTip by remember { mutableStateOf("请输入文本，点击下方按钮转换") }
+
+    // 系统剪贴板
+    val clipboard = remember { Toolkit.getDefaultToolkit().systemClipboard }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        // 输入区域
+        OutlinedTextField(
+            value = inputText,
+            onValueChange = {
+                inputText = it
+                convertTip = "请点击转换按钮"
+            },
+            label = { Text("原始文本") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp),
+            singleLine = false,
+            maxLines = Int.MAX_VALUE,
+            textStyle = TextStyle(fontSize = 13.sp)
+        )
+
+        // 转换按钮行
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                onClick = { outputText = inputText.toUpperCamelCase() },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(6.dp)
+            ) {
+                Text("大驼峰", fontSize = 12.sp)
+            }
+            Button(
+                onClick = { outputText = inputText.toLowerCamelCase() },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(6.dp)
+            ) {
+                Text("小驼峰", fontSize = 12.sp)
+            }
+            Button(
+                onClick = { outputText = inputText.toSnakeCase() },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(6.dp)
+            ) {
+                Text("下划线", fontSize = 12.sp)
+            }
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                onClick = { outputText = inputText.toUpperSnakeCase() },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(6.dp)
+            ) {
+                Text("大写下划线", fontSize = 12.sp)
+            }
+            Button(
+                onClick = { outputText = inputText.toKebabCase() },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(6.dp)
+            ) {
+                Text("连字符", fontSize = 12.sp)
+            }
+            Button(
+                onClick = { inputText = ""; outputText = ""; convertTip = "已清空" },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(6.dp)
+            ) {
+                Text("清空", fontSize = 12.sp)
+            }
+        }
+
+        // 提示文本
+        Text(
+            text = convertTip,
+            style = MaterialTheme.typography.labelSmall,
+            modifier = Modifier.padding(vertical = 2.dp)
+        )
+
+        // 输出区域 + 复制按钮
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            OutlinedTextField(
+                value = outputText,
+                onValueChange = {},
+                label = { Text("转换结果") },
+                readOnly = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp),
+                singleLine = false,
+                maxLines = Int.MAX_VALUE,
+                textStyle = TextStyle(fontSize = 13.sp)
+            )
+
+            // 复制按钮
+            Button(
+                onClick = {
+                    if (outputText.isBlank()) {
+                        convertTip = "无内容可复制"
+                        return@Button
+                    }
+                    val selection = StringSelection(outputText)
+                    clipboard.setContents(selection, selection)
+                    convertTip = "✅ 复制成功"
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text("复制结果到剪贴板")
+            }
+        }
+    }
+}
+
+// ====================== 核心转换工具方法 ======================
+
+/**
+ * 分割文本为单词列表（支持空格、下划线、连字符、驼峰）
+ */
+private fun String.splitToWords(): List<String> {
+    if (isBlank()) return emptyList()
+    return trim()
+        // 处理下划线、连字符、空格
+        .replace(Regex("[-_\\s]+"), " ")
+        // 处理驼峰：大写字母前加空格
+        .replace(Regex("(?<=[a-z])(?=[A-Z])"), " ")
+        .split(" ")
+        .filter { it.isNotBlank() }
+        .map { it.lowercase() }
+}
+
+/**
+ * 大驼峰 UpperCamelCase
+ */
+fun String.toUpperCamelCase(): String {
+    return splitToWords()
+        .joinToString("") { it.replaceFirstChar { c -> c.uppercase() } }
+}
+
+/**
+ * 小驼峰 lowerCamelCase
+ */
+fun String.toLowerCamelCase(): String {
+    val words = splitToWords()
+    if (words.isEmpty()) return ""
+    return words.first() + words.drop(1)
+        .joinToString("") { it.replaceFirstChar { c -> c.uppercase() } }
+}
+
+/**
+ * 下划线 snake_case
+ */
+fun String.toSnakeCase(): String {
+    return splitToWords().joinToString("_")
+}
+
+/**
+ * 大写下划线 SCREAMING_SNAKE_CASE
+ */
+fun String.toUpperSnakeCase(): String {
+    return splitToWords().joinToString("_") { it.uppercase() }
+}
+
+/**
+ * 连字符 kebab-case
+ */
+fun String.toKebabCase(): String {
+    return splitToWords().joinToString("-")
+}
+
 fun decodeHtml(input: String): String {
     val entities = mapOf(
         "&amp;" to '&',

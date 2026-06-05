@@ -247,7 +247,8 @@ val menuItems = listOf(
         expandedIcon = Icons.FolderOpen,
         children = listOf(
             MenuItem(id = "markdown", path = "root/text/markdown", name = "Markdown", icon = Icons.Markdown),
-            MenuItem(id = "regexCheck", path = "root/text/regexCheck", name = "正则速查", icon = Icons.Search)
+            MenuItem(id = "regexCheck", path = "root/text/regexCheck", name = "正则速查", icon = Icons.Search),
+            MenuItem(id = "textCase", path = "root/text/textCase", name = "转换大小写", icon = Icons.SwitchIcon),
         )
     ),
     MenuItem(
@@ -320,6 +321,9 @@ fun getContent(menuItem: MenuItem){
         }
         "base85"->{
             Base85DeEncode()
+        }
+        "textCase"->{
+            TextCaseConvert()
         }
     }
 }
