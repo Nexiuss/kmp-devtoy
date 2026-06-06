@@ -13,19 +13,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.isCtrlPressed
+import androidx.compose.ui.input.key.isMetaPressed
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.gabrieldrn.carbon.tab.TabItem
 import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.devtoy.components.*
 import com.nexius.devtoy.components.Icons.ArrowBack
-import com.nexius.devtoy.components.Icons.CodeXml
-import com.nexius.devtoy.components.Icons.Markdown
 import com.nexius.devtoy.components.filerename.ui.FileRenameView
 import com.nexius.devtoy.components.ftp.ui.FtpScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import kotlin.coroutines.ContinuationInterceptor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +58,30 @@ fun layout() {
     val maxSidebarWidth = 400.dp
 
     Scaffold(
+        // ========== 新增：全局快捷键监听修饰符 ==========
+        modifier = Modifier.onKeyEvent { event ->
+            if (event.type == KeyEventType.KeyUp) return@onKeyEvent false
+            // 监听 Ctrl+W 或 Cmd+W
+            val isWKey = event.key == Key.W
+            val isShortcut = (event.isCtrlPressed || event.isMetaPressed) && isWKey
+            if (isShortcut) {
+                // 执行关闭当前选中标签
+                if (tabs.size > 1) { // 防止关闭最后一个标签
+                    tabs.remove(selectedTab)
+                    // 关闭后自动切换到最后一个标签
+                    if (tabs.isNotEmpty()) {
+                        selectedTab = tabs.last()
+                        val item = getByName(selectedTab.label)
+                        if (item != null) {
+                            navigator.navigate(item.id)
+                        }
+                    }
+                }
+                true // 消费事件
+            } else {
+                false
+            }
+        },
         topBar = {
             TopAppBar(
                 title = {
