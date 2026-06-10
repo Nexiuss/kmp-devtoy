@@ -29,6 +29,7 @@ import com.nexius.devtoy.components.*
 import com.nexius.devtoy.components.Icons.ArrowBack
 import com.nexius.devtoy.components.filerename.ui.FileRenameView
 import com.nexius.devtoy.components.ftp.ui.FtpScreen
+import com.nexius.devtoy.components.textcompare.ui.TextCompareView
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.coroutines.ContinuationInterceptor
 
@@ -278,6 +279,7 @@ val menuItems = listOf(
             MenuItem(id = "markdown", path = "root/text/markdown", name = "Markdown", icon = Icons.Markdown),
             MenuItem(id = "regexCheck", path = "root/text/regexCheck", name = "正则速查", icon = Icons.Search),
             MenuItem(id = "textCase", path = "root/text/textCase", name = "转换大小写", icon = Icons.SwitchIcon),
+            MenuItem(id = "textCompare", path = "root/text/textCompare", name = "文本比对", icon = Icons.TextCompare),
         )
     ),
     MenuItem(
@@ -353,6 +355,9 @@ fun getContent(menuItem: MenuItem){
         }
         "textCase"->{
             TextCaseConvert()
+        }
+        "textCompare"->{
+            TextCompareView()
         }
     }
 }

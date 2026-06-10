@@ -4298,4 +4298,97 @@ object Icons {
 
     @Suppress("ObjectPropertyName")
     private var _switchIcon: ImageVector? = null
+
+    val TextCompare: ImageVector
+        get() {
+            if (_text_compare != null) {
+                return _text_compare!!
+            }
+            _text_compare =
+                ImageVector.Builder(
+                    name = "text_compare",
+                    defaultWidth = 24.dp,
+                    defaultHeight = 24.dp,
+                    viewportWidth = 24f,
+                    viewportHeight = 24f,
+                )
+                    .apply {
+                        path(
+                            fill = SolidColor(Color.Black),
+                            fillAlpha = 1f,
+                            stroke = null,
+                            strokeAlpha = 1f,
+                            strokeLineWidth = 1f,
+                            strokeLineCap = StrokeCap.Butt,
+                            strokeLineJoin = StrokeJoin.Bevel,
+                            strokeLineMiter = 1f,
+                            pathFillType = PathFillType.Companion.NonZero,
+                        ) {
+                            moveTo(10f, 23f)
+                            verticalLineTo(21f)
+                            horizontalLineTo(5f)
+                            quadTo(4.18f, 21f, 3.59f, 20.41f)
+                            reflectiveQuadTo(3f, 19f)
+                            verticalLineTo(5f)
+                            quadTo(3f, 4.17f, 3.59f, 3.59f)
+                            reflectiveQuadTo(5f, 3f)
+                            horizontalLineToRelative(5f)
+                            verticalLineTo(1f)
+                            horizontalLineToRelative(2f)
+                            verticalLineTo(23f)
+                            horizontalLineTo(10f)
+                            close()
+                            moveTo(5f, 19f)
+                            horizontalLineToRelative(5f)
+                            verticalLineTo(17f)
+                            horizontalLineTo(7f)
+                            verticalLineTo(15f)
+                            horizontalLineToRelative(3f)
+                            verticalLineTo(13f)
+                            horizontalLineTo(7f)
+                            verticalLineTo(11f)
+                            horizontalLineToRelative(3f)
+                            verticalLineTo(9f)
+                            horizontalLineTo(7f)
+                            verticalLineTo(7f)
+                            horizontalLineToRelative(3f)
+                            verticalLineTo(5f)
+                            horizontalLineTo(5f)
+                            verticalLineTo(19f)
+                            close()
+                            moveTo(14f, 5f)
+                            verticalLineTo(3f)
+                            horizontalLineToRelative(5f)
+                            quadToRelative(0.83f, 0f, 1.41f, 0.59f)
+                            reflectiveQuadTo(21f, 5f)
+                            verticalLineTo(19f)
+                            quadToRelative(0f, 0.82f, -0.59f, 1.41f)
+                            reflectiveQuadTo(19f, 21f)
+                            horizontalLineTo(14f)
+                            verticalLineTo(19f)
+                            horizontalLineToRelative(5f)
+                            verticalLineTo(5f)
+                            horizontalLineTo(14f)
+                            close()
+                            moveToRelative(0f, 8f)
+                            verticalLineTo(11f)
+                            horizontalLineToRelative(3f)
+                            verticalLineToRelative(2f)
+                            horizontalLineTo(14f)
+                            close()
+                            moveTo(14f, 9f)
+                            verticalLineTo(7f)
+                            horizontalLineToRelative(3f)
+                            verticalLineTo(9f)
+                            horizontalLineTo(14f)
+                            close()
+                            moveToRelative(-4f, 3f)
+                            close()
+                        }
+                    }
+                    .build()
+            return _text_compare!!
+        }
+
+    private var _text_compare: ImageVector? = null
 }
