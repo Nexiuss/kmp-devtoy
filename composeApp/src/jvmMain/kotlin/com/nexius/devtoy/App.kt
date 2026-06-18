@@ -23,6 +23,7 @@ import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.gabrieldrn.carbon.CarbonDesignSystem
 import com.gabrieldrn.carbon.tab.TabItem
 import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.devtoy.components.*
@@ -37,7 +38,9 @@ import kotlin.coroutines.ContinuationInterceptor
 @Composable
 @Preview
 fun App() {
-    layout()
+    CarbonDesignSystem{
+        layout()
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -256,7 +259,8 @@ val menuItems = listOf(
         children = listOf(
             MenuItem(id = "json", path = "root/format/json", name = "JSON", icon = Icons.DataArray),
             MenuItem(id = "sql", path = "root/format/sql", name = "SQL", icon = Icons.Storage, expandedIcon = Icons.FolderOpen),
-            MenuItem(id = "xml", path = "root/format/xml", name = "XML", icon = Icons.CodeXml, expandedIcon = Icons.FolderOpen)
+            MenuItem(id = "xml", path = "root/format/xml", name = "XML", icon = Icons.CodeXml, expandedIcon = Icons.FolderOpen),
+            MenuItem(id = "yamlJson", path = "root/format/yamlJson", name = "YAML/JSON", icon = Icons.Transform, expandedIcon = Icons.FolderOpen)
         )
     ),
     MenuItem(
@@ -358,6 +362,9 @@ fun getContent(menuItem: MenuItem){
         }
         "textCompare"->{
             TextCompareView()
+        }
+        "yamlJson"->{
+            YamlJsonConverter()
         }
     }
 }

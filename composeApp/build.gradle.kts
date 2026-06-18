@@ -52,6 +52,8 @@ kotlin {
             implementation(libs.table.m3)
             //jwt
             implementation(libs.jwt.kt)
+            //yaml
+            implementation(libs.snakeyaml)
 
 
         }

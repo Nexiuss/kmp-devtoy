@@ -3363,6 +3363,90 @@ object Icons {
 
     private var _arrow_upward: ImageVector? = null
 
+
+    val ArrowLeft: ImageVector
+        get() {
+            if (_keyboard_arrow_left != null) {
+                return _keyboard_arrow_left!!
+            }
+            _keyboard_arrow_left =
+                ImageVector.Builder(
+                    name = "keyboard_arrow_left",
+                    defaultWidth = 24.dp,
+                    defaultHeight = 24.dp,
+                    viewportWidth = 24f,
+                    viewportHeight = 24f,
+                )
+                    .apply {
+                        path(
+                            fill = SolidColor(Color.Black),
+                            fillAlpha = 1f,
+                            stroke = null,
+                            strokeAlpha = 1f,
+                            strokeLineWidth = 1f,
+                            strokeLineCap = StrokeCap.Butt,
+                            strokeLineJoin = StrokeJoin.Bevel,
+                            strokeLineMiter = 1f,
+                            pathFillType = PathFillType.Companion.NonZero,
+                        ) {
+                            moveTo(14f, 18f)
+                            lineTo(8f, 12f)
+                            lineTo(14f, 6f)
+                            lineToRelative(1.4f, 1.4f)
+                            lineTo(10.8f, 12f)
+                            lineToRelative(4.6f, 4.6f)
+                            lineTo(14f, 18f)
+                            close()
+                        }
+                    }
+                    .build()
+            return _keyboard_arrow_left!!
+        }
+
+    private var _keyboard_arrow_left: ImageVector? = null
+
+
+    val ArrowRight: ImageVector
+        get() {
+            if (_keyboard_arrow_right != null) {
+                return _keyboard_arrow_right!!
+            }
+            _keyboard_arrow_right =
+                ImageVector.Builder(
+                    name = "keyboard_arrow_right",
+                    defaultWidth = 24.dp,
+                    defaultHeight = 24.dp,
+                    viewportWidth = 24f,
+                    viewportHeight = 24f,
+                )
+                    .apply {
+                        path(
+                            fill = SolidColor(Color.Black),
+                            fillAlpha = 1f,
+                            stroke = null,
+                            strokeAlpha = 1f,
+                            strokeLineWidth = 1f,
+                            strokeLineCap = StrokeCap.Butt,
+                            strokeLineJoin = StrokeJoin.Bevel,
+                            strokeLineMiter = 1f,
+                            pathFillType = PathFillType.Companion.NonZero,
+                        ) {
+                            moveTo(12.6f, 12f)
+                            lineTo(8f, 7.4f)
+                            lineTo(9.4f, 6f)
+                            lineToRelative(6f, 6f)
+                            lineToRelative(-6f, 6f)
+                            lineTo(8f, 16.6f)
+                            lineTo(12.6f, 12f)
+                            close()
+                        }
+                    }
+                    .build()
+            return _keyboard_arrow_right!!
+        }
+
+    private var _keyboard_arrow_right: ImageVector? = null
+
     val MyLocation: ImageVector
         get() {
             if (_my_location != null) {

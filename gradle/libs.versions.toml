@@ -24,6 +24,7 @@ jsch = "0.1.55"
 calf-file-picker = "0.9.0"
 table-m3 = "0.2.3"
 jwt-kt = "1.2.0"
+snakeyaml = "2.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -76,6 +77,7 @@ jsch = { module = "com.jcraft:jsch", version.ref = "jsch" }
 calf-file-picker = { module = "com.mohamedrejeb.calf:calf-file-picker", version.ref = "calf-file-picker" }
 table-m3 = { module = "io.github.windedge.table:table-m3", version.ref = "table-m3" }
 jwt-kt = { module = "com.appstractive:jwt-kt", version.ref = "jwt-kt" }
+snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml" }
 
 [plugins]
 composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
