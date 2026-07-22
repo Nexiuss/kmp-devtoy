@@ -28,6 +28,7 @@ import com.gabrieldrn.carbon.tab.TabItem
 import com.gabrieldrn.carbon.tab.TabList
 import com.nexius.devtoy.components.*
 import com.nexius.devtoy.components.Icons.ArrowBack
+import com.nexius.devtoy.components.decompiler.DecompilerScreen
 import com.nexius.devtoy.components.filerename.ui.FileRenameView
 import com.nexius.devtoy.components.ftp.ui.FtpScreen
 import com.nexius.devtoy.components.textcompare.ui.TextCompareView
@@ -300,6 +301,7 @@ val menuItems = listOf(
     MenuItem(id = "fileRename", path = "root/fileRename", name = "文件重命名", icon = Icons.FilePresent),
     MenuItem(id = "loanCalculator", path = "root/LoanCalculator", name = "贷款计算", icon = Icons.Calculate),
     MenuItem(id = "timestampConverter", path = "root/timestampConverter", name = "时间戳转换", icon = Icons.Timer),
+    MenuItem(id = "decompiler", path = "root/decompiler", name = "Java反编译器", icon = Icons.Code),
 )
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -365,6 +367,9 @@ fun getContent(menuItem: MenuItem){
         }
         "yamlJson"->{
             YamlJsonConverter()
+        }
+        "decompiler"->{
+            DecompilerScreen()
         }
     }
 }

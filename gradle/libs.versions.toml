@@ -25,6 +25,7 @@ calf-file-picker = "0.9.0"
 table-m3 = "0.2.3"
 jwt-kt = "1.2.0"
 snakeyaml = "2.2"
+cfr = "0.152"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -78,6 +79,7 @@ calf-file-picker = { module = "com.mohamedrejeb.calf:calf-file-picker", version.
 table-m3 = { module = "io.github.windedge.table:table-m3", version.ref = "table-m3" }
 jwt-kt = { module = "com.appstractive:jwt-kt", version.ref = "jwt-kt" }
 snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml" }
+cfr = { module = "org.benf:cfr", version.ref = "cfr" }
 
 [plugins]
 composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }

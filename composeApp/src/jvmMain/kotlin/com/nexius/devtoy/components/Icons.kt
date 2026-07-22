@@ -4475,4 +4475,131 @@ object Icons {
         }
 
     private var _text_compare: ImageVector? = null
+
+    val SwapHoriz: ImageVector
+        get() {
+            if (_swap_horiz != null) {
+                return _swap_horiz!!
+            }
+            _swap_horiz =
+                ImageVector.Builder(
+                    name = "swap_horiz",
+                    defaultWidth = 24.dp,
+                    defaultHeight = 24.dp,
+                    viewportWidth = 24f,
+                    viewportHeight = 24f,
+                )
+                    .apply {
+                        path(
+                            fill = SolidColor(Color.Black),
+                            fillAlpha = 1f,
+                            stroke = null,
+                            strokeAlpha = 1f,
+                            strokeLineWidth = 1f,
+                            strokeLineCap = StrokeCap.Butt,
+                            strokeLineJoin = StrokeJoin.Bevel,
+                            strokeLineMiter = 1f,
+                            pathFillType = PathFillType.Companion.NonZero,
+                        ) {
+                            moveTo(7f, 20f)
+                            lineTo(2f, 15f)
+                            lineTo(7f, 10f)
+                            lineToRelative(1.4f, 1.42f)
+                            lineTo(5.83f, 14f)
+                            horizontalLineTo(13f)
+                            verticalLineToRelative(2f)
+                            horizontalLineTo(5.83f)
+                            lineTo(8.4f, 18.58f)
+                            lineTo(7f, 20f)
+                            close()
+                            moveTo(17f, 14f)
+                            lineTo(15.6f, 12.58f)
+                            lineTo(18.18f, 10f)
+                            horizontalLineTo(11f)
+                            verticalLineTo(8f)
+                            horizontalLineToRelative(7.18f)
+                            lineTo(15.6f, 5.43f)
+                            lineTo(17f, 4f)
+                            lineToRelative(5f, 5f)
+                            lineToRelative(-5f, 5f)
+                            close()
+                        }
+                    }
+                    .build()
+            return _swap_horiz!!
+        }
+
+    private var _swap_horiz: ImageVector? = null
+
+    val KeyboardArrowRight = ArrowRight
+
+
+    val Attachment: ImageVector
+        get() {
+            if (_attachment != null) {
+                return _attachment!!
+            }
+            _attachment =
+                ImageVector.Builder(
+                    name = "attachment",
+                    defaultWidth = 24.dp,
+                    defaultHeight = 24.dp,
+                    viewportWidth = 24f,
+                    viewportHeight = 24f,
+                )
+                    .apply {
+                        path(
+                            fill = SolidColor(Color.Black),
+                            fillAlpha = 1f,
+                            stroke = null,
+                            strokeAlpha = 1f,
+                            strokeLineWidth = 1f,
+                            strokeLineCap = StrokeCap.Butt,
+                            strokeLineJoin = StrokeJoin.Bevel,
+                            strokeLineMiter = 1f,
+                            pathFillType = PathFillType.Companion.NonZero,
+                        ) {
+                            moveTo(8.25f, 18f)
+                            quadTo(5.65f, 18f, 3.83f, 16.18f)
+                            reflectiveQuadTo(2f, 11.75f)
+                            reflectiveQuadTo(3.83f, 7.32f)
+                            reflectiveQuadTo(8.25f, 5.5f)
+                            horizontalLineTo(17.5f)
+                            quadToRelative(1.88f, 0f, 3.19f, 1.31f)
+                            reflectiveQuadTo(22f, 10f)
+                            reflectiveQuadToRelative(-1.31f, 3.19f)
+                            reflectiveQuadTo(17.5f, 14.5f)
+                            horizontalLineTo(8.75f)
+                            quadTo(7.6f, 14.5f, 6.8f, 13.7f)
+                            reflectiveQuadTo(6f, 11.75f)
+                            reflectiveQuadTo(6.8f, 9.8f)
+                            reflectiveQuadTo(8.75f, 9f)
+                            horizontalLineTo(18f)
+                            verticalLineToRelative(2f)
+                            horizontalLineTo(8.75f)
+                            quadTo(8.43f, 11f, 8.21f, 11.21f)
+                            quadTo(8f, 11.43f, 8f, 11.75f)
+                            reflectiveQuadToRelative(0.21f, 0.54f)
+                            reflectiveQuadTo(8.75f, 12.5f)
+                            horizontalLineTo(17.5f)
+                            quadToRelative(1.05f, -0.03f, 1.78f, -0.74f)
+                            reflectiveQuadTo(20f, 10f)
+                            reflectiveQuadTo(19.28f, 8.23f)
+                            reflectiveQuadTo(17.5f, 7.5f)
+                            horizontalLineTo(8.25f)
+                            quadTo(6.48f, 7.47f, 5.24f, 8.73f)
+                            reflectiveQuadTo(4f, 11.75f)
+                            quadToRelative(0f, 1.75f, 1.24f, 2.97f)
+                            reflectiveQuadTo(8.25f, 16f)
+                            horizontalLineTo(18f)
+                            verticalLineToRelative(2f)
+                            horizontalLineTo(8.25f)
+                            close()
+                        }
+                    }
+                    .build()
+            return _attachment!!
+        }
+
+    private var _attachment: ImageVector? = null
 }
