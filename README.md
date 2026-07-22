@@ -1,5 +1,5 @@
 # KMP-DevToy
-<div align="center">
+<div style="text-align: center;">
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-Multiplatform-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org/docs/multiplatform.html)
 [![Compose](https://img.shields.io/badge/Jetpack-Compose-4285F4?logo=jetpackcompose&logoColor=white)](https://developer.android.com/develop/ui/compose)
@@ -19,6 +19,7 @@
 ## 支持功能
 - [x] 编解码器：
   - [x] base64
+  - [x] base85文本文件
   - [x] Html
   - [x] url
   - [x] 二维码
@@ -27,11 +28,14 @@
   - [x] json 
   - [x] sql 
   - [x] xml
+  - [x] yaml<>json
 - [ ] 生成器：
   - [x] uuid 
-  - [x] 正则速查 
 - [ ] 文本处理：
   - [x] markdown
+  - [x] 正则速查
+  - [x] 转换大小写
+  - [x] 文本比对
 - [x] 网络：
   - [x] http客户端
 - [x] FTP：
@@ -42,6 +46,7 @@
   - [x] 文件编码转换
 - [x] 贷款计算器
 - [x] 时间戳转换
+- [x] java反编译器
 ### 示例图片
 ![example.png](images/example.png)  
 ### 参考文档
